@@ -335,8 +335,8 @@ var d = new Array(21);
         d[1] = "Iovis";
         d[2] = "Iovi";
         d[3] = "Iovem";
-        d[4] = "Iuppiter";
-        d[5] = "Iove";
+        d[5] = "Iuppiter";
+        d[4] = "Iove";
     }
     
     if (nom == "rus") {                                                         // rus
