@@ -223,7 +223,7 @@ var d = new Array(21);
 
     if (nom.substring(nom.length-1, nom.length) == "r") {      						// -er and -ir nouns
         d[0] = nom; 
-        d[4] = nom;
+        d[5] = nom;
     }
 
     d[12] = lemma;                                                    // stores extra info
