@@ -216,7 +216,7 @@ var d = new Array(21);
         d[0] = nom;
         irrForms[0] = d[0];
         d[3] = nom;
-        d[4] = nom;
+        d[5] = nom;
         d[16]="nom. -us but gender is neuter";
     }
 
@@ -233,17 +233,17 @@ var d = new Array(21);
     d[20] = trans;
 
     if (nom.substring(nom.length-3, nom.length) == "ius") {      // -ius nouns
-        d[4] = stem;
+        d[5] = stem;
     }
     
     if (nom == "meus") {                                                             // 'meus'
-        d[4] = "mi";
-        irrForms[4] = "mi";
+        d[5] = "mi";
+        irrForms[5] = "mi";
     }
  	 
  	 if (nom == "deus") {                                                             // 'deus'
-        d[4] = "deus";
-        irrForms[4] = "deus";
+        d[5] = "deus";
+        irrForms[5] = "deus";
     }
     
  	 if (nom == "pontus") {                                                             // 'pontus', no plural
