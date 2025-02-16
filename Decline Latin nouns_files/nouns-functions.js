@@ -101,9 +101,6 @@ function checkForm(){
             else {
                 totMistakes ++;
                 frm1[i*2].className = "wrongColor";
-                console.log(frm1[i*2].value);
-                console.log(frm1[i].value);
-                console.log(i);
                 if ((frm1[i*2].value == "") || (frm1[i*2].value == defaultNFormValues[i])) {
                     frm1[i*2].value = good;
                 }
