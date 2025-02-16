@@ -494,7 +494,7 @@ dBase3[211] = ["amnis", "amn", "m", "3b", "stream, river", "amnis, amnis", "3", 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 4th declension
 
 dBase4 = [];
-
+/*
 dBase4[0] = ["manus", "man", "f", "4", "hand", "manus, us", "1", "s"];
 dBase4[1] = ["cornu", "corn", "n", "4", "horn", "cornu, us", "1", "s"];
 dBase4[2] = ["ictus", "ict", "m", "4", "blow", "ictus, us", "3", "n"];
@@ -537,12 +537,12 @@ dBase4[38] = ["casus", "cas", "m", "4", "fall, error, event", "casus, us", "3", 
 dBase4[39] = ["cantus", "cant", "m", "4", "song", "cantus, us", "1", "s"];
 dBase4[40] = ["aestus", "aest", "m", "4", "agitation, heat, tide", "aestus, us", "1", "s"];
 dBase4[41] = ["adventus", "advent", "m", "4", "arrival", "adventus, us", "1", "s"];
-
+*/
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 5th declension
 
 dBase5 = [];
-
+/*
 dBase5[0] = ["dies", "di", "f", "5", "day", "dies, ei", "1", "s"];
 dBase5[1] = ["res", "r", "f", "5", "thing", "res, ei", "1", "s"];
 dBase5[2] = ["fides", "fid", "f", "5", "faith, confidence", "fides, ei", "1", "s"];
@@ -559,7 +559,7 @@ dBase5[12] = ["pauperies", "pauperi", "f", "5", "poverty", "pauperies, ei", "1",
 dBase5[13] = ["rabies", "rabi", "f", "5", "rage, fury", "rabies, ei", "3", "n"];
 dBase5[14] = ["diluvies", "diluvi", "f", "5", "deluge, inundation", "diluvies, ei", "3", "n"];
 dBase5[15] = ["durities", "duriti", "f", "5", "hardness", "durities, ei", "3", "n"];
-
+*/
 
 
 
