@@ -1,0 +1,143 @@
+
+
+body {
+  	background-color: #FCFFED; /* #FFF0B2; --------- #D2E4D2;*/
+/*  	background-image: url('graphics/sfondo TEST.jpg'); */
+  	background-repeat:no-repeat;
+  	background-attachment:fixed;
+  	background-position:center top; 
+  /*
+	background-color: #fff; #D2E4D2;
+	background-image: url('graphics/background-page.jpg');
+	background-repeat: repeat;
+	color: rgb(51, 51, 51); #61300D;
+	*/
+}
+
+
+caption {
+	font-weight:bold;
+	color: black; 
+	text-align: center;
+}
+
+hr {width: 50%}
+
+.centeredDiv {
+	width: 900px;
+	margin: 0 auto;
+	padding: 1px;
+	text-align: center;
+	background-color: #fff;
+	-moz-border-radius: 1em 1em 1em 1em;
+	-webkit-border-radius: 1em 1em 1em 1em;
+	border-radius: 1em 1em 1em 1em;
+	box-shadow: 0px 0px 8px #000;
+	-webkit-box-shadow: 0px 0px 8px #000;
+  	-moz-box-shadow: 0px 0px 8px #000;
+  	
+	/*background-image: url('graphics/background-slide.gif');
+	background-repeat: repeat;
+	-moz-box-shadow:  8px  8px 9px #7D3E11, -2px -2px 9px #7D3E11, 8px -2px 9px #7D3E11, -2px  8px 9px #7D3E11;    
+   -webkit-box-shadow:  8px  8px 9px #7D3E11, -2px -2px 9px #7D3E11, 8px -2px 9px #7D3E11, -2px  8px 9px #7D3E11;
+   box-shadow:  8px  8px 9px #7D3E11, -2px -2px 9px #7D3E11, 8px -2px 9px #7D3E11, -2px  8px 9px #7D3E11;
+   filter: progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=45, Strength=6),
+           progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=135, Strength=6),
+           progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=225, Strength=6),
+           progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=315, Strength=6); */
+}
+
+.helpDiv {
+	width: 900px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #fff;
+	-moz-border-radius: 1em 1em 1em 1em;
+	-webkit-border-radius: 1em 1em 1em 1em;
+	border-radius: 1em 1em 1em 1em;
+	box-shadow: 0px 0px 8px #000;
+	-webkit-box-shadow: 0px 0px 8px #000;
+  	-moz-box-shadow: 0px 0px 8px #000;
+  	/*
+	background-image: url('graphics/background-slide.gif');
+	background-repeat: repeat; 
+	-moz-box-shadow:  8px  8px 9px #7D3E11, -2px -2px 9px #7D3E11, 8px -2px 9px #7D3E11, -2px  8px 9px #7D3E11;    
+   -webkit-box-shadow:  8px  8px 9px #7D3E11, -2px -2px 9px #7D3E11, 8px -2px 9px #7D3E11, -2px  8px 9px #7D3E11;
+   box-shadow:  8px  8px 9px #7D3E11, -2px -2px 9px #7D3E11, 8px -2px 9px #7D3E11, -2px  8px 9px #7D3E11;
+   filter: progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=45, Strength=6),
+           progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=135, Strength=6),
+           progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=225, Strength=6),
+           progid:DXImageTransform.Microsoft.Shadow(color='#7D3E11', Direction=315, Strength=6); */
+}
+
+.helpCenteredDiv {
+	text-align: center; 
+	background-color: #fff;
+}
+
+.smallDiv {
+	width: 500; 
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #E8DAD0;
+	padding: 20px 20px 5px 20px;
+}
+
+.centeredTable {
+	text-align: center;
+   background-color: #CCDFDF; /*#E8DAD0;*/
+   margin-left: auto;
+   margin-right: auto;  
+}
+
+.leftTable {
+	text-align: left;
+	background-color: #CCDFDF;
+   margin-left: auto;
+   margin-right: auto;  
+}
+
+.normCell { background-color: #efefef; }
+.darkCell   { background-color: #F4CABC; }
+.brightCell { background-color: #CCDFDF; }
+.nullCell { background-color: #F5EBE6; }
+
+.btnav { background-color: #84C1DF; border: 1px #000000 solid;} 
+	
+.previousAttemptsTable {
+   margin-left: auto;
+   margin-right: auto;  
+   text-align: center;
+}
+
+table.previousAttemptsTable td {width: 100px}
+
+.invisible {display:none}
+.visible {display:inline}
+.centeredPar { text-align: center; }
+
+.uline {text-decoration: underline; }
+
+.lightGray  {color: gray}
+.rightColor {color: green;}
+.wrongColor {color: crimson;}
+.normColor  {color: black;}
+
+
+/*
+a:link {color:#660033; text-decoration:none;}     		 	
+a:visited {color:#660033;}  									
+a:hover {color:#3D001F; text-decoration:underline;}  		
+a:active {color:#660033;}  										
+*/
+
+a:link,
+a:visited {text-decoration:none; color: #005d60;}
+a:active, 
+a:hover {text-decoration:underline; color: #002a72;} 
+
+a.imgLink { padding: 3px; }
+a.imgLink:hover {background-color: Snow;
+
+

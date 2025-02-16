@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0059)http://www.graverini.net/luca/langtests/tests_EN/nouns.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<title>Decline Latin nouns</title>
+  
+    <link rel="stylesheet" href="./Decline Latin nouns_files/testsStyles.css">	
+
+<script type="text/javascript" src="./Decline Latin nouns_files/languageVariables_EN.js"> </script>
+<script type="text/javascript" src="./Decline Latin nouns_files/dBaseNouns_EN.js"> </script>
+<script type="text/javascript" src="./Decline Latin nouns_files/nouns-machine.js"> </script>
+<script type="text/javascript" src="./Decline Latin nouns_files/nouns-functions.js"> </script>
+
+<script type="text/javascript"> 
+
+</script>
+
+</head>
+<!-- ------------------------------------------------------------------------------------BODY  -->
+<body>
+
+<div class="containerDiv">
+
+<div class="centeredDiv">
+
+<h2 id="header1">2nd declension:</h2>
+<h2 id="header2"></h2>
+<h3 id="header3"><i>animus, i</i>, m.  (soul, intellect, spirit)</h3>
+
+<!-- -------------------------------------------------------------------------------------------------- create table for declension -->
+<form id="frm1">
+
+<table class="centeredTable">
+
+<tbody><tr>
+<th><span id="blankHeader"> </span></th>
+<th><span id="headerSingular">SINGULAR</span></th>
+<th><span id="headerPlural">PLURAL</span></th>
+</tr>
+
+<tr>
+<td> Nom. </td>
+<td> <input id="snom" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="1" value="(Nom.)"> </td>
+<td> <input id="pnom" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="7" value="(Nom.)"> </td>
+</tr>
+
+<tr>
+<td> Gen. </td>
+<td> <input id="sgen" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="2" value="(Gen.)"> </td>
+<td> <input id="pgen" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="8" value="(Gen.)"> </td>
+</tr>
+
+<tr>
+<td> Dat. </td>
+<td> <input id="sdat" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="3" value="(Dat.)"> </td>
+<td> <input id="pdat" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="9" value="(Dat.)"> </td>
+</tr>
+
+<tr>
+<td> Acc. </td>
+<td> <input id="sacc" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="4" value="(Acc.)"> </td>
+<td> <input id="pacc" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="10" value="(Acc.)"> </td>
+</tr>
+
+<tr>
+<td> Abl. </td>
+<td> <input id="sabl" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="5" value="(Abl.)"> </td>
+<td> <input id="pabl" type="text" onblur="onBlur(this)" onfocus="onFocus(this)" class="lightGray" size="22" tabindex="10" value="(Abl.)"> </td>
+</tr>
+<tr><td><br></td></tr>
+
+
+
+</tbody>
+</table>
+</form>
+<!-- ----------------------------------------------------------------------------------------  FOOTER    -->
+<span id="footer" class="visible">
+<!-- ----------------------------------------------------------------------------------------  buttons form    -->
+<form id="buttonFrm">
+    <p class="centeredPar">
+        <span id="checkButton"><input id="checkB" onclick="checkForm()" value="Check" type="button" tabindex="-1"></span>
+        <span id="clearButton"><input onclick="clearForm()" value="Clear form" type="button" tabindex="-1"></span>
+        <span id="tryAnotherButton" class="invisible"><input id="tryAnotherB" onclick="newNoun()" value="Try a new noun" type="button" tabindex="-1"></span>
+        <span id="extraButton"></span>     
+        <span id="audioButton"></span>  
+    </p>
+    <p class="centeredPar">
+        <span id="closeWindow"><input onclick="closeWindow()" value="Back to previous page" type="button" tabindex="-1"></span>
+        <span id="helpButton"><input onclick="showHelp()" value="Help" type="button" tabindex="-1"></span>
+    </p>
+</form>
+
+<!-- ------------------------------------------------------------------------------------------ make selections -->
+
+<hr>
+
+<p></p>
+
+<form id="hiddenSelection" class="invisible"> <!-- used to exchange parameters with popup window -->
+	<input id="hiddenInput" type="text">
+</form>
+
+<form id="selectForm">
+ <span id="declSelection1">Random selection of &nbsp;</span>    
+ <select id="scopeSelection" onchange="selectScope()" tabindex="-1">
+ 	<option value="0" selected="">ALL declensions  </option>
+   <option value="1">1st declension </option>
+   <option value="2">2nd declension </option>
+   <option value="3">3rd declension </option>
+   <option value="4">4th declension </option>
+   <option value="5">5th declension </option>
+ </select>
+ <span id="declSelection2"> nouns included in the default vocabulary</span>
+</form> <p></p>
+
+<p><span id="nounSelection1">You can also select a </span><span id="nounSelection2"><a href="javascript:void(0)" onclick="selectSingleNoun()" tabindex="-1">&nbsp;specific noun </a>&nbsp;</span><span id="nounSelection3"> from a larger vocabulary</span></p>
+
+</span>
+
+<!-- ------------------------------------------------------------------------------------------ EXTRA INFO and AUDIO -->
+
+<span id="extraInfo" class="invisible">
+	extra info!
+</span>
+
+<span id="audioPlay" class="invisible">
+	Audio section!
+</span>
+
+<!-- ------------------------------------------------------------------------------------------ initialize -->
+
+<p> <span id="testPar1"></span><span id="testPar2"></span><span id="testPar3"></span></p>
+<script type="text/javascript"> 
+    initializePage();
+</script>
+
+</div>
+
+</div>
+
+
+
+</body></html>
