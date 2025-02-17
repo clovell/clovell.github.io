@@ -7,7 +7,7 @@ currentDeclension = 0;
 lastRandomNumbers = new Array(10);
 lastRNIndex = 0;
 audioAvailable = false;
-checkButtonDisabled = "";
+var checkButtonDisabled = "";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ prototype of Array.indexOf (otherwise not working in IE)
 
