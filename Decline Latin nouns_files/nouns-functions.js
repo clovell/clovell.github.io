@@ -283,6 +283,8 @@ function selectNoun(decl) {
     
     audioAvailable = (noun[7] == "s");
 
+	console.log(noun);
+
     return noun; 
 }
 
