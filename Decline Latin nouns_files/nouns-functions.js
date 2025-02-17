@@ -8,6 +8,7 @@ lastRandomNumbers = new Array(10);
 lastRNIndex = 0;
 audioAvailable = false;
 var checkButtonDisabled = "";
+var checkButtonEnabled = "";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ prototype of Array.indexOf (otherwise not working in IE)
 
