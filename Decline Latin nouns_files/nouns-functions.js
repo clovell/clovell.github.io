@@ -535,6 +535,7 @@ function initializePage() {
 	document.getElementById("headerPlural").innerHTML = LPluralUp;
 	checkButtonEnabled = '<input id="checkB" onclick="checkForm()" value="' + LCheckButton + '" type="button" tabIndex="-1">';
 	checkButtonDisabled = '<input id="checkB" onclick="checkForm()" value="' + LCheckButton + '" type="button" tabIndex="-1" disabled>';
+	console.log(checkButtonDisabled);
 	document.getElementById("checkButton").innerHTML = checkButtonEnabled;
 	document.getElementById("clearButton").innerHTML = '<input onclick="clearForm()" value="' + LClearButton + '" type="button" tabIndex="-1">';
 	document.getElementById("closeWindow").innerHTML = '<input onclick ="closeWindow()" value="' + LCloseWindowButton + '" type="button" tabIndex="-1">';
