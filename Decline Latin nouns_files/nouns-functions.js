@@ -280,7 +280,7 @@ function selectNoun(decl) {
             noun = dBase5[rndm];
             break;
     	}
-    } while(parseInt(noun[6]) > 1);   // use small vocabulary
+    } //while(parseInt(noun[6]) > 1);   // use small vocabulary
     
     audioAvailable = (noun[7] == "s");
 
