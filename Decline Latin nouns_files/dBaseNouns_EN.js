@@ -2,8 +2,6 @@
 
 // structure: 0:nominative, 1:stem, 2:gender, 3:declN, 4:meaning, 5:lemma, 6:vocabulary level (1,2,3), 7: audio available (s/n)
 
-var
-
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1st declension
 
 dBase1 = [];

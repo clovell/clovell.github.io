@@ -246,6 +246,8 @@ function selectNoun(decl) {
     var start5 = l1+l2+l3+l4;
     var lTot = l1 + l2 + l3 + l4 + l5;
     
+	console.log(start4);
+
     var rndm;
 
     do {     
