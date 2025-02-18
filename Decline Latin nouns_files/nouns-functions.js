@@ -247,13 +247,12 @@ function selectNoun(decl) {
     var lTot = l1 + l2 + l3 + l4 + l5;
     
     var rndm;
-    
-	console.log(rndm);
 
     do {     
     	switch (decl) {
         case "0":
 				rndm = getRandom (lTot);
+				console.log(rndm);
             if (rndm >= start5) noun = dBase5[rndm-start5];
                 else if (rndm >= start4) noun = dBase4[rndm-start4];
                     else if (rndm >= start3) noun = dBase3[rndm-start3];
