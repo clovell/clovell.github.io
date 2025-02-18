@@ -416,12 +416,3 @@ dBase5[13] = ["rabies", "rabi", "f", "5", "rage, fury", "rabies, ei", "3", "n"];
 dBase5[14] = ["diluvies", "diluvi", "f", "5", "deluge, inundation", "diluvies, ei", "3", "n"];
 dBase5[15] = ["durities", "duriti", "f", "5", "hardness", "durities, ei", "3", "n"];
 */
-
-
-
-
-
-
-
-
-

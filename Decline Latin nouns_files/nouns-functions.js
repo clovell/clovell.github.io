@@ -248,6 +248,8 @@ function selectNoun(decl) {
     
     var rndm;
     
+	console.log(rndm);
+
     do {     
     	switch (decl) {
         case "0":
