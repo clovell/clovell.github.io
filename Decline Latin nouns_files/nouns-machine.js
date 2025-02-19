@@ -288,7 +288,7 @@ var d = new Array(21);
 
 
 // ----------------------------------------------------------------------------------------------------------------------------
-function decline3a(nom, stem, gender, declN, trans, lemma) {        // 3rd declension, 1st group
+function decline3a(nom, stem, gender, declN, trans, lemma) {        // 3rd declension, standard endings
                                                                                             
                                                                                                  
 var d = new Array(21);
@@ -377,7 +377,7 @@ var d = new Array(21);
 
 // ----------------------------------------------------------------------------------------------------------------------------
 
-function decline3b(nom, stem, gender, declN, trans, lemma) {        // 3rd declension, 2nd group
+function decline3b(nom, stem, gender, declN, trans, lemma) {        // 3rd decl, mostly masc/fem i-stems 
                                                                                                                                
 var d = new Array(21);
 
@@ -465,8 +465,8 @@ var d = new Array(21);
 
 // ----------------------------------------------------------------------------------------------------------------------------
 
-function decline3c(nom, stem, gender, declN, trans, lemma) {        // 3rd declension, 3rd group
-                                                                                                 // neuters -e, -al, -ar
+function decline3c(nom, stem, gender, declN, trans, lemma) {    // 3rd declension, 3rd group
+                                                                // neuters -e, -al, -ar
 var d = new Array(21);
 
     for(var i=0; i<21; i++) {                                                   // clears the arrays
