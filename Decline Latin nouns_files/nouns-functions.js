@@ -399,13 +399,16 @@ function askForNewNoun() {
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ selectScope()
 
 function selectScope() {
-	var newDecl = "";
-		
+	var newDecl = scopeSelection.options.selectedIndex.toString();
+/*	
 	for (var i=0; i<5; i++) {
-		if(selectForm.scopeSelection.options[i].selected)
+		console.log(selectForm.scopeSelection.options[i].selected);
+		if(selectForm.scopeSelection.options[i].selected) {
 			newDecl = i.toString();
+		}
 	}
-		
+*/
+
 	if (newDecl != currentDeclension) {
 		
 		clearRandomNumbers();
@@ -537,16 +540,15 @@ function initializePage() {
 	document.getElementById("headerPlural").innerHTML = LPluralUp;
 	checkButtonEnabled = '<input id="checkB" onclick="checkForm()" value="' + LCheckButton + '" type="button" tabIndex="-1">';
 	checkButtonDisabled = '<input id="checkB" onclick="checkForm()" value="' + LCheckButton + '" type="button" tabIndex="-1" disabled>';
-	console.log(checkButtonDisabled);
 	document.getElementById("checkButton").innerHTML = checkButtonEnabled;
 	document.getElementById("clearButton").innerHTML = '<input onclick="clearForm()" value="' + LClearButton + '" type="button" tabIndex="-1">';
 	document.getElementById("closeWindow").innerHTML = '<input onclick ="closeWindow()" value="' + LCloseWindowButton + '" type="button" tabIndex="-1">';
 	document.getElementById("helpButton").innerHTML = '<input onclick ="showHelp()" value="' + LHelpButton + '" type="button" tabIndex="-1">';
 	document.getElementById("declSelection1").innerHTML = LDeclSelection1 + "&nbsp;";
 	document.getElementById("declSelection2").innerHTML = LDeclSelection2;
-	document.getElementById("nounSelection1").innerHTML = LNounSelection1;
-	document.getElementById("nounSelection2").innerHTML = '<a href="javascript:void(0)" onclick="selectSingleNoun()" tabIndex="-1">&nbsp;' + LNounSelection2 + '</a>&nbsp;';
-	document.getElementById("nounSelection3").innerHTML = LNounSelection3;
+//	document.getElementById("nounSelection1").innerHTML = LNounSelection1;
+//	document.getElementById("nounSelection2").innerHTML = '<a href="javascript:void(0)" onclick="selectSingleNoun()" tabIndex="-1">&nbsp;' + LNounSelection2 + '</a>&nbsp;';
+//	document.getElementById("nounSelection3").innerHTML = LNounSelection3;
 	document.getElementById("tryAnotherButton").innerHTML = '<input id="tryAnotherB" onclick="newNoun()" value="' + LTryAnotherNoun + '" type="button" tabIndex="-1">';
 	document.getElementById("tryAnotherButton").className = "invisible";
 	extraInfoButton = "<input onclick='extraInfo()' value='" + LExtraInfo + "' type='button' tabIndex='-1'>";
