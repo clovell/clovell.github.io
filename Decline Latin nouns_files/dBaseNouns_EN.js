@@ -90,8 +90,6 @@ dBase1[75] = ["nauta", "naut", "m", "1", "sailor", "nauta, -ae", "2", "n"];
 
 dBase2 = [];
 
-dBase2 = [];
-
 dBase2[0] = ["amicus", "amic", "m", "2", "friend", "amīcus, -ī", "1", "n"];
 dBase2[1] = ["ager", "agr", "m", "2", "territory, field", "ager, agrī", "1", "n"];
 dBase2[2] = ["puer", "puer", "m", "2", "boy", "puer, -ī", "1", "n"];
@@ -161,7 +159,7 @@ dBase3[12] = ["frater", "fratr", "m", "3b", "brother", "frater, fratris", "1", "
 dBase3[13] = ["soror", "soror", "f", "3a", "sister", "soror, sororis", "1", "n"];
 dBase3[14] = ["uxor", "uxor", "f", "3a", "wife", "uxor, uxoris", "1", "n"];
 dBase3[15] = ["canis", "can", "m", "3b", "dog", "canis, canis", "1", "n"];
-dBase3[16] = ["aetas", "aetat", "f", "3a", "age, period", "aetas, aetatis", "2", "n"];];
+dBase3[16] = ["aetas", "aetat", "f", "3a", "age, period", "aetas, aetatis", "2", "n"];
 dBase3[17] = ["amor", "amor", "m", "3a", "love", "amor, amoris", "2", "n"];
 dBase3[18] = ["arx", "arc", "f", "3a", "stronghold, citadel", "arx, arcis", "2", "n"];
 dBase3[19] = ["mors", "mort", "f", "3a", "death", "mors, mortis", "2", "n"];
@@ -385,6 +383,7 @@ dBase3[211] = ["amnis", "amn", "m", "3b", "stream, river", "amnis, amnis", "3", 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 4th declension
 
 dBase4 = [];
+
 /*
 dBase4[0] = ["manus", "man", "f", "4", "hand", "manus, us", "1", "s"];
 dBase4[1] = ["cornu", "corn", "n", "4", "horn", "cornu, us", "1", "s"];
