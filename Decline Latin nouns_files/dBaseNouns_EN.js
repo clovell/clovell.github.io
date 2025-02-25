@@ -40,6 +40,7 @@ dBase1[30] = ["copia", "copi", "f", "1", "abundance; (pl.) troops", "copia, -ae"
 dBase1[31] = ["patria", "patri", "f", "1", "fatherland, country", "patria, -ae", "2", "n"];
 dBase1[32] = ["lacrima", "lacrim", "f", "1", "tear", "lacrima, -ae", "2", "n"];
 dBase1[33] = ["gloria", "glori", "f", "1", "glory, fame", "glōria, -ae", "2", "n"];
+/*
 dBase1[34] = ["fuga", "fug", "f", "1", "flight, route", "fuga, -ae", "2", "n"];
 dBase1[35] = ["ara", "ar", "f", "1", "altar", "āra, -ae", "2", "n"];
 dBase1[36] = ["gratia", "grati", "f", "1", "favor, influence, gratitude", "grātia, -ae", "2", "n"];
@@ -83,7 +84,7 @@ dBase1[72] = ["scientia", "scienti", "f", "1", "knowledge", "scientia, -ae", "2"
 dBase1[73] = ["disciplina", "disciplin", "f", "1", "training, instruction; learning, discipline", "disciplīna, -ae", "2", "n"];
 dBase1[74] = ["agricola", "agricol", "m", "1", "farmer", "agricola, -ae", "e", "n"];
 dBase1[75] = ["nauta", "naut", "m", "1", "sailor", "nauta, -ae", "2", "n"];
-
+*/
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 2nd declension
 
@@ -142,6 +143,31 @@ dBase2[44] = ["humus", "hum", "f", "2", "earth, ground, soil", "humus, -ī", "2"
 
 dBase3 = [];
 
+// Limit list to masculine and feminine, just 20 words
+
+dBase3[0] = ["arbor", "arbor", "f", "3a", "tree", "arbor, arboris", "1", "n"];
+dBase3[1] = ["aestas", "aestat", "f", "3a", "summer", "aestas, aestatis", "1", "n"];
+dBase3[2] = ["vox", "voc", "f", "3a", "voice", "vox, vocis", "1", "n"];
+dBase3[3] = ["fragor", "fragor", "m", "3a", "crash, noise", "1", "n"];
+dBase3[4] = ["clamor", "clamor", "m", "3a", "shout, noise", "clamor, clamoris", "1", "n"];
+dBase3[5] = ["mater", "matr", "f", "3b", "mother", "mater, matris", "1", "n"];
+dBase3[6] = ["pater", "patr", "m", "3b", "father", "pater, patris", "1", "n"];
+dBase3[7] = ["princeps", "princip", "m", "3a", "chief, prince", "princeps, principis", "1", "n"];
+dBase3[8] = ["senator", "senator", "m", "3a", "senator", "senātor, senātōris", "1", "n"];
+dBase3[9] = ["urbs", "urb", "f", "3a", "town", "urbs, urbis", "1", "n"];
+dBase3[10] = ["nox", "noct", "f", "3a", "night", "nox, noctis", "1", "n"];
+dBase3[11] = ["parens", "parent", "f", "3a", "parent", "parēns, parentis", "1", "n"];
+dBase3[12] = ["frater", "fratr", "m", "3b", "brother", "frater, fratris", "1", "n"];
+dBase3[13] = ["soror", "soror", "f", "3a", "sister", "soror, sororis", "1", "n"];
+dBase3[14] = ["uxor", "uxor", "f", "3a", "wife", "uxor, uxoris", "1", "n"];
+dBase3[15] = ["canis", "can", "m", "3b", "dog", "canis, canis", "1", "n"];
+dBase3[16] = ["aetas", "aetat", "f", "3a", "age, period", "aetas, aetatis", "2", "n"];];
+dBase3[17] = ["amor", "amor", "m", "3a", "love", "amor, amoris", "2", "n"];
+dBase3[18] = ["arx", "arc", "f", "3a", "stronghold, citadel", "arx, arcis", "2", "n"];
+dBase3[19] = ["mors", "mort", "f", "3a", "death", "mors, mortis", "2", "n"];
+dBase3[20] = ["cervix", "cervic", "f", "3a", "neck", "cervix, cervicis", "2", "n"];
+
+/*
 dBase3[0] = ["urbs", "urb", "f", "3a", "town", "urbs, urbis", "1", "s"];
 dBase3[1] = ["caput", "capit", "n", "3a", "head", "caput, capitis", "3", "n"];
 dBase3[2] = ["civis", "civ", "m", "3b", "citizen", "cīvis, cīvis", "1", "s"];
@@ -354,7 +380,7 @@ dBase3[208] = ["milia", "mili", "n", "3b", "thousands", "milia, milium", "2", "n
 dBase3[209] = ["anguis", "angu", "m", "3b", "snake", "anguis, anguis", "3", "n"];
 dBase3[210] = ["amor", "amor", "f", "3a", "love", "amor, amoris", "1", "s"];
 dBase3[211] = ["amnis", "amn", "m", "3b", "stream, river", "amnis, amnis", "3", "n"];
-
+*/
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 4th declension
 
