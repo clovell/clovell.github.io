@@ -6,7 +6,7 @@
 
 dBase1 = [];
 
-dBase1[0] = ["pictura", "pictur", "f", "1", "pictūra, -ae", "1", "n"];
+dBase1[0] = ["pictura", "pictur", "f", "1", "picture, painting", "pictūra, -ae", "1", "n"];
 dBase1[1] = ["puella", "puell", "f", "1", "girl", "puella, -ae", "1", "n"];
 dBase1[2] = ["villa", "vill", "f", "1", "country house, house", "vīlla, -ae", "1", "n"];
 dBase1[3] = ["Italia", "Ital", "f", "1", "Italy", "Ītalia, -ae", "1", "n"];
