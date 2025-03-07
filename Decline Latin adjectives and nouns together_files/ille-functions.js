@@ -135,7 +135,7 @@ function clearANForm() {
 
 function showANHelp() {
 	var stili = ""
-	var popUpHelp = window.open("AN-help.html", "", stili);
+	var popUpHelp = window.open("nouns-help.html", "", stili);
 }
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ close  pageAN
