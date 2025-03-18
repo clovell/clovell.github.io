@@ -1,0 +1,205 @@
+dBaseIlle = [];
+
+dBaseIlle[0] = "ille";
+dBaseIlle[1] = "illa";
+dBaseIlle[2] = "illud";
+dBaseIlle[3] = "illius";
+dBaseIlle[4] = "illius";
+dBaseIlle[5] = "illius";
+dBaseIlle[6] = "illi";
+dBaseIlle[7] = "illi";
+dBaseIlle[8] = "illi";
+dBaseIlle[9] = "illum";
+dBaseIlle[10] = "illam";
+dBaseIlle[11] = "illud";
+dBaseIlle[12] = "illo";
+dBaseIlle[13] = "illa";
+dBaseIlle[14] = "illo";
+dBaseIlle[15] = "illi";
+dBaseIlle[16] = "illae";
+dBaseIlle[17] = "illa";
+dBaseIlle[18] = "illorum";
+dBaseIlle[19] = "illarum";
+dBaseIlle[20] = "illorum";
+dBaseIlle[21] = "illis";
+dBaseIlle[22] = "illis";
+dBaseIlle[23] = "illis";
+dBaseIlle[24] = "illos";
+dBaseIlle[25] = "illas";
+dBaseIlle[26] = "illa";
+dBaseIlle[27] = "illis";
+dBaseIlle[28] = "illis";
+dBaseIlle[29] = "illis";
+
+/* hic, haec, hoc */
+
+dBaseHic = [];
+
+dBaseHic[0] = "hic";
+dBaseHic[1] = "huius";
+dBaseHic[2] = "huic";
+dBaseHic[3] = "hunc";
+dBaseHic[4] = "hoc";
+dBaseHic[5] = "haec";
+dBaseHic[6] = "huius";
+dBaseHic[7] = "huic";
+dBaseHic[8] = "hanc";
+dBaseHic[9] = "hac";
+dBaseHic[10] = "hoc";
+dBaseHic[11] = "huius";
+dBaseHic[12] = "huic";
+dBaseHic[13] = "hoc";
+dBaseHic[14] = "hoc";
+dBaseHic[15] = "hi";
+dBaseHic[16] = "horum";
+dBaseHic[17] = "his";
+dBaseHic[18] = "hos";
+dBaseHic[19] = "his";
+dBaseHic[20] = "hae";
+dBaseHic[21] = "harum";
+dBaseHic[22] = "his";
+dBaseHic[23] = "has";
+dBaseHic[24] = "his";
+dBaseHic[25] = "haec";
+dBaseHic[26] = "horum";
+dBaseHic[27] = "his";
+dBaseHic[28] = "haec";
+dBaseHic[29] = "his";
+
+/* iste, ista, istud */
+
+dBaseIste = [];
+
+dBaseIste[0] = "iste";
+dBaseIste[1] = "istius";
+dBaseIste[2] = "isti";
+dBaseIste[3] = "istum";
+dBaseIste[4] = "isto";
+dBaseIste[5] = "ista";
+dBaseIste[6] = "istius";
+dBaseIste[7] = "isti";
+dBaseIste[8] = "istam";
+dBaseIste[9] = "ista";
+dBaseIste[10] = "istud";
+dBaseIste[11] = "istius";
+dBaseIste[12] = "isti";
+dBaseIste[13] = "istud";
+dBaseIste[14] = "isto";
+dBaseIste[15] = "isti";
+dBaseIste[16] = "istorum";
+dBaseIste[17] = "istis";
+dBaseIste[18] = "istos";
+dBaseIste[19] = "istis";
+dBaseIste[20] = "istae";
+dBaseIste[21] = "istarum";
+dBaseIste[22] = "istis";
+dBaseIste[23] = "istas";
+dBaseIste[24] = "istis";
+dBaseIste[25] = "ista";
+dBaseIste[26] = "istorum";
+dBaseIste[27] = "istis";
+dBaseIste[28] = "ista";
+dBaseIste[29] = "istis";
+
+/* is, ea, id */
+
+dBaseIs = [];
+
+dBaseIs[0] = "is";
+dBaseIs[1] = "eius";
+dBaseIs[2] = "ei";
+dBaseIs[3] = "eum";
+dBaseIs[4] = "eo";
+dBaseIs[5] = "ea";
+dBaseIs[6] = "eius";
+dBaseIs[7] = "ei";
+dBaseIs[8] = "eam";
+dBaseIs[9] = "ea";
+dBaseIs[10] = "id";
+dBaseIs[11] = "eius";
+dBaseIs[12] = "ei";
+dBaseIs[13] = "id";
+dBaseIs[14] = "eo";
+dBaseIs[15] = "ei";
+dBaseIs[16] = "eorum";
+dBaseIs[17] = "eis";
+dBaseIs[18] = "eos";
+dBaseIs[19] = "eis";
+dBaseIs[20] = "eae";
+dBaseIs[21] = "earum";
+dBaseIs[22] = "eis";
+dBaseIs[23] = "eas";
+dBaseIs[24] = "eis";
+dBaseIs[25] = "ea";
+dBaseIs[26] = "eorum";
+dBaseIs[27] = "eis";
+dBaseIs[28] = "ea";
+dBaseIs[29] = "eis";
+
+/* ipse, ipsa, ipsum */
+
+dBaseIpse = [];
+
+dBaseIpse[0] = "ipse";
+dBaseIpse[1] = "ipsius";
+dBaseIpse[2] = "ipsi";
+dBaseIpse[3] = "ipsum";
+dBaseIpse[4] = "ipso";
+dBaseIpse[5] = "ipsa";
+dBaseIpse[6] = "ipsius";
+dBaseIpse[7] = "ipsi";
+dBaseIpse[8] = "ipsam";
+dBaseIpse[9] = "ipsa";
+dBaseIpse[10] = "ipsum";
+dBaseIpse[11] = "ipsius";
+dBaseIpse[12] = "ipsi";
+dBaseIpse[13] = "ipsum";
+dBaseIpse[14] = "ipso";
+dBaseIpse[15] = "ipsi";
+dBaseIpse[16] = "ipsorum";
+dBaseIpse[17] = "ipsis";
+dBaseIpse[18] = "ipsos";
+dBaseIpse[19] = "ipsis";
+dBaseIpse[20] = "ipsae";
+dBaseIpse[21] = "ipsarum";
+dBaseIpse[22] = "ipsis";
+dBaseIpse[23] = "ipsas";
+dBaseIpse[24] = "ipsis";
+dBaseIpse[25] = "ipsa";
+dBaseIpse[26] = "ipsorum";
+dBaseIpse[27] = "ipsis";
+dBaseIpse[28] = "ipsa";
+dBaseIpse[29] = "ipsis";
+
+dBaseIdem = [];
+
+dBaseIdem[0] = "idem";
+dBaseIdem[1] = "eiusdem";
+dBaseIdem[2] = "eidem";
+dBaseIdem[3] = "eundem";
+dBaseIdem[4] = "eodem";
+dBaseIdem[5] = "eadem";
+dBaseIdem[6] = "eiusdem";
+dBaseIdem[7] = "eidem";
+dBaseIdem[8] = "eandem";
+dBaseIdem[9] = "eadem";
+dBaseIdem[10] = "idem";
+dBaseIdem[11] = "eiusdem";
+dBaseIdem[12] = "eidem";
+dBaseIdem[13] = "eundem";
+dBaseIdem[14] = "eodem";
+dBaseIdem[15] = "eidem";
+dBaseIdem[16] = "eorundem";
+dBaseIdem[17] = "eisdem";
+dBaseIdem[18] = "eosdem";
+dBaseIdem[19] = "eisdem";
+dBaseIdem[20] = "eaedem";
+dBaseIdem[21] = "earundem";
+dBaseIdem[22] = "eisdem";
+dBaseIdem[23] = "easdem";
+dBaseIdem[24] = "eisdem`";
+dBaseIdem[25] = "eadem";
+dBaseIdem[26] = "eorundem";
+dBaseIdem[27] = "eisdem";
+dBaseIdem[28] = "eadem";
+dBaseIdem[29] = "eisdem";
