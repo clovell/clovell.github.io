@@ -1,6 +1,6 @@
 
 
-body {;
+body {
   	background-color: #FCFFED; /* #FFF0B2; --------- #D2E4D2;*/
   	background-image: url('../graphics/roman-mosaic-london-archaeology-discovery.jpg');
   	background-repeat:no-repeat;
@@ -147,6 +147,6 @@ a:active,
 a:hover {text-decoration:underline; color: #002a72;} 
 
 a.imgLink { padding: 3px; }
-a.imgLink:hover {background-color: Snow;
+a.imgLink:hover {background-color: Snow;}
 
 
