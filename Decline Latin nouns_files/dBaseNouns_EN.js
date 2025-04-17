@@ -135,6 +135,15 @@ dBase2[41] = ["gladius", "gladi", "m", "2", "sword", "gladius, -ī", "2", "n"];
 dBase2[42] = ["barbarus", "barbar", "m", "2", "barbarian", "barbarus, -ī", "2", "n"];
 dBase2[43] = ["annus", "ann", "m", "2", "year", "annus, -ī", "2", "n"];
 dBase2[44] = ["humus", "hum", "f", "2", "earth, ground, soil", "humus, -ī", "2", "n"];
+dBase2[45] = ["auxilium", "auxili", "n", "2", "help, assistance", "auxilium, -ī", "2", "n"];
+dBase2[46] = ["baculum", "bacul", "n", "2", "stick, staff", "baculum, -ī", "2", "n"];
+dBase2[47] = ["cisium", "cisi", "n", "2", "two-wheeled charior", "cisium, -ī", "2", "n"];
+dBase2[48] = ["cubiculum", "cubicul", "n", "2", "bedroom", "cubiculum, -ī", "2", "n"];
+dBase2[49] = ["periculum", "pericul", "n", "2", "danger", "pericul, -ī", "2", "n"];
+dBase2[50] = ["plaustrum", "plaustr", "n", "2", "wagon", "plaustrum, -ī", "2", "n"];
+dBase2[51] = ["silentium", "silenti", "n", "2", "silence", "silentium, -ī", "2", "n"];
+dBase2[52] = ["vehiculum", "vehicul", "n", "2", "vehicle", "vehiculum, -ī", "2", "n"];
+dBase2[53] = ["vestigium", "vestigi", "n", "2", "tracks, footprints, traces", "vestigium, -ī", "2", "n"];
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 3rd declension
@@ -146,7 +155,7 @@ dBase3 = [];
 dBase3[0] = ["arbor", "arbor", "f", "3a", "tree", "arbor, arboris", "1", "n"];
 dBase3[1] = ["aestas", "aestat", "f", "3a", "summer", "aestas, aestatis", "1", "n"];
 dBase3[2] = ["vox", "voc", "f", "3a", "voice", "vox, vocis", "1", "n"];
-dBase3[3] = ["fragor", "fragor", "m", "3a", "crash, noise", "1", "n"];
+dBase3[3] = ["fragor", "fragor", "m", "3a", "crash, noise", "fragor, fragoris", "1", "n"];
 dBase3[4] = ["clamor", "clamor", "m", "3a", "shout, noise", "clamor, clamoris", "1", "n"];
 dBase3[5] = ["mater", "matr", "f", "3b", "mother", "mater, matris", "1", "n"];
 dBase3[6] = ["pater", "patr", "m", "3b", "father", "pater, patris", "1", "n"];
@@ -164,6 +173,15 @@ dBase3[17] = ["amor", "amor", "m", "3a", "love", "amor, amoris", "2", "n"];
 dBase3[18] = ["arx", "arc", "f", "3a", "stronghold, citadel", "arx, arcis", "2", "n"];
 dBase3[19] = ["mors", "mort", "f", "3a", "death", "mors, mortis", "2", "n"];
 dBase3[20] = ["cervix", "cervic", "f", "3a", "neck", "cervix, cervicis", "2", "n"];
+
+// add some neuter non i-stem nouns
+
+dBase3[21] = ["iter", "itin", "n", "3a", "journey, way, route", "iter, itineris", "2", "n"];
+dBase3[22] = ["nomen", "nomin", "n", "3a", "name", "nomen, nominis", "2", "n"];
+dBase3[23] = ["onus", "oner", "n", "3a", "burden, load", "onus, oneris", "2", "n"];
+dBase3[24] = ["tempus", "tempor", "n", "3a", "time", "tempus, temporis", "2", "n"];
+dBase3[25] = ["flumen", "flumin", "n", "3a", "river", "flumen, fluminis", "3", "n"];
+dBase3[26] = ["sidus", "sider", "n", "3a", "star; constellation", "sidus, sideris", "3", "n"];
 
 /*
 dBase3[0] = ["urbs", "urb", "f", "3a", "town", "urbs, urbis", "1", "s"];
