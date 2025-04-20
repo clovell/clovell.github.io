@@ -6,6 +6,8 @@ body {
   	background-repeat:no-repeat;
   	background-attachment:fixed;
   	background-position:center top; 
+
+	font-size: min(max(1rem, 4vw), 22px);
   /*
 	background-color: #fff; #D2E4D2;
 	background-image: url('graphics/background-page.jpg');
@@ -21,10 +23,10 @@ caption {
 	text-align: center;
 }
 
-hr {width: 50%}
+hr {width: 75%}
 
 .centeredDiv {
-	width: 900px;
+	width: 75%;
 	margin: 0 auto;
 	padding: 1px;
 	text-align: center;
@@ -48,7 +50,7 @@ hr {width: 50%}
 }
 
 .helpDiv {
-	width: 900px;
+	width: 75%;
 	margin: 0 auto;
 	padding: 20px;
 	background-color: #fff;
@@ -76,7 +78,7 @@ hr {width: 50%}
 }
 
 .smallDiv {
-	width: 500; 
+	width: 50%; 
 	text-align: left;
 	margin-left: auto;
 	margin-right: auto;
@@ -85,6 +87,7 @@ hr {width: 50%}
 }
 
 .centeredTable {
+	font-size: min(max(1rem, 4vw), 22px);
 	text-align: center;
    background-color: #CCDFDF; /*#E8DAD0;*/
    margin-left: auto;
@@ -124,7 +127,12 @@ table.previousAttemptsTable td {width: 100px}
 .wrongColor {color: crimson;}
 .normColor  {color: black;}
 
-
+th, td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+  }
 /*
 a:link {color:#660033; text-decoration:none;}     		 	
 a:visited {color:#660033;}  									
@@ -138,6 +146,6 @@ a:active,
 a:hover {text-decoration:underline; color: #002a72;} 
 
 a.imgLink { padding: 3px; }
-a.imgLink:hover {background-color: Snow;
+a.imgLink:hover {background-color: Snow;}
 
-
+form input{font-size: min(max(1rem, 4vw), 22px);}
