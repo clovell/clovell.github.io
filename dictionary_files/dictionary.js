@@ -73,6 +73,7 @@
                 records.push({ latin: values[0].replace(/"/g, ''), definition: values[1].replace(/"/g, ''), chapter: values[2].replace(/"/g, '') || 'N/A' });
             }
         }
+        console.log(records);
         return records;
     }
 
@@ -361,7 +362,7 @@
             return;
         }
 
-        vocabulary.sort((a, b) => a.latin.localeCompare(b.latin));
+        //vocabulary.sort((a, b) => a.latin.localeCompare(b.latin));
         populateWordWheel();
         updateWordWheelStyles();
 
