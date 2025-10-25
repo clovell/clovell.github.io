@@ -65,7 +65,7 @@
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
                 if (char === '"' && (i === 0 || line[i - 1] !== '\\')) { inQuotes = !inQuotes; } 
-                else if (char === ';' && !inQuotes) { values.push(current.trim()); current = ''; } 
+                else if (char === ';' && !inQuotes) { values.push(current.trim()); current = ''; }
                 else { current += char; }
             }
             values.push(current.trim());
