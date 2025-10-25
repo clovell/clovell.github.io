@@ -351,7 +351,7 @@
         }
         
         try {
-            const response = await fetch('dictionary.csv');
+            const response = await fetch('https://clovell.github.io/dictionary_files/dictionary.csv');
             if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
             const csvText = await response.text();
             vocabulary = parseCSV(csvText);
