@@ -137,11 +137,8 @@
         if (currentSelected) currentSelected.classList.remove('selected');
         
         const selectedLemma = vocabulary.at(wordId);
-        console.log(selectedLemma);
         const newSelectedItem = wordWheel.querySelector(`#${CSS.escape(wordId)}`);
-        //const newSelectedId = wordWheel.querySelector(`li[data-id="${CSS.escape(latinWord)}"]`);
         if (newSelectedItem) {
-            console.log(newSelectedItem);
             newSelectedItem.classList.add('selected');
             newSelectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
