@@ -36,7 +36,8 @@ body {
 }
 #word-wheel-title { padding: 20px; font-size: 1.2em; font-weight: bold; border-bottom: 1px solid var(--border-color); color: var(--accent-color); text-align: center; }
 #word-wheel { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
-#word-wheel li { padding: 12px 20px; cursor: pointer; font-size: 0.95em; border-bottom: 1px solid var(--primary-bg); transition: background-color 0.2s, color 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#word-wheel li { padding: 12px 20px; cursor: pointer; font-size: 0.95em; border-bottom: 1px solid var(--primary-bg); transition: background-color 0.2s, color 0.2s; overflow: hidden; text-overflow: ellipsis; } 
+/*commented out white-space: nowrap; */
 #word-wheel li:hover { background-color: var(--accent-secondary); color: var(--accent-color); }
 #word-wheel li.selected { background-color: var(--accent-color); color: var(--accent-text-color); font-weight: bold; }
 

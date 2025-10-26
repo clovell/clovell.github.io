@@ -59,18 +59,20 @@
         const hasHeader = lines[0].toLowerCase().includes('latin');
         const dataLines = hasHeader ? lines.slice(1) : lines;
         const records = [];
+        var id = 0;
         for (const line of dataLines) {
              if (!line) continue;
             const values = []; let current = ''; let inQuotes = false;
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
                 if (char === '"' && (i === 0 || line[i - 1] !== '\\')) { inQuotes = !inQuotes; } 
-                else if (char === ';' && !inQuotes) { values.push(current.trim()); current = ''; }
+                else if (char === ';' && !inQuotes) { values.push(current); current = ''; }
                 else { current += char; }
             }
-            values.push(current.trim());
+            values.push(current); //removing .trim() to see if that keeps the tab characters
             if (values.length >= 3) {
-                records.push({ latin: values[0].replace(/"/g, ''), definition: values[1].replace(/"/g, ''), chapter: values[2].replace(/"/g, '') || 'N/A' });
+                records.push({ latin: values[0].replace(/"/g, ''), definition: values[1].replace(/"/g, ''), chapter: values[2].replace(/"/g, '') || 'N/A', id: id });
+                id += 1;
             }
         }
         console.log(records);
@@ -82,7 +84,13 @@
         const fragment = document.createDocumentFragment();
         vocabulary.forEach(word => {
             const li = document.createElement('li');
-            li.textContent = word.latin;
+            if (word.latin.startsWith("\t")) {
+                console.log("Found a tab");
+                li.innerHTML = word.latin.replace('\t', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+                console.log(li.textContent);
+            } else {
+                li.textContent = word.latin;
+            }
             li.dataset.latin = word.latin;
             fragment.appendChild(li);
         });
@@ -120,16 +128,17 @@
             });
         });
 
-        updateWordWheelSelection(word.latin);
+        updateWordWheelSelection(word.id);
         searchInput.value = word.latin;
         suggestionsList.style.display = 'none';
         suggestionsList.innerHTML = '';
     }
     
-    function updateWordWheelSelection(latinWord) {
+    function updateWordWheelSelection(wordId) {
         const currentSelected = wordWheel.querySelector('.selected');
         if (currentSelected) currentSelected.classList.remove('selected');
-        const newSelectedItem = wordWheel.querySelector(`li[data-latin="${CSS.escape(latinWord)}"]`);
+        const newSelectedItem = wordWheel.querySelector(`li[data-id="${CSS.escape(wordId)}"`);
+        //const newSelectedId = wordWheel.querySelector(`li[data-id="${CSS.escape(latinWord)}"]`);
         if (newSelectedItem) {
             newSelectedItem.classList.add('selected');
             newSelectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
