@@ -71,11 +71,10 @@
             }
             values.push(current); //removing .trim() to see if that keeps the tab characters
             if (values.length >= 3) {
-                records.push({ latin: values[0].replace(/"/g, ''), definition: values[1].replace(/"/g, ''), chapter: values[2].replace(/"/g, '') || 'N/A', id: id });
+                records.push({ latin: values[0].replace(/"/g, ''), definition: values[1].replace(/"/g, ''), chapter: values[2].replace(/"/g, '') || 'N/A', id: id, searchString: values[0].trim() });
                 id += 1;
             }
         }
-        console.log(records);
         return records;
     }
 
@@ -84,10 +83,9 @@
         const fragment = document.createDocumentFragment();
         vocabulary.forEach(word => {
             const li = document.createElement('li');
+            li.setAttribute("id", word.id);
             if (word.latin.startsWith("\t")) {
-                console.log("Found a tab");
                 li.innerHTML = word.latin.replace('\t', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-                console.log(li.textContent);
             } else {
                 li.textContent = word.latin;
             }
@@ -137,9 +135,13 @@
     function updateWordWheelSelection(wordId) {
         const currentSelected = wordWheel.querySelector('.selected');
         if (currentSelected) currentSelected.classList.remove('selected');
-        const newSelectedItem = wordWheel.querySelector(`li[data-id="${CSS.escape(wordId)}"`);
+        
+        const selectedLemma = vocabulary.at(wordId);
+        console.log(selectedLemma);
+        const newSelectedItem = wordWheel.querySelector(`#${CSS.escape(wordId)}`);
         //const newSelectedId = wordWheel.querySelector(`li[data-id="${CSS.escape(latinWord)}"]`);
         if (newSelectedItem) {
+            console.log(newSelectedItem);
             newSelectedItem.classList.add('selected');
             newSelectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -280,7 +282,7 @@
         const secondaryMatches = [];
 
         vocabulary.forEach(word => {
-            const normalizedLatin = normalizeForSearch(word.latin);
+            const normalizedLatin = normalizeForSearch(word.searchString);
             if (normalizedLatin.startsWith(normalizedSearchTerm)) {
                 primaryMatches.push(word);
             } else if (normalizedLatin.includes(' ' + normalizedSearchTerm)) {
