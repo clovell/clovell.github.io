@@ -72,8 +72,10 @@
                 else { current += char; }
             }
             values.push(current); //removing .trim() to see if that keeps the tab characters
-            records.push({ word: values[0].replace(/"/g, ''), pos: values[1].replace(/"/g, ''), definition: values[2].replace(/"/g, '') || 'N/A', id: id, definition: values[0].trim() });
-            id += 1;
+            if (values.length >= 3) {
+                records.push({ latin: values[0].replace(/"/g, ''), pos: values[1].replace(/"/g, ''), definition: values[2].replace(/"/g, '') || 'N/A', id: id, searchString: values[0].trim() });
+                id += 1;
+            }
         }
         console.log(records);
         return records;
@@ -112,8 +114,8 @@
                 <h2>${word.latin}</h2>
                 ${buttonHtml}
             </div>
-            <p>${word.definition}</p>
-            <div class="chapter">First Appears in Chapter: ${word.chapter}</div>
+            <p><h2>${word.definition}</h2></p>
+            <div class="chapter">Part of speech: ${word.pos}</div>
             <div class="result-footer">
                 ${buttonHtml}
             </div>
