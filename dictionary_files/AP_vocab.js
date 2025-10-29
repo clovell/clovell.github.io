@@ -73,7 +73,7 @@
             }
             values.push(current); //removing .trim() to see if that keeps the tab characters
             if (values.length >= 3) {
-                records.push({ latin: values[0].replace(/"/g, ''), definition: values[1].replace(/"/g, ''), chapter: values[2].replace(/"/g, '') || 'N/A', id: id, searchString: values[0].trim() });
+                records.push({ word: values[0].replace(/"/g, ''), pos: values[1].replace(/"/g, ''), definition: values[2].replace(/"/g, '') || 'N/A', id: id, searchString: values[0].trim() });
                 id += 1;
             }
         }
