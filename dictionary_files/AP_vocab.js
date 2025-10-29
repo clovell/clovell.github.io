@@ -68,14 +68,12 @@
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
                 if (char === '"' && (i === 0 || line[i - 1] !== '\\')) { inQuotes = !inQuotes; } 
-                else if (char === ';' && !inQuotes) { values.push(current); current = ''; }
+                else if (char === ',' && !inQuotes) { values.push(current); current = ''; }
                 else { current += char; }
             }
             values.push(current); //removing .trim() to see if that keeps the tab characters
-            if (values.length >= 3) {
-                records.push({ word: values[0].replace(/"/g, ''), pos: values[1].replace(/"/g, ''), definition: values[2].replace(/"/g, '') || 'N/A', id: id, searchString: values[0].trim() });
-                id += 1;
-            }
+            records.push({ word: values[0].replace(/"/g, ''), pos: values[1].replace(/"/g, ''), definition: values[2].replace(/"/g, '') || 'N/A', id: id, definition: values[0].trim() });
+            id += 1;
         }
         console.log(records);
         return records;
@@ -202,7 +200,7 @@
     function generateTSVContent() {
         return studyList.map(latinWord => {
             const word = vocabulary.find(w => w.latin === latinWord);
-            return word ? [word.latin, word.definition, word.chapter].join('\t') : '';
+            return word ? [word.word, word.pos, word.definition].join('\t') : '';
         }).filter(Boolean).join('\n');
     }
 
