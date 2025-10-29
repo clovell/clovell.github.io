@@ -1,3 +1,6 @@
+"-ne",enclitic,added in a direct question as a question mark to the first or principal word of the clause,3.6,N/A,N/A,0,238
+"-que",enclitic,"and (affixed to a word and joining it with a preceding word), both...and (-que...-que)",1.1,N/A,N/A,0,4
+"-ve",enclitic,"or, or if you will, or as you please",3.4,N/A,N/A,0,307
 "a, ab, abs",preposition,"(with abl.) from, away from, out of, by",1.1,2.1,N/A,21,21
 "abeo, -ire, -ii, -itum",verb,"to go from, go away, go off, go forth, go, depart",1.1,2.2,N/A,3,553
 "absum, abesse, afui",verb,"to be away from, be absent",5.3,N/A,N/A,0,445
@@ -8,8 +11,10 @@
 "accuso, -are, -avi, -atum",verb,"to accuse, blame, find fault; reprimand; charge (w/ a crime)",3.6,N/A,N/A,0,N/A
 "acer, acris, acre",adjective,"sharp, bitter, pointed, piercing, shrill; keen; severe",1.1,2.1,N/A,2,587
 "acies, -ei (f.)",noun,"sharp edge, point; front of an army, battle line; army",5.3,5.3,N/A,2,439
+"ad",preposition,"(with acc.) to, toward",1.1,2.2,N/A,24,14
 "addo, -ere, -didi, -ditum",verb,"to put to, place upon, lay on, join, attach",1.4,2.1,N/A,2,433
 "adeo, -ire, -ii, -itum",verb,"to go to, come to, come up to, approach, draw near",1.2,2.2,N/A,4,595
+"adhuc",adverb,"until now, heretofore, as yet, still, to this point, to this place",1.3,2.2,5.6,8,379
 "adsum (assum), adesse, adfui",verb,"to be at, be present, be at hand",2.4,2.4,N/A,1,279
 "adsurgo (ass-), -ere, -surrexi, -surrectum",verb,"to rise up, rise, stand up",1.4,2.2,N/A,3,N/A
 "adversus, -a, -um",adjective,"turned to, turned against, opposite, before, in front of; unfavorable",1.1,2.2,N/A,3,657
@@ -48,12 +53,15 @@
 "amo, -are, -avi, -atum",verb,to love,5.1,N/A,N/A,0,219
 "amor, -oris (m.)",noun,"love, affection, strong friendly feeling",5.1,5.1,N/A,10,116
 "amplector, -i, amplexus sum",verb,"to twine around, encircle, encompass, embrace",2.4,2.4,N/A,3,N/A
+"an",conjunction,"or, or whether",1.3,2.1,6.1,6,94
 "ancilla, -ae (f.)",noun,enslaved woman,1.3,N/A,N/A,0,N/A
 "angustus, -a, -um",adjective,"narrow, steep, close, confined; scanty, poor; narrowminded, petty",1.3,2.2,N/A,2,N/A
 "anima, -ae (f.)",noun,"air, a current of air, breeze, wind; breath, life, soul",1.4,2.2,N/A,2,493
 "animal, -is (n.)",noun,"animal, living thing",1.4,N/A,N/A,0,547
 "animus, -i (m.)",noun,"soul, intelligence, reason, intellect, mind; courage",1.1,2.1,N/A,10,40
 "annus, -i (m.)",noun,year,2.3,2.3,N/A,8,167
+"ante",preposition/ adverb,"(with acc.) (of space) before, in front, forwards; (of time) before, previously",3.4,3.5,N/A,6,112
+"antea",adverb,"before, before this; formerly, previously, in the past",4.1,N/A,N/A,0,N/A
 "antiquus, -a, -um",adjective,"ancient, former, old, of old times",4.4,4.4,N/A,3,617
 "anxius, -a, -um",adjective,"anxious, uneasy, disturbed; concerned; careful",3.6,3.6,N/A,1,N/A
 "aperio, -ire, -ui, -tum",verb,"to uncover, open, disclose; explain, recount; reveal; establish",1.4,2.2,6.2,4,837
@@ -61,6 +69,7 @@
 "appello (adp-), -are, -avi, -atum",verb,"to call, address, name; request, implore, demand",3.4,N/A,N/A,0,700
 "Appia, -ae (f.)",noun (proper),a Roman female name (nomen – name of a Roman gens),1.1,N/A,N/A,0,N/A
 "appropinquo (adp-), -are, -avi, -atum",verb,"(with dat. or ad + acc.) to approach; come near to, draw near (space/time)",1.3,2.1,N/A,1,N/A
+"apud",preposition,"(with acc.) with, among, at, by, near, at the house of",1.1,2.2,N/A,2,205
 "aqua, -ae (f.)",noun,water,1.2,2.2,N/A,6,272
 "ara, -ae (f.)",noun,"structure for sacrifice, altar",4.6,4.6,N/A,2,374
 "arbor (arbos), -oris (f.)",noun,tree,1.4,2.1,N/A,1,468
@@ -92,10 +101,13 @@
 "aureus, -a, -um",adjective,"of gold, golden; gilded; gleaming like gold; splendid",5.3,5.3,N/A,1,691
 "auris, -is (f.)",noun,ear,3.1,3.1,N/A,3,366
 "aurum, -i (n.)",noun,gold,5.3,5.4,N/A,3,303
+"aut",conjunction,or (introducing an antithesis to what precedes); either…or (aut…aut),1.1,2.1,5.6,29,24
+"autem",conjunction,"but, on the other hand, on the contrary, however",3.4,3.5,N/A,2,123
 "auxilium, -i (n.)",noun,"help, assistance; remedy; supporting resource, force; (pl.) auxiliary troops",4.6,4.6,N/A,2,543
 "avunculus, -i (m.)",noun,"maternal uncle, mother’s brother",2.1,2.1,N/A,8,N/A
 "beatus, -a, -um",adjective,"happy, prosperous, blessed, fortunate",1.4,2.1,N/A,3,408
 "bellum, -i (n.)",noun,war,1.2,4.4,N/A,9,86
+"bene",adverb,well,2.4,2.4,N/A,2,235
 "beneficium, -i (n.)",noun,"favor, benefit, service, kindness",3.4,3.5,N/A,2,182
 "benignus, -a, -um",adjective,"kind, favorable; kindly, mild, affable",3.6,N/A,N/A,0,N/A
 "bibo, -ere, bibi",verb,to drink,4.1,N/A,N/A,0,N/A
@@ -137,8 +149,10 @@
 "cibus, -i (m.)",noun,"food; eating, a meal",1.2,N/A,N/A,0,863
 "cingo, -ere, -xi, -nctum",verb,"to go around, surround, encompass, gird, wreathe, crown",2.4,2.4,N/A,3,814
 "cinis, -eris (m.)",noun,ashes,2.1,2.1,6.1,6,779
+"circum",preposition,"(with acc.) around, about, all around",4.4,4.4,N/A,4,N/A
 "civis, -is (m. or f.)",noun,citizen,4.6,4.6,N/A,1,471
 "civitas, -atis (f.)",noun,"city, state; citizenship",3.4,3.4,N/A,7,346
+"clam",adverb,"secretly; without knowledge of, unknown to",4.6,N/A,N/A,0,N/A
 "clamo, -are, -avi, -atum",verb,"to call, cry out, shout aloud; complain loudly",5.3,N/A,N/A,0,N/A
 "clamor, -is (m.)",noun,"shout, cry; loud shouting; applause; a loud noise, roar; a battle-cry",2.4,2.4,N/A,2,605
 "clarus, -a, -um",adjective,"clear, bright, shining, brilliant",5.1,N/A,N/A,0,395
@@ -169,6 +183,7 @@
 "consumo, -ere, -sumpsi, -sumptum",verb,"to burn up, destroy; reduce, wear away; extinguish, exhaust; devour, consume; spend, squander",6.1,N/A,N/A,0,869
 "contendo, -ere, -tendi, -tentum",verb,"to stretch, draw tight; to draw, bend; to tune; to stretch out for, rush to, travel; be in a hurry; direct",6.2,N/A,N/A,0,N/A
 "contingo, -ere, -tigi, -tactum",verb,"to touch, reach, take hold of, seize",4.4,4.5,N/A,2,494
+"contra",adjective/adverb,"in opposition, opposite, face to face; in turn, in return, back, on the other hand, likewise (with acc.)",2.4,2.4,N/A,4,271
 "conubium, -i (n.)",noun,marriage,5.1,5.1,N/A,3,N/A
 "copia, -ae (f.)",noun,"abundance, ample supply, plenty; (in plural) troops, forces",1.4,2.1,N/A,2,331
 "coquo, -ere, coxi, coctum",verb,"to cook; burn, parch; consider, plan",5.4,5.5,N/A,1,N/A
@@ -176,16 +191,21 @@
 "cornu, -us (n.)",noun,"horn; hoof; beak, claw; bow; horn, trumpet; end, wing of an army",5.4,5.4,N/A,1,591
 "corpus, -oris (n.)",noun,body (living or lifeless),1.2,2.2,N/A,14,75
 "corripio, -ere, -ripui, -reptum",verb,"to seize, snatch up, grasp, collect, take hold of, arrest",2.3,2.3,N/A,5,N/A
+"cotidie",adverb,"daily, every day; day by day; usually, ordinarily, commonly",3.6,3.6,N/A,1,N/A
+"cras",adverb,"tomorrow; after today; hereafter, in the future",3.6,N/A,N/A,0,N/A
 "credo, -ere, -didi, -ditum",verb,"(with dat.) to believe, trust; to confide in, have confidence in",1.3,2.1,N/A,13,109
 "cresco, -ere, crevi, cretum",verb,"to come into being, spring up, arise, be born, grow",2.1,2.1,N/A,3,609
 "crimen, -inis (n.)",noun,"judgment, charge, crime, accusation, reproach",5.4,N/A,N/A,0,475
 "crudelis, -e",adjective,"rude, unfeeling, hard, hard-hearted, cruel, severe, fierce",5.1,5.2,N/A,3,N/A
 "cubiculum, -i (n.)",noun,"bedroom, room",1.1,2.2,N/A,2,N/A
 "culina, -ae (f.)",noun,kitchen,1.2,N/A,N/A,0,N/A
+"cum",conjunction,"when, while, since, although",1.1,2.1,5.6,15,10
+"cum",preposition,"(with abl.) with, together, along with",1.1,2.4,N/A,5,10
 "cunctor, -ari, -atus sum",verb,"to delay, linger, loiter; hesitate, doubt",2.1,2.1,N/A,3,N/A
 "cunctus, -a, -um",adjective,"all together, whole, all, entire",4.6,4.6,N/A,1,292
 "cupiditas, -atis (f.)",noun,"desire, lust, greed, enthusiasm, eagerness, passion",4.1,N/A,N/A,0,N/A
 "cupio, -ere, -ivi, -itum",verb,"to long for, desire, wish",2.3,2.3,N/A,2,441
+"cur",adverb,why? wherefore? for what reason?,5.1,N/A,N/A,0,404
 "cura, -ae (f.)",noun,"trouble, care, concern, attention, pains, industry, diligence, exertion",3.6,3.6,N/A,5,186
 "curo, -are, -avi, -atum",verb,"to care, provide for; be attentive to; take charge of; heal, cure",2.4,2.4,N/A,2,743
 "curro, -ere, cucurri, cursum",verb,"to run, move quickly, travel quickly",1.3,N/A,N/A,0,562
@@ -194,14 +214,17 @@
 "custodio, -ire, -ivi, -itum",verb,"to guard, watch over, keep safe; to take heed, care, observe",4.1,N/A,N/A,0,N/A
 "custos, -odis (m.)",noun,"guard, sentry, protector; doorkeeper, watchman",5.4,5.4,N/A,2,622
 "Danai, -orum (pl.)",noun (proper),"the Danaans, the Greeks",4.4,4.4,N/A,4,N/A
+"de",preposition,"(with abl.) from, away from, down from, out of, about",1.2,2.2,N/A,16,46
 "dea, -ae (f.)",noun,goddess,1.1,4.4,N/A,5,42
 "debeo, -ere, -ui, -itum",verb,"to owe, be in debt; ought, must, should",2.3,2.3,N/A,5,155
 "Decius, -i (m.)",noun (proper),a Roman male name (nomen – name of a Roman gens),1.1,N/A,N/A,0,N/A
 "defendo, -ere, -i, defensum",verb,"to defend, guard, protect, look after; repel, ward off, prevent; support, preserve",3.4,N/A,N/A,0,653
 "defessus, -a, -um",adjective,"worn out, weary, tired; weakened",4.1,N/A,N/A,0,N/A
+"deinde or dein",adverb,"then, next, thereafter, afterward",1.3,2.1,6.1,6,150
 "delecto, -are, -avi, -atum",verb,"to delight, please, amuse, fascinate; charm, lure, entice; enjoy",3.6,3.6,N/A,1,N/A
 "deleo, -ere, -evi, -etum",verb,"to erase, remove, delete; abolish",3.6,N/A,N/A,0,N/A
 "demonstro, -are, -avi, -atum",verb,"to point out/at/to, draw attention to; to explain, describe; reveal, mention, refer to; prove, demonstrate",4.1,N/A,N/A,0,N/A
+"denique",adverb,"finally, in the end; and then",5.6,5.6,N/A,2,796
 "densus, -a, -um",adjective,"thick, close, compact, dense, crowded",2.1,2.1,N/A,3,N/A
 "descendo, -ere, -i, descensum",verb,"to descend, go down; to dismount; to penetrate, sink",2.3,2.3,N/A,1,802
 "desero, -ere, -ui, -tum",verb,"to leave, forsake, abandon, desert, give up",1.2,2.2,6.1,5,544
@@ -224,6 +247,7 @@
 "discipulus, -i (m.)",noun,"student, follower",4.1,N/A,N/A,0,N/A
 "disco, -ere, didici",verb,"to learn, learn to know, acquire, become acquainted with",3.1,3.1,N/A,1,465
 "dissimilis, -e",adjective,"unlike, different, dissimilar",4.6,N/A,N/A,0,N/A
+"diu",adverb,"a long time, long while, long, for a long time",3.1,3.2,N/A,2,361
 "diva, -ae (f.)",noun,goddess,4.4,4.5,N/A,3,N/A
 "dives, -itis",adjective,rich; costly; productive (land); talented,5.1,N/A,N/A,0,564
 "divus, -i (m.)",noun,"god, a deity",4.6,4.6,N/A,5,N/A
@@ -239,19 +263,27 @@
 "dubius, -a, -um",adjective,"moving two ways, doubting, doubtful, dubious, uncertain",2.3,2.3,N/A,3,528
 "duco, -ere, -xi, -ctum",verb,"to lead, conduct, guide, direct, draw, bring, fetch, escort",3.1,3.1,N/A,8,133
 "dulcis, -e",adjective,sweet,5.1,5.1,N/A,4,383
+"dum",conjunction,"while, a while, now, yet; so long as, provided that, if only; until, until that",2.4,2.4,6.1,6,103
 "duo, -ae, -o",adjective,two,1.1,2.2,N/A,3,221
 "durus, -a, -um",adjective,"hard (to the touch); harsh, rough, stern, unyielding, unfeeling",5.3,5.3,N/A,2,249
 "dux, ducis (m.)",noun,"leader, conductor, guide",5.1,5.1,N/A,1,239
+"ecce",interjection,lo! see! behold! there! look!,2.3,2.3,N/A,3,643
 "effundo, -ere, -fudi, -fusum",verb,"to pour out, pour forth, shed, spread abroad",2.4,2.4,N/A,4,719
 "ego, mei, mihi, me, me",pronoun,"I, me",1.1,2.1,N/A,63,11
 "egredior, -gredi, -gressus sum",verb,"to go out, come forth, march out, go away",2.1,2.1,6.2,4,912
 "emo, -ere, emi, emptum",verb,"to buy; gain, acquire",3.1,3.1,N/A,1,N/A
+"enim",conjunction,"for, for instance, namely, that is to say, I mean, in fact",1.2,2.1,5.6,16,57
+"eo",adverb,"there, in that place; to there; therefore, for that reason",3.6,3.6,N/A,1,470
 "eo, ire, ivi or ii, itum",verb,"to go, walk, ride, sail, fly, move, pass",1.3,3.1,N/A,8,97
 "epistula, -ae (f.)",noun,"written communication, letter",1.4,2.2,N/A,5,951
 "eques, -itis (m.)",noun,"horseman, rider; cavalryman, horse-soldier, trooper; member of the Equestrian social class",5.4,5.4,N/A,1,296
+"equidem",adverb,"truly, indeed, certainly, by all means, of course, to be sure",2.1,2.1,6.1,6,N/A
 "equus, -i (m.)",noun,horse,4.6,4.6,N/A,1,248
+"ergo",conjunction,"consequently; therefore, then, so then; because of (with gen.)",1.1,2.2,N/A,2,134
 "eripio, -ere, -ipui, -eptum",verb,"to tear out, snatch away, pluck, tear, take away",1.4,2.1,N/A,4,349
 "erro, -are, -avi, -atum",verb,"to wander, stray, roam; be in error, err, mistake, go wrong, go astray",4.4,4.4,N/A,2,402
+"et",conjunction,"and; also, too, besides, likewise, as well, even; both…and (et…et)",1.1,2.1,N/A,184,1
+"etiam",conjunction,"now too, yet, as yet, even yet, still, even now",1.2,2.1,5.6,20,67
 "ex, e",preposition,"(with abl.) out of, from",1.1,2.1,N/A,21,26
 "excipio, -ere, -cepi, -ceptum",verb,"to take out, withdraw; except, make an exception, stipulate, reserve",5.1,N/A,N/A,0,394
 "excito, -are, -avi, -atum",verb,"to call out, summon forth, bring out, wake, rouse",1.2,2.2,6.2,4,N/A
@@ -263,6 +295,7 @@
 "explico, -are, -avi, atum (or -ui, -itum)",verb,"to unfold, extend; to set forth, explain",5.6,N/A,N/A,0,N/A
 "exspecto or expecto, -are, -avi, -atum",verb,"to look out for, await, wait for",2.4,2.4,N/A,2,442
 "exstinguo or extinguo, -ere, -nxi, -nctum",verb,"to put out, quench, extinguish, destroy",2.4,2.4,N/A,3,N/A
+"extra",adverb,"outside of, beyond, without, beside; except",5.6,N/A,N/A,0,N/A
 "extremus, -a, -um",adjective,"outermost, utmost, extreme, farthest, last",5.1,5.1,N/A,4,385
 "fabula, -ae (f.)",noun,"story, fable; play",1.1,N/A,N/A,0,966
 "facies, -ei (f.)",noun,"appearance, form, figure, shape, build",5.4,N/A,N/A,0,479
@@ -297,11 +330,14 @@
 "for, fari, fatus sum",verb,"to speak, say",4.6,4.6,N/A,3,739
 "forma, -ae (f.)",noun,"form, contour, figure, shape, appearance, looks",1.4,2.1,N/A,3,422
 "formido, -inis (f.)",noun,"fearfulness, fear, terror, dread, awe",1.2,2.2,6.2,3,N/A
+"fortasse",adverb,"perhaps, possibly; it may be",3.4,N/A,N/A,0,833
+"forte",adverb,"by chance, by accident",2.1,2.1,N/A,3,579
 "fortis, -e",adjective,"strong, firm, stout, courageous, brave, valiant, bold, fearless",1.4,2.1,N/A,7,286
 "fortuna, -ae (f.)",noun,"chance, luck, fate, fortune",1.3,2.1,N/A,2,138
 "forum, -i (n.)",noun,"forum, market; the Forum (in Rome); court of justice",3.4,N/A,N/A,0,811
 "frango, -ere, fregi, fractum",verb,"to break (in pieces), dash to pieces, shiver, shatter, fracture",1.4,2.1,N/A,2,345
 "frater, -tris (m.)",noun,brother,2.3,2.3,N/A,3,225
+"frustra",adverb,"in vain; for nothing, to no purpose",3.4,N/A,N/A,0,694
 "fuga, -ae (f.)",noun,"fleeing, flight, running away",1.4,2.1,N/A,6,364
 "fugio, -ere, fugi, fugitum",verb,"to flee, fly, take flight, run away, make off",1.3,2.1,N/A,9,177
 "furor, -oris (m.)",noun,"raving, rage, madness, fury, passion",4.6,4.6,N/A,1,466
@@ -326,12 +362,17 @@
 "haereo, -ere, haesi, haesum",verb,"to stick, adhere, cling to; to hesitate; to be in difficulties",3.1,3.1,N/A,2,N/A
 "Harpocras, -tis (m.)",noun (proper),a Greek male name,3.4,3.5,N/A,3,N/A
 "hasta, -ae (f.)",noun,"staff, rod, pole; spear, javelin",4.6,4.6,N/A,5,N/A
+"haud or haut",adverb,"not, not at all, by no means",5.4,5.5,N/A,1,226
 "haurio, -ire, hausi, haustum",verb,"to draw up, draw out, draw; to drain, drink up, spill, shed",1.3,2.2,6.2,3,N/A
 "Helvia, -ae (f.)",noun (proper),a Roman female name (nomen – name of a Roman gens),1.2,N/A,N/A,0,N/A
 "herba, -ae (f.)",noun,"grass, herb",3.1,3.2,N/A,1,N/A
+"heri",adverb,yesterday,4.1,N/A,N/A,0,N/A
+"hic",adverb,"here, in this place",1.2,4.4,6.2,4,80
 "hic, haec, hoc",pronoun/ adjective,this,1.1,2.1,N/A,53,7
 "hiems, -emis (m.)",noun,"winter; cold, frost; storm, stormy weather",3.6,N/A,N/A,0,803
+"hinc",adverb,"from this place, hence",4.4,4.4,6.2,4,N/A
 "historia, -ae (f.)",noun,"narrative of past events, history",1.4,2.2,N/A,3,N/A
+"hodie",adverb,"today, nowadays; at the present time",4.1,N/A,N/A,0,981
 "homo, -inis (m.)",noun,"human being, man, person",1.2,3.5,N/A,1,88
 "honor (honos), -oris (m.)",noun,"honor, repute, esteem, reputation, praise, distinction",3.1,3.1,N/A,3,290
 "hora, -ae (f.)",noun,hour; time; season,1.2,2.1,N/A,2,664
@@ -340,16 +381,21 @@
 "hortus, -i (m.)",noun,garden; park (pl.),4.1,N/A,N/A,0,N/A
 "hospes, -itis (m.)",noun,"guest, visitor; stranger; host",5.1,5.2,N/A,1,873
 "hostis, -is (m.)",noun,"stranger, foreigner; enemy, foe, public enemy",1.3,4.6,N/A,2,93
+"huc",adverb,"to this place, hither",1.1,2.2,N/A,2,368
 "humanus, -a, -um",adjective,"of man, human",3.1,3.1,N/A,1,355
 "iaceo, -ere, -cui, -citum",verb,"to lie down, be prostrate, lie at rest",1.3,2.1,6.2,4,228
 "iacio, -ere, ieci, iactum",verb,to throw (away); establish; declare,4.1,N/A,N/A,0,899
 "iacto, -are, -avi, -atum",verb,"to throw, cast, hurl",4.4,4.4,N/A,3,N/A
+"iam",adverb,"at the moment, at the present moment, now, already, at this time, just now, at present",1.1,2.1,5.6,34,34
 "ianua, -ae (f.)",noun,"door, entrance",4.1,N/A,N/A,0,N/A
 "iatralipta or -es, -ae (m.)",noun,"doctor, especially one who uses massage and ointments",3.4,3.5,N/A,3,N/A
+"ibi",adverb,"in that place, there; on the spot, then, thereupon",2.1,2.1,6.1,5,619
 "idem, eadem, idem",pronoun/ adjective,the same,1.2,2.3,5.6,10,59
+"igitur",conjunction,"then, therefore, thereupon, accordingly, consequently",3.1,3.1,N/A,1,313
 "ignavus, -a, -um",adjective,"lazy, idle; spiritless; cowardly, faint-hearted; ignoble",4.1,N/A,N/A,0,N/A
 "ignis, -is (m.)",noun,fire,1.3,2.1,N/A,8,151
 "ille, illa, illud",pronoun/ adjective,that,1.1,2.1,N/A,54,8
+"illic",adverb,"in that place, yonder, there",1.2,2.2,N/A,1,396
 "imago, -inis (f.)",noun,"imitation, copy, image, likeness, statue, picture; ghost",3.1,3.1,N/A,5,754
 "immineo (inm-), -ere",verb,"to project over, lean toward, hang down over, overhang, loom (over), threaten",2.1,2.1,N/A,3,N/A
 "immortalis (inm-), -e",adjective,"immortal, undying",1.3,2.1,N/A,1,N/A
@@ -359,11 +405,13 @@
 "impetus, -us (m.)",noun,"attack, assault, onset; violence, fury, rush, force",5.3,N/A,N/A,0,421
 "implico (inp-), -are, -avi, -atum (or -ui, -itum)",verb,"to enfold, involve, entangle, envelop, encircle, embrace, clasp, grasp",3.1,3.1,6.2,4,N/A
 "impono (inp-), -ere, -posui, -positum",verb,"to place upon, set on, impose, establish, introduce, set, place",1.3,2.2,N/A,2,437
+"in",preposition,"(with abl.) in, on; (with acc.) into, to, onto, against",1.1,2.1,N/A,68,5
 "incendium, -i (n.)",noun,"fire; fiery heat; fiery passion, love, hostility; incendiary missile; (pl.) flames",1.4,2.2,N/A,1,N/A
 "incertus, -a, -um",adjective,"not fixed, unsettled, undetermined; hesitating, undecided, doubtful, at a loss",2.1,2.1,N/A,5,N/A
 "incido, -ere, -cidi",verb,"to fall in, fall, light, strike, reach, find the way",2.1,2.1,N/A,3,871
 "incipio, -ere, -cepi, -ceptum",verb,"to take hold, take in hand, begin",2.3,2.3,N/A,4,411
 "incito, -are, -avi, -atum",verb,"to enrage; urge on, incite; inspire",4.6,N/A,N/A,0,N/A
+"inde",adverb,"from that place, from there, thence",3.1,3.1,N/A,2,328
 "induo, -ere, -ui, -utum",verb,"to put on, clothe, cover; to dress oneself in",1.2,2.2,N/A,2,N/A
 "infans, -ntis",adjective,"speechless; (as a noun) little child, infant, baby",2.4,2.4,N/A,4,N/A
 "infelix, -icis",adjective,"unfruitful, not fertile, barren; unfortunate, ill-fated, unhappy, miserable, unlucky",4.6,4.6,N/A,4,N/A
@@ -380,7 +428,12 @@
 "intellego, -ere, -exi, -ectum",verb,to understand; realize,5.3,N/A,N/A,0,512
 "intendo, -ere, -di, -tum",verb,"to stretch out, reach forth, extend",3.1,3.1,N/A,3,895
 "intentus, -a, -um",adjective,"eager, intent, attentive; strict; intense, strenuous; serious",2.3,2.3,N/A,1,N/A
+"inter",preposition,"(with acc.) between, among",1.2,3.5,N/A,9,64
+"interdum",adverb,"sometimes, occasionally, now and then, meanwhile",5.4,5.5,N/A,1,N/A
+"interea",adverb,"meanwhile, in the meantime",2.1,2.1,N/A,3,N/A
 "interficio, -ere, -feci, -fectum",verb,"to kill, destroy",5.4,N/A,N/A,0,699
+"interim",adverb,"meanwhile, in the meantime",1.4,2.2,6.2,3,693
+"intra",preposition,"(with acc.) (of space) within, inside, on the inside; (of time) during; fewer than",1.3,2.2,N/A,1,704
 "intro, -are, -avi, -atum",verb,"to go into, enter",5.1,5.2,N/A,2,766
 "invenio, -ire, -veni, -ventum",verb,"to come upon, find, meet with, light upon",1.1,2.2,N/A,3,316
 "invitus, -a, -um",adjective,"reluctant, unwilling; against one’s will",5.3,N/A,N/A,0,N/A
@@ -389,8 +442,11 @@
 "iratus, -a, -um",adjective,"angry, angered; violent",5.3,N/A,N/A,0,N/A
 "is, ea, id",pronoun/ adjective,"he, she, it; this, that, the",1.1,2.1,N/A,31,13
 "iste, -a, -ud",pronoun/ adjective,"that, this, that of yours",1.2,5.2,6.2,3,81
+"ita",adverb,"in this manner, in such a way, so, thus, accordingly, as has been said",1.3,2.1,6.1,6,120
 "Italia, -ae (f.)",noun (proper),Italy,2.1,4.4,N/A,5,N/A
+"itaque",conjunction,"and so, and thus, and accordingly",3.4,3.5,N/A,1,208
 "iter, itineris (n.)",noun,"a going, walk, way, journey, passage, march, voyage",5.4,5.4,N/A,1,230
+"iterum",adverb,"again, a second time, once more, anew",1.2,2.2,N/A,3,758
 "iubeo, -ere, iussi, iussum",verb,"to order, give an order, bid, tell, command",1.2,2.1,5.6,10,84
 "iudex, -icis (m.)",noun,judge; juror,5.3,N/A,N/A,0,839
 "iugum, -i (n.)",noun,"yoke, collar; height, summit, ridge, chain of mountains",4.4,4.5,N/A,2,335
@@ -400,6 +456,7 @@
 "ius, iuris (n.)",noun,"right, justice, duty, law",3.4,3.5,N/A,3,314
 "iuvenis, -is (m. or f.)",noun,"young person, youth",2.4,2.4,N/A,2,277
 "iuvo, -are, iuvi, iutum",verb,"to help, aid, assist, further, serve, support, benefit, delight, please",1.4,2.1,N/A,1,390
+"iuxta",preposition,"(with acc.) near, close to, next to; on par with, like",5.3,5.3,N/A,1,N/A
 "labor, -i, lapsus sum",verb,"to glide, slide, move, fall, slip, float, pass, flow",5.1,5.1,N/A,3,N/A
 "labor, -oris (m.)",noun,"labor, toil, exertion",2.1,4.4,N/A,3,201
 "laboro, -are, -avi, -atum",verb,"to work; produce; be troubled, sick, oppressed, in distress",6.2,N/A,N/A,0,900
@@ -437,6 +494,7 @@
 "litus, -oris (n.)",noun,"seashore, seaside, beach",1.3,2.1,6.1,8,245
 "Livia, -ae (f.)",noun (proper),a Roman female name (nomen – name of a Roman gens),1.1,N/A,N/A,0,N/A
 "locus or locum, -i (m.)",noun,"place, spot",1.2,2.1,N/A,9,62
+"longe",adverb,"a long way off, far, far off, at a distance",2.4,2.4,N/A,5,400
 "longus, -a, -um",adjective,"long, extended",1.3,2.1,N/A,8,142
 "loquor, -i, locutus sum",verb,"to speak, talk, say, tell, mention, utter",5.1,5.2,N/A,1,310
 "Lucilius, -i (m.)",noun (proper),a Roman male name (nomen – name of a Roman gens),1.2,N/A,N/A,0,N/A
@@ -447,16 +505,19 @@
 "lupus, -i (m.)",noun,wolf,4.1,N/A,N/A,0,N/A
 "lux, lucis (f.)",noun,"light, brightness",5.1,5.1,N/A,1,299
 "machina, -ae (f.)",noun,"machine, engine",4.6,4.6,N/A,3,N/A
+"magis",adverb,"more, in a higher degree, more completely",1.3,2.1,N/A,10,90
 "magister, -i (m.)",noun,"teacher, tutor, master, expert, chief; pilot of a ship",1.4,N/A,N/A,0,933
 "magnus, -a, -um",adjective,"great, large",1.1,2.1,N/A,16,25
 "malo, malle, malui",verb,"to prefer, incline toward, wish rather",1.4,2.1,N/A,2,598
 "malum, -i (n.)",noun,"an evil, mischief, misfortune, calamity",2.1,2.1,N/A,5,N/A
 "malus, -a, -um",adjective,"bad, not good, evil",3.6,N/A,N/A,0,227
+"mane",adverb,in the morning; early in the morning,4.1,N/A,N/A,0,N/A
 "maneo, -ere, -nsi, -nsum",verb,"to stay, remain, abide, wait for, expect",1.4,2.1,N/A,6,357
 "manus, -us (f.)",noun,hand; band (of soldiers),1.2,2.4,N/A,13,48
 "mare, -is (n.)",noun,sea,1.3,2.1,N/A,8,125
 "maritus, -i (m.)",noun,"married man, husband",4.1,N/A,N/A,0,654
 "mater, -tris (f.)",noun,mother,1.3,2.1,N/A,8,127
+"maxime or maxume",adverb,"in the highest degree, especially, exceedingly, very",2.1,2.1,N/A,4,N/A
 "medicus, -i (m.)",noun,"doctor, surgeon",1.2,N/A,N/A,0,N/A
 "medium, -i (n.)",noun,"middle, midst, center, interval, intervening space",3.1,3.2,N/A,3,N/A
 "medius, -a, -um",adjective,"in the middle, in the midst, mid, mean, middle (of)",1.3,2.1,N/A,12,162
@@ -473,11 +534,13 @@
 "metus, -us (m.)",noun,"fear, dread, apprehension, anxiety",1.3,2.1,N/A,10,215
 "meus, -a, -um",adjective,"of me, my, mine, belonging to me, my own",1.1,2.1,N/A,26,41
 "miles, -itis (m.)",noun,soldier,5.4,5.5,N/A,1,161
+"minus",adverb,less,2.3,2.3,N/A,4,N/A
 "mirabilis, -e",adjective,"strange, amazing, marvelous; singular",5.1,5.1,N/A,1,N/A
 "misceo, -ere, miscui, mixtum",verb,"to mix, mingle, intermingle, blend",1.3,2.2,N/A,3,425
 "Misenum, -i (n.)",noun (proper),"Misenum, a town and harbor in Campania",2.1,2.1,N/A,5,N/A
 "miser, -era, -erum",adjective,"wretched, unfortunate, miserable, pitiable, in distress",2.4,2.4,N/A,6,137
 "mitto, -ere, misi, missum",verb,"to send, cause to go, let go, send off, dispatch",3.4,3.4,N/A,4,114
+"modo",adverb,"only, merely, solely, simply, but, no more than",1.3,2.1,N/A,1,152
 "modus, -i (m.)",noun,"measure, extent, quantity; manner, way, mode",2.4,2.4,N/A,2,195
 "moenia, -ium (n. pl.)",noun,"defensive walls, ramparts, bulwarks, city walls",4.4,4.4,N/A,7,593
 "mollis, -e",adjective,"yielding, flexible, supple, soft, tender, delicate, gentle, mild, pleasant",3.4,3.4,N/A,1,356
@@ -490,14 +553,17 @@
 "mors, -tis (f.)",noun,death,1.3,2.1,N/A,7,95
 "mos, moris (m.)",noun,"will, way, habit, manner, fashion, custom, practice",3.1,3.2,N/A,2,181
 "moveo, -ere, movi, motum",verb,"to move, stir, set in motion, shake, disturb, remove",2.3,2.3,N/A,5,192
+"mox",adverb,"soon, directly, presently, then",1.4,2.1,6.1,6,469
 "mulier, -eris (f.)",noun,woman,3.1,3.1,N/A,1,961
 "multitudo, -inis (f.)",noun,"multitude, great number; crowd; rabble, mob",5.1,N/A,N/A,0,733
+"multum",adverb,"much, very much, greatly",2.1,2.1,N/A,3,N/A
 "multus, -a, -um",adjective,"much, great, many",1.1,2.1,N/A,12,43
 "mundus, -i (m.)",noun,"universe, world, heavens, earth",2.4,2.4,N/A,1,350
 "munus, -eris (n.)",noun,"service, office, duty; gift, present",1.4,2.1,N/A,1,276
 "murus, -i (m.)",noun,"wall, city wall",4.6,4.6,N/A,5,508
 "Musonius, -i (m.)",noun (proper),a Roman male name (nomen – name of a Roman gens),1.2,N/A,N/A,0,N/A
 "muto, -are, -avi, -atum",verb,"to move, move away, remove, change",2.4,2.4,N/A,4,315
+"nam or namque",conjunction,"for, you see",1.2,2.1,5.6,11,61
 "narro, -are, -avi, -atum",verb,"to make known, tell, relate, narrate, report, recount, set forth",3.1,3.1,N/A,4,910
 "nascor, -i, natus sum",verb,"to be born, begin life, be produced, proceed, be begotten",3.6,N/A,N/A,0,266
 "natura, -ae (f.)",noun,"nature, natural constitution, property, quality",1.1,2.2,N/A,2,180
@@ -505,16 +571,25 @@
 "nauta, -ae (m.)",noun,sailor,1.1,N/A,N/A,0,N/A
 "navigo, -are, -avi, -atum",verb,to sail; navigate,5.3,N/A,N/A,0,N/A
 "navis, -is (f.)",noun,ship,1.4,2.1,N/A,4,353
+"ne",adverb/ conjunction,"no, not, (+ quidem) not even, that not, lest, so that not",1.2,2.3,5.6,15,47
+"nec or neque",conjunction,"and not, also not, nor; neither...nor (nec/neque...nec/ neque)",1.1,2.1,N/A,24,19
+"necesse",adjective,"necessary, essential; unavoidable, compulsory, inevitable; true",5.3,N/A,N/A,0,773
 "neglego, -ere, -exi, -ectum",verb,"to disregard, neglect, ignore; do nothing about",5.6,N/A,N/A,0,N/A
 "nego, -are, -avi, -atum",verb,"to say no, deny, refuse",1.2,2.2,N/A,3,294
 "negotium, -i (n.)",noun,"work, business, activity, job; pain, trouble, annoyance, distress",5.4,N/A,N/A,0,846
 "nemo, -inis",pronoun,"no man, no one, nobody",3.6,N/A,N/A,0,179
 "nemus, -oris (n.)",noun,"tract of woodland, wood, forest, grove",5.3,5.3,6.2,4,461
 "nescio, -ire, -ivi, -itum",verb,"to not know (how); be ignorant, unfamiliar, unaware, unable",5.6,N/A,N/A,0,525
+"ni",adverb/ conjunction,"not; if not, unless",1.3,N/A,N/A,0,100
 "niger, -gra, -grum",adjective,"black, dark",1.2,2.1,N/A,2,634
+"nihil or nil",pronoun,nothing,1.2,2.2,N/A,5,55
+"nisi",conjunction,"if not, unless, except",1.3,2.1,N/A,4,100
 "nobilis, -e",adjective,"that is known, well-known, famous, noted, celebrated, renowned",5.4,N/A,N/A,0,455
 "nolo, nolle, nolui",verb,"to wish ... not, not to wish; be unwilling, refuse",5.4,N/A,N/A,0,458
 "nomen, -inis (n.)",noun,"a means of knowing, name",5.1,5.1,N/A,5,135
+"non",adverb,"not, by no means, not at all",1.1,2.1,N/A,37,6
+"nondum",adverb,not yet,1.4,2.1,N/A,1,436
+"nonne",adverb,"...right?, ...correct?, ...yes? [indicates a question that expects a “yes” answer]",5.6,N/A,N/A,0,N/A
 "nos, nostrum/nostri, nobis, nos, nobis",pronoun,"we, us",1.2,2.3,N/A,8,51
 "nosco, -ere, novi, notum",verb,"to get knowledge of, become acquainted with, come to know, learn, discern",1.4,2.1,N/A,1,347
 "noster, -stra, -strum",adjective,"our, our own, ours, of us",1.2,2.3,N/A,7,52
@@ -524,18 +599,24 @@
 "nubes, -is (f.)",noun,"cloud, mist, vapor",2.1,2.1,N/A,9,N/A
 "nubila, -orum (n. pl.)",noun,"clouds, rainclouds",2.4,2.4,N/A,3,N/A
 "nullus, -a, -um",adjective,"not any, none, no",1.2,3.1,N/A,3,49
+"num",adverb,"if, whether; now; surely not? [indicates a question that expects a “no” answer]",6.1,N/A,N/A,0,924
 "numen, -inis (n.)",noun,"nod; command, authority, divine will; divinity, deity",3.1,3.1,N/A,3,452
 "numero, -are, -avi, -atum",verb,"to count, reckon, number",6.2,N/A,N/A,0,N/A
 "numerus, -i (m.)",noun,number,1.4,2.1,N/A,1,338
+"numquam",adverb,"at no time, never",3.6,3.6,N/A,3,251
+"nunc",adverb,"now, at present, at this time",1.2,2.2,N/A,17,50
 "nuntio, -are, -avi, -atum",verb,"to announce, report, give warning; convey, deliver",2.4,2.4,N/A,1,N/A
 "nuntius, -i (m.)",noun,"announcement, message; messenger",2.4,2.4,N/A,1,919
 "nympha, -ae (f.)",noun,"nymph (a demi-goddess who inhabits the sea, rivers, fountains, woods, trees, and mountains)",5.1,5.1,N/A,3,N/A
+"o",interjection,O! oh!,4.4,4.5,N/A,6,N/A
+"ob",preposition,"(with acc.) on account of, for, because of, by reason of, for the sake of",2.1,4.4,N/A,2,449
 "obscurus, -a, -um",adjective,"dark, dusky, shady, obscure",3.1,3.1,N/A,3,N/A
 "occido, -ere, -cidi, -casum",verb,"to fall down, fall",2.1,2.1,N/A,3,N/A
 "occupo, -are, -avi, -atum",verb,"to take into possession, seize, occupy, master, win",5.4,N/A,N/A,0,472
 "occurro (obc-), -ere, -curri (or -cucurri), -cursum",verb,"(with dat.) to run to meet; to oppose, resist; to come to mind, occur",3.1,3.1,N/A,1,677
 "oculus, -i (m.)",noun,eye,1.3,2.1,N/A,14,206
 "odium, -i (n.)",noun,"hate, dislike, unpopularity",5.6,5.7,N/A,1,522
+"olim",adverb,"formerly; once, once upon a time; in the future",4.4,4.4,N/A,1,574
 "omnis, -e",adjective,"all, every",1.1,2.1,N/A,24,18
 "operio, -ire, -ui, -ertum",verb,"to cover, cover over",1.4,2.2,6.2,4,N/A
 "oppidum, -i (n.)",noun,town,2.3,2.3,N/A,2,635
@@ -551,14 +632,17 @@
 "os, oris (n.)",noun,mouth; (in general) face,4.4,4.5,6.1,8,147
 "ostendo, -ere, -di, ostentum",verb,"to stretch out, spread before, show, point out, exhibit, display",3.1,3.2,N/A,1,371
 "otium, -i (n.)",noun,"leisure; spare time; holiday; ease, rest, peace, quiet, calm",2.3,2.3,N/A,2,715
+"paene",adverb,"nearly, almost; mostly",3.4,N/A,N/A,0,944
 "Pallas, -antis (m.)",noun (proper),"Pallas, son of Evander",5.6,5.7,N/A,3,N/A
 "palma, -ae (f.)",noun,"palm, flat hand; palm tree, palm",4.4,4.5,N/A,3,N/A
 "panis, -is (m.)",noun,bread,4.1,N/A,N/A,0,N/A
 "par, paris",adjective,equal,3.4,3.5,N/A,1,281
 "parco, -ere, peperci, parsum",verb,"(with dat.) to act sparingly, be sparing, spare, refrain from, use moderately",5.3,5.3,N/A,1,412
 "parens, -entis (m. or f.)",noun,"procreator, father, mother, parent",2.4,2.4,N/A,4,190
+"pariter",adverb,"equally, in an equal degree, in like manner, as well, as much, alike",4.6,4.6,N/A,3,N/A
 "paro, -are, -avi, -atum",verb,"to prepare, make ready, furnish, provide; arrange, order, design",5.1,5.1,N/A,3,160
 "pars, partis (f.)",noun,"part, piece, portion, share, division, section",1.2,2.3,N/A,7,65
+"parum",adverb,"too little, not enough, insufficiently",2.4,2.4,N/A,1,204
 "parvus, -a, -um",adjective,"little, small, petty, puny, inconsiderable",4.6,4.6,N/A,3,143
 "pater, -tris (m.)",noun,father,1.2,4.4,N/A,6,71
 "patior, -i, passus sum",verb,"to bear, support, undergo, suffer, endure, allow",2.3,2.3,6.1,6,185
@@ -573,6 +657,7 @@
 "pecunia, -ae (f.)",noun,money; property,3.6,N/A,N/A,0,530
 "pello, -ere, pepuli, pulsum",verb,"to beat; to push; to drive out, banish, strike, defeat, drive away",4.1,N/A,N/A,0,563
 "pendeo, -ere, pependi",verb,"to hang, hang down, be suspended",4.4,4.5,6.2,4,N/A
+"per",preposition,"(with acc.) through, across, along, among",1.1,2.2,N/A,36,30
 "perdo, -ere, -didi, -ditum",verb,"to destroy, make away with, ruin, squander, throw away, waste, lose",3.4,3.4,N/A,1,488
 "pereo, -ire, -ii (or -ivi), -itum",verb,"to pass away, come to nothing, vanish, disappear, perish, die",2.3,2.3,N/A,2,268
 "periculosus, -a, -um",adjective,dangerous; threatening,4.1,N/A,N/A,0,N/A
@@ -601,6 +686,9 @@
 "portus, -us (m.)",noun,"port, harbor; refuge, haven",5.3,N/A,N/A,0,N/A
 "posco, -ere, poposci",verb,"to ask urgently, beg, demand, request, desire",1.4,2.1,6.2,4,487
 "possum, posse, potui",verb,"to be able, have power, can",1.1,2.1,N/A,16,23
+"post",preposition/ adverb,"(with acc.) (of space) behind, after; (of time) behind, afterward, after, later",2.4,2.4,N/A,4,164
+"postea",adverb,afterward,1.3,2.1,N/A,2,964
+"postquam or post quam",adverb,"after that, after, as soon as, when",3.1,3.2,N/A,2,384
 "potens, -entis",adjective,"powerful, strong; capable; mighty",5.4,5.4,N/A,2,567
 "potestas, -atis (f.)",noun,"power, rule, force; strength, ability",3.4,N/A,N/A,0,737
 "praemium, -i (n.)",noun,"prize, reward; gift; repayment",5.4,N/A,N/A,0,680
@@ -608,13 +696,21 @@
 "praesto, -are, -iti, -atum (or -itum)",verb,"to stand out, be superior, be better; exhibit, fulfill",5.3,N/A,N/A,0,423
 "precor, -ari, -atus",verb,"to ask, beg, entreat, pray, request, call upon",2.4,2.4,N/A,2,492
 "premo, -ere, -essi, -essum",verb,"to press, repress, oppress, restrain",2.3,2.3,N/A,4,240
+"primum",adverb,"at first, first, in the first place, in the beginning",4.6,4.6,N/A,3,252
 "primus, -a, -um",adjective,"the first, first",1.3,2.3,N/A,15,91
 "princeps, -cipis (m.)",noun,"first man, first person; chief, leader, ruler, emperor",3.4,3.5,N/A,1,317
 "princeps, -cipis",adjective,"first in order, foremost, chief",5.1,N/A,N/A,0,317
 "prior, prius",adjective,"former, previous, prior, first",3.1,3.2,N/A,3,526
+"prius",adverb,"sooner, first, previously",5.4,N/A,N/A,0,484
+"priusquam or prius quam",adverb,"before that, before; sooner, rather",5.4,N/A,N/A,0,484
+"pro",preposition,"(with abl.) before, in front of, for",3.4,3.5,N/A,8,128
+"procul",adverb,"in the distance, at a distance, away, apart, far, far off",1.4,2.1,N/A,2,397
 "proelium, -i (n.)",noun,"battle, combat",5.4,5.4,N/A,3,348
 "proficiscor, -i, -fectus sum",verb,"to set out, start, go, march, depart",2.3,2.3,N/A,3,335
+"prope",preposition,"(with acc.) near, near to",3.6,N/A,N/A,0,189
 "propero, -are, -avi, -atum",verb,"to make haste, hasten, be quick, be in haste, go quickly",1.4,2.1,N/A,3,537
+"propius",adverb,"more nearly, more closely, nearer, closer",2.1,2.1,N/A,3,N/A
+"propter",preposition,"(with acc.) near, close to; because of, on account of",1.3,2.2,6.2,3,560
 "prosum, prodesse, profui",verb,"(with dat.) to be useful, be of use, do good, benefit, profit, serve",5.1,N/A,N/A,0,373
 "provincia, -ae (f.)",noun,province; official duty,5.6,N/A,N/A,0,620
 "proximus or proxumus, -a, -um",adjective,"nearest, next",2.1,2.1,N/A,4,N/A
@@ -629,18 +725,34 @@
 "pumex, -icis (f.)",noun,pumice stone,2.1,2.1,N/A,3,N/A
 "punio, -ire, -ivi, -itum",verb,"to punish, inflict punishment; avenge, extract retribution",4.1,N/A,N/A,0,N/A
 "puto, -are, -avi, -atum",verb,"to believe, think, suppose; clean, trim",1.3,2.1,N/A,4,166
+"qua",adverb,"on which side, at which place, in what direction, where, by what way",3.1,3.2,N/A,2,336
 "quaero, -ere, quaesivi (or -ii), quaesitum",verb,"to seek, look for",5.1,5.1,N/A,2,113
 "qualis, -e",adjective,"of what sort, of what nature, what kind of a; of such a sort, kind, or nature, such as, as",2.4,2.4,N/A,7,263
+"quam",adverb,"in what manner, how greatly, how, how much; as, than; after than, earlier than",1.1,2.1,5.6,8,29
+"quamquam",conjunction,"though, although, albeit, notwithstanding that",2.1,2.1,6.1,7,644
+"quamvis",adverb/ conjunction,"as you will, as much as you will, however much, as much as possible, very much, extremely",1.4,2.1,N/A,2,489
+"quando",adverb/ conjunction,"when, since, because",3.4,N/A,N/A,0,621
 "quantus, -a, -um",adjective,"of what size, how much, how great; as (correl. with tantus)",5.1,N/A,N/A,0,311
+"quasi",adverb,"as if, just as if, as though",2.1,2.1,N/A,8,938
+"quater",adverb,four times,4.4,4.5,N/A,3,N/A
 "qui, quae, quod",pronoun/ adjective,"who, which, that",1.1,2.1,N/A,96,3
+"quia",conjunction,"because, since",1.3,2.1,6.1,6,132
 "quicumque, quaecumque, quodcumque",pronoun/ adjective,"whoever, whatever, whatsoever, everyone who, everything that, all that",5.4,5.5,N/A,1,284
 "quidam, quaedam, quoddam (or quiddam)",pronoun/ adjective,"certain, certain one, somebody, one, something",1.3,2.1,N/A,3,126
+"quidem",adverb,"assuredly, certainly, in fact, indeed",1.4,2.2,5.6,9,136
 "quiesco, -ere, quievi, quietum",verb,"to rest, repose, keep quiet, be inactive, be at peace",1.2,2.2,6.1,5,969
+"quin",conjunction,"why not; but, indeed, really, in fact",5.1,5.2,N/A,1,456
+"quippe",adverb/ conjunction,"of course, as you see, obviously, as one might expect, naturally, by all means",5.4,N/A,N/A,0,499
 "quis, qua, quid",pronoun/ adjective,"anyone, anything, someone, something (often with si, ne, num, or nisi)",3.1,3.1,N/A,3,N/A
 "quis, quid",pronoun/ adjective,"who, what",2.3,2.3,N/A,21,212
 "quisquam, quaequam, quicquam (or quidquam)",pronoun/ adjective,"any, anyone",1.1,5.2,N/A,1,12
 "quisque, quaeque, quidque (or quodque or quicque)",pronoun/ adjective,"whoever it be, whatever, each, each one, every, everybody, everyone",3.6,3.6,N/A,1,197
 "quisquis, quaeque, quodquod (or quidquid or quicquid)",pronoun/ adjective,"whoever, whosoever, whatever, whatsoever, everyone who, each, every, all",2.4,2.4,N/A,2,129
+"quo",adverb,"to where, in where, where; for which reason, to what end, why, in order that, so that",1.4,2.1,N/A,2,305
+"quod",conjunction,"that, in that, because, but, though",2.4,2.4,6.1,5,N/A
+"quomodo",adverb,"how, in what way; just as",3.4,N/A,N/A,0,831
+"quoque",conjunction,"also, too",1.2,3.1,6.1,5,76
+"quot",adjective,"how many, as many as, as many...as (tot...quot)",4.1,N/A,N/A,0,N/A
 "quotus, -a, -um",adjective,"which (in number), what, of what number",4.1,N/A,N/A,0,N/A
 "rapio, -ere, -pui, -ptum",verb,"to seize and carry off, snatch, tear, drag, hurry away",2.1,4.4,N/A,1,273
 "ratio, -onis (f.)",noun,"reason, understanding; calculation, computation",1.1,2.2,N/A,3,256
@@ -665,10 +777,12 @@
 "Roma, Romae (f.)",noun (proper),(the city of) Rome,1.1,N/A,N/A,0,N/A
 "Romanus, -a, -um",adjective,"of Rome, Roman",3.4,3.5,N/A,7,N/A
 "rumpo, -ere, rupi, ruptum",verb,"to break, burst, tear, rupture, burst in pieces, force open",2.3,2.3,N/A,2,480
+"rursus or rursum",adjective/adverb,"turned back, back, backwards; back again, again, once more",1.2,2.2,5.6,10,440
 "rusticus, -a, -um",adjective,"country, rural; plain, simple, rustic; provincial, unrefined",4.1,N/A,N/A,0,N/A
 "sacer, -cra, -crum",adjective,"dedicated, consecrated, devoted, sacred",4.6,4.6,N/A,3,398
 "sacrificium, -i (n.)",noun,"sacrifice, offering to a deity",4.1,N/A,N/A,0,N/A
 "saeculum or saeclum, -i (n.)",noun,"generation, age, people of any time",3.4,3.4,N/A,3,776
+"saepe",adverb,"often, oft, oftentimes, many times, frequently",3.4,3.5,N/A,3,145
 "saevus, -a, -um",adjective,"raging, mad, furious, fierce, savage, ferocious, cruel, violent, severe",2.1,4.4,N/A,6,244
 "salio, -ire, salui, saltum",verb,"to leap, jump; move suddenly",4.1,N/A,N/A,0,N/A
 "salus, -utis (f.)",noun,"soundness, health, good health, vigor, safety",1.4,2.1,6.1,7,549
@@ -677,6 +791,7 @@
 "sanus, -a, -um",adjective,"sound, healthy; sensible; sober, sane",4.6,N/A,N/A,0,946
 "sapiens, -entis",adjective,"wise, knowing, sensible",5.4,N/A,N/A,0,453
 "sapientia, -ae (f.)",noun,"wisdom; judgment, understanding; reason, intelligence",5.1,N/A,N/A,0,797
+"satis or sat",adjective/adverb,"enough, sufficient, satisfactory, ample, adequate",5.1,N/A,N/A,0,341
 "saxum, -i (n.)",noun,"large stone, broken rock, boulder, rock",5.6,5.7,N/A,1,306
 "scelestus, -a, -um",adjective,"infamous, wicked; accursed",5.3,N/A,N/A,0,N/A
 "scelus, -eris (n.)",noun,"wicked deed, heinous act, crime, sin, wickedness",4.6,4.6,N/A,1,154
@@ -684,9 +799,11 @@
 "scientia, -ae (f.)",noun,"knowledge, science; skill",3.1,3.2,N/A,1,971
 "scio, -ire, -ivi, -itum",verb,"to know, understand, perceive, have knowledge of, be skilled in",1.3,2.2,6.1,5,172
 "scribo, -ere, scripsi, scriptum",verb,"to write, write out, compose, draw up, produce",2.1,2.1,N/A,12,568
+"sed",conjunction,"but, on the contrary, but also, but even, but in fact",1.1,2.1,N/A,20,20
 "sedeo, -ere, sedi, sessum",verb,"to sit, remain, settle",2.3,2.3,N/A,3,506
 "sedes, -is (f.)",noun,"seat, bench, chair, throne; place, spot; (pl.) dwelling-place, palace",1.4,2.2,6.1,5,403
 "sella, -ae (f.)",noun,"seat, stool, chair; chair of an official",5.3,N/A,N/A,0,N/A
+"semper",adverb,"ever, always, at all times, continually, perpetually, forever",1.3,2.1,N/A,1,149
 "senator, -oris (m.)",noun,senator,5.6,N/A,N/A,0,N/A
 "senatus, -us (m.)",noun,"council of elders, council of state, Senate",5.1,N/A,N/A,0,329
 "senex, senis (m.)",noun,old man,3.1,3.1,N/A,1,558
@@ -698,13 +815,18 @@
 "servo, -are, -avi, -atum",verb,"to make safe, save, preserve, guard, keep, protect, rescue",5.4,5.4,N/A,1,289
 "servus, -i (m.)",noun,enslaved man,1.3,N/A,N/A,0,496
 "severus, -a, -um",adjective,"stern, strict, severe; weighty, serious; plain",5.6,N/A,N/A,0,N/A
+"si",conjunction,if,1.1,2.1,N/A,26,16
+"sic",adverb,"so, thus, in this manner, in such a manner, in the same way or manner, in like manner, likewise",1.2,4.4,N/A,6,79
 "sidus, -eris (n.)",noun,"group of stars, constellation, heavenly body, star",4.4,4.5,N/A,10,359
 "significo, -are, -avi, -atum",verb,"to signify, indicate, show",3.1,3.2,N/A,1,N/A
 "signum, -i (n.)",noun,"mark, token, sign, indication, proof; military standard, banner",3.1,3.2,N/A,3,261
 "silva, -ae (f.)",noun,"woods, forest, woodland",5.3,5.3,N/A,1,234
 "similis, -e",adjective,"like, resembling, similar",1.1,2.2,N/A,6,414
+"simul",adverb,"at the same time, together, at once, simultaneously",3.6,3.6,N/A,3,274
+"sine",preposition,(with abl.) without,3.4,3.5,N/A,2,104
 "sinister, -tra, -trum",adjective,"(on the) left, improper, adverse; inauspicious",6.1,N/A,N/A,0,N/A
 "sinus, -us (m.)",noun,"bent surface, curve, fold, hollow, coil; lap; bay, gulf",1.4,2.1,N/A,2,478
+"sive or seu",conjunction,or if,3.1,3.1,N/A,3,362
 "socius, -a, -um",adjective,"sharing, joining in, united, associated, allied, fellow, common",5.4,5.5,N/A,1,372
 "sol, solis (m.)",noun,sun,1.4,2.1,N/A,3,320
 "soleo, -ere, -ui, -itum",verb,"to be used, be wont, be accustomed",2.3,2.3,N/A,3,246
@@ -726,6 +848,7 @@
 "spes, spei (f.)",noun,hope,2.4,2.4,N/A,3,232
 "spiritus, -us (m.)",noun,"breathing, breath",2.1,2.1,N/A,4,703
 "spiro, -are, -avi, -atum",verb,"to breathe; blow, breathe out, exhale; live",5.3,5.3,N/A,1,N/A
+"statim",adverb,"straightaway, at once, immediately, instantly",1.4,2.2,N/A,4,798
 "statua, -ae (f.)",noun,statue; image,4.1,N/A,N/A,0,N/A
 "sterno, -ere, stravi, stratum",verb,"to spread out, stretch out, scatter; cover; overthrow, lay low, kill",2.4,2.4,N/A,3,N/A
 "stilus, -i (m.)",noun,"pen, stylus used for writing on wax tablets",3.1,3.1,N/A,3,N/A
@@ -735,13 +858,17 @@
 "studeo, -ere, -ui",verb,"(with dat.) to desire, be eager for; apply oneself to; strive after; to study",1.1,2.1,N/A,2,989
 "studium, -i (n.)",noun,"application, zeal, eagerness, inclination, desire, exertion, study",2.3,2.3,N/A,3,450
 "stultus, -a, -um",adjective,"foolish, stupid",4.1,N/A,N/A,0,N/A
+"sub",preposition,"(with abl.) under, below, beneath, underneath, behind; (with acc.) under, below, beneath, up to, toward",2.1,2.2,N/A,12,118
+"subito",adverb,"suddenly, immediately, unexpectedly, at once",4.4,4.5,N/A,3,848
 "subsisto, -ere, -stiti",verb,"to take a stand, take position, stand still, remain standing, stop, halt",1.2,2.2,6.2,3,N/A
 "sum, esse, fui",verb,to be,1.1,2.1,N/A,90,2
 "summus, -a, -um",adjective,"uppermost, highest, topmost; chief, main",3.1,3.1,N/A,8,N/A
 "sumo, -ere, sumpsi, sumptum",verb,"to take, take up, take in hand, lay hold of, assume",3.6,3.6,N/A,2,454
+"super",preposition,"(with acc. and abl.) above, on top, over",1.1,2.2,N/A,5,401
 "superbus, -a, -um",adjective,"haughty, proud, vain, arrogant, insolent, domineering",4.4,4.4,N/A,3,656
 "supero, -are, -avi, -atum",verb,"to overcome, conquer; survive; surpass, be above, have the upper hand",4.6,4.6,N/A,2,668
 "superus, -a, -um",adjective,"that is above, upper, higher; (pl.) the gods",1.3,5.5,N/A,1,99
+"supra",adverb,"above, beyond; over; more than; in charge of, in authority over",5.4,5.4,N/A,1,588
 "surgo, -ere, surrexi, surrectum",verb,"to rise, arise, get up, stand up",1.3,2.2,N/A,5,570
 "suspendo, -ere, -di, suspensum",verb,"to hang up, hang, suspend",2.4,2.4,N/A,5,N/A
 "sustineo, -ere, -tinui, -tentum",verb,"to hold up, hold upright, uphold, bear up, keep up, support, sustain",3.4,3.4,N/A,3,762
@@ -751,7 +878,13 @@
 "taceo, -ere, -cui, -citum",verb,"to be silent, not speak, say nothing",5.1,N/A,N/A,0,369
 "tacitus, -a, -um",adjective,"silent, not spoken of, kept secret, secret, hidden",2.3,2.3,N/A,3,N/A
 "talis, -e",adjective,"such, of such a kind, such like, the like",4.4,4.5,6.1,7,203
+"tam",adverb,"in such a degree, as much, so, so much",1.3,5.1,N/A,2,96
+"tamen",adverb,"notwithstanding, nevertheless, for all that, however, yet, still",1.2,2.1,5.6,15,58
+"tamquam or tanquam",adverb,"as much as, so as, just as, like as, as if, so to speak",2.4,2.4,N/A,1,363
+"tandem",adverb,"at length, at last, in the end, finally",2.4,2.4,6.2,4,427
 "tango, -ere, tetigi, tactum",verb,"to touch, strike; border on; influence; mention",5.6,5.7,N/A,1,534
+"tantum modo",adverb,"only, merely",3.6,N/A,N/A,0,216
+"tantum",adverb,"so much, so greatly; only, merely, but",3.4,3.4,N/A,3,216
 "tantus, -a, -um",adjective,"of such size, of such a measure, so great, such, as great (correl. with quantus)",1.3,2.1,5.6,12,105
 "tardus, -a, -um",adjective,slow; deliberate; late,3.4,N/A,N/A,0,738
 "tectum, -i (n.)",noun,"building, shelter, house, dwelling, roof",1.4,2.2,N/A,9,386
@@ -778,30 +911,39 @@
 "toga, -ae (f.)",noun,toga,4.1,N/A,N/A,0,N/A
 "tollo, -ere, sustuli, sublatum",verb,"to lift, take up, raise, elevate, exalt",1.4,2.1,5.6,9,293
 "torqueo, -ere, torsi, tortum",verb,"to turn, turn about, turn away, twist, bend, wind",2.3,2.3,6.2,4,N/A
+"tot",pronoun,"so many, such a number of, as many...as (tot...quot)",2.1,4.4,6.1,6,259
 "totus, -a, -um",adjective,"all, all the, all at once, whole, entire, total",1.2,3.1,N/A,6,78
 "trado, -ere, -didi, -ditum",verb,"to give up, hand over, deliver, surrender",1.4,2.1,N/A,1,297
 "traho, -ere, traxi, tractum",verb,"to draw, drag, haul, draw off, pull forth, drag away",4.4,4.5,N/A,2,213
 "Traianus, -i (m.)",noun (proper),"Trajan, a Roman emperor",3.4,3.4,N/A,5,N/A
+"trans",preposition,"(with acc.) across, over; beyond; on the other side",1.1,N/A,N/A,0,N/A
 "transeo, -ire, -ii, -itum",verb,"to go over, go across, cross over, pass over, pass by, pass",5.6,5.7,N/A,1,431
 "tremor, -oris (m.)",noun,"shaking, quaking, quivering, trembling, tremor",1.3,2.2,N/A,4,N/A
 "tristis, -e",adjective,"sad, mournful, dejected, gloomy, downcast",3.1,3.1,N/A,4,275
 "Troia, -ae (f.)",noun (proper),"Troy, a city of Asia Minor",4.4,4.4,N/A,7,N/A
 "Troianus, -a, -um",adjective,"of Troy, Trojan",4.4,4.4,N/A,4,N/A
 "tu, tui, tibi, te, te",pronoun,you (singular),1.1,2.1,N/A,48,9
+"tum",adverb,"then, at that time, in those times",1.2,2.2,5.6,12,56
 "tumultus, -i (m.)",noun,"(a) commotion, confusion, uproar; rebellion, uprising, disturbance",4.1,N/A,N/A,0,N/A
+"tunc",adverb,"then, at that time, just then, on that occasion",1.2,2.2,N/A,3,56
 "turba, -ae (f.)",noun,"turmoil, riot, disturbance; crowd, multitude",2.4,2.4,N/A,2,323
 "Turnus, -i (m.)",noun (proper),"Turnus, prince of the Rutuli and enemy of Aeneas",5.4,5.4,N/A,5,N/A
 "turpis, -e",adjective,"ugly, unsightly, unseemly, repulsive, foul, filthy; shameful, disgraceful",5.1,5.1,N/A,1,377
 "tutus, -a, -um",adjective,"guarded, safe, secure, out of danger",5.1,5.1,N/A,1,365
 "tuus, -a, -um",adjective,"your, yours, of you (singular)",1.2,2.1,N/A,26,44
+"ubi",adverb,"in which place, in what place, where; when, whenever, as soon as, as",1.3,2.2,5.6,10,92
+"ubique",adverb,"anywhere, everywhere",3.1,3.1,N/A,1,N/A
 "ullus, -a, -um",adjective,"any, any one",1.3,2.1,6.1,5,178
 "ultimus, -a, -um",adjective,"farthest, most distant, most remote, uttermost, extreme, last",4.6,4.6,N/A,2,432
 "umbra, -ae (f.)",noun,"shade, ghost, shadow",5.1,5.1,N/A,5,257
 "umerus (humerus), -i (m.)",noun,"upper arm, shoulder",4.4,4.5,6.1,6,N/A
+"umquam",adverb,"at any time, ever",4.6,4.6,N/A,2,482
 "unda, -ae (f.)",noun,"wave, billow",4.4,4.5,N/A,6,207
+"unde",adverb,"from which place, from where, whence",1.4,2.1,N/A,2,300
 "unus, -a, -um",adjective,"one, single; alone, only, sole; a, an",1.2,2.2,N/A,6,53
 "urbs, urbis (f.)",noun,"walled town, city, city of Rome",1.2,2.1,N/A,14,82
 "usus, -us (m.)",noun,"use, practice, employment, exercise, enjoyment",5.3,N/A,N/A,0,446
+"ut or uti",adverb/ conjunction,"how, in what way; as, like; when; that, so that",1.1,2.1,5.6,38,15
 "uterque, utraque, utrumque",pronoun/ adjective,"each, either, each one, one and the other, one as well as the other, both (of two regarded severally)",1.3,2.1,6.2,4,243
 "utor, uti, usus sum",verb,"(with abl.) to use, make use of, employ, profit by, take advantage of, enjoy, serve oneself with",1.4,2.1,N/A,2,330
 "uxor, -is (f.)",noun,wife,4.1,N/A,N/A,0,552
@@ -809,10 +951,13 @@
 "valeo, -ere, -ui, -itum",verb,"to be strong, be vigorous, have strength, be able",1.3,2.2,N/A,6,539
 "varius, -a, -um",adjective,"diverse, different, changing, varying, various",1.2,2.2,N/A,3,631
 "vehemens, -entis",adjective,"violent, severe; emphatic, vigorous, lively",4.6,N/A,N/A,0,N/A
+"vel",conjunction,or; either…or (vel…vel),3.4,3.4,6.1,6,141
+"velut or veluti",adverb,"even as, just as, like as, like",1.4,2.1,N/A,1,447
 "vendo, -ere, -didi, -ditum",verb,to sell,5.3,N/A,N/A,0,N/A
 "venio, -ire, veni, ventum",verb,to come,1.2,2.1,N/A,14,63
 "ventus, -i (m.)",noun,wind,1.4,2.1,N/A,2,269
 "verbum, -i (n.)",noun,word,3.6,N/A,N/A,0,188
+"vero",adverb,"in truth, in fact, certainly, truly, to be sure, surely, assuredly",1.4,2.1,N/A,6,280
 "vertex (vortex), -icis (f.)",noun,"whirl, whirlpool, vortex; highest point, top, peak, summit",3.1,3.2,N/A,5,N/A
 "verto (vorto), -ere, -i, versum",verb,"to turn, turn up, turn back, direct",1.4,2.1,6.1,6,288
 "verus, -a, -um",adjective,"true, real, actual, genuine",1.1,2.2,N/A,5,410
@@ -839,6 +984,7 @@
 "vitupero, -are, -avi, -atum",verb,"to find fault with, blame, reproach, disparage, scold, censure",5.6,N/A,N/A,0,N/A
 "vivo, -ere, vixi, victum",verb,"to live, be alive, have life",1.3,2.1,N/A,3,156
 "vivus, -a, -um",adjective,"alive, fresh; living",5.6,N/A,N/A,0,N/A
+"vix",adverb,"with difficulty, with much ado, hardly, scarcely, barely",2.4,2.4,N/A,2,352
 "voco, -are, -avi, -atum",verb,"to call, summon, invoke, call together, convoke",2.3,2.3,N/A,6,158
 "volo, -are, -avi, -atum",verb,to fly,5.1,5.1,N/A,3,N/A
 "volo, velle, volui",verb,"to will, wish, want, purpose, be minded, determine",1.2,2.1,N/A,7,66
@@ -851,150 +997,4 @@
 "vulnus (volnus), -eris (n.)",noun,wound,5.3,5.3,N/A,4,327
 "vultus (voltus), -us (m.)",noun,"countenance, features, expression, aspect; face",5.3,5.3,N/A,3,209
 "—, sui, sibi, se, se",pronoun,"himself, herself, itself, themselves",1.1,2.1,5.6,22,17
--ne,enclitic,added in a direct question as a question mark to the first or principal word of the clause,3.6,N/A,N/A,0,238
--que,enclitic,"and (affixed to a word and joining it with a preceding word), both...and (-que...-que)",1.1,N/A,N/A,0,4
--ve,enclitic,"or, or if you will, or as you please",3.4,N/A,N/A,0,307
-ad,preposition,"(with acc.) to, toward",1.1,2.2,N/A,24,14
-adhuc,adverb,"until now, heretofore, as yet, still, to this point, to this place",1.3,2.2,5.6,8,379
-an,conjunction,"or, or whether",1.3,2.1,6.1,6,94
-ante,preposition/ adverb,"(with acc.) (of space) before, in front, forwards; (of time) before, previously",3.4,3.5,N/A,6,112
-antea,adverb,"before, before this; formerly, previously, in the past",4.1,N/A,N/A,0,N/A
-apud,preposition,"(with acc.) with, among, at, by, near, at the house of",1.1,2.2,N/A,2,205
-aut,conjunction,or (introducing an antithesis to what precedes); either…or (aut…aut),1.1,2.1,5.6,29,24
-autem,conjunction,"but, on the other hand, on the contrary, however",3.4,3.5,N/A,2,123
-bene,adverb,well,2.4,2.4,N/A,2,235
-circum,preposition,"(with acc.) around, about, all around",4.4,4.4,N/A,4,N/A
-clam,adverb,"secretly; without knowledge of, unknown to",4.6,N/A,N/A,0,N/A
-contra,adjective/adverb,"in opposition, opposite, face to face; in turn, in return, back, on the other hand, likewise (with acc.)",2.4,2.4,N/A,4,271
-cotidie,adverb,"daily, every day; day by day; usually, ordinarily, commonly",3.6,3.6,N/A,1,N/A
-cras,adverb,"tomorrow; after today; hereafter, in the future",3.6,N/A,N/A,0,N/A
-cum,conjunction,"when, while, since, although",1.1,2.1,5.6,15,10
-cum,preposition,"(with abl.) with, together, along with",1.1,2.4,N/A,5,10
-cur,adverb,why? wherefore? for what reason?,5.1,N/A,N/A,0,404
-de,preposition,"(with abl.) from, away from, down from, out of, about",1.2,2.2,N/A,16,46
-deinde or dein,adverb,"then, next, thereafter, afterward",1.3,2.1,6.1,6,150
-denique,adverb,"finally, in the end; and then",5.6,5.6,N/A,2,796
-diu,adverb,"a long time, long while, long, for a long time",3.1,3.2,N/A,2,361
-dum,conjunction,"while, a while, now, yet; so long as, provided that, if only; until, until that",2.4,2.4,6.1,6,103
-ecce,interjection,lo! see! behold! there! look!,2.3,2.3,N/A,3,643
-enim,conjunction,"for, for instance, namely, that is to say, I mean, in fact",1.2,2.1,5.6,16,57
-eo,adverb,"there, in that place; to there; therefore, for that reason",3.6,3.6,N/A,1,470
-equidem,adverb,"truly, indeed, certainly, by all means, of course, to be sure",2.1,2.1,6.1,6,N/A
-ergo,conjunction,"consequently; therefore, then, so then; because of (with gen.)",1.1,2.2,N/A,2,134
-et,conjunction,"and; also, too, besides, likewise, as well, even; both…and (et…et)",1.1,2.1,N/A,184,1
-etiam,conjunction,"now too, yet, as yet, even yet, still, even now",1.2,2.1,5.6,20,67
-extra,adverb,"outside of, beyond, without, beside; except",5.6,N/A,N/A,0,N/A
-fortasse,adverb,"perhaps, possibly; it may be",3.4,N/A,N/A,0,833
-forte,adverb,"by chance, by accident",2.1,2.1,N/A,3,579
-frustra,adverb,"in vain; for nothing, to no purpose",3.4,N/A,N/A,0,694
-haud or haut,adverb,"not, not at all, by no means",5.4,5.5,N/A,1,226
-heri,adverb,yesterday,4.1,N/A,N/A,0,N/A
-hic,adverb,"here, in this place",1.2,4.4,6.2,4,80
-hinc,adverb,"from this place, hence",4.4,4.4,6.2,4,N/A
-hodie,adverb,"today, nowadays; at the present time",4.1,N/A,N/A,0,981
-huc,adverb,"to this place, hither",1.1,2.2,N/A,2,368
-iam,adverb,"at the moment, at the present moment, now, already, at this time, just now, at present",1.1,2.1,5.6,34,34
-ibi,adverb,"in that place, there; on the spot, then, thereupon",2.1,2.1,6.1,5,619
-igitur,conjunction,"then, therefore, thereupon, accordingly, consequently",3.1,3.1,N/A,1,313
-illic,adverb,"in that place, yonder, there",1.2,2.2,N/A,1,396
-in,preposition,"(with abl.) in, on; (with acc.) into, to, onto, against",1.1,2.1,N/A,68,5
-inde,adverb,"from that place, from there, thence",3.1,3.1,N/A,2,328
-inter,preposition,"(with acc.) between, among",1.2,3.5,N/A,9,64
-interdum,adverb,"sometimes, occasionally, now and then, meanwhile",5.4,5.5,N/A,1,N/A
-interea,adverb,"meanwhile, in the meantime",2.1,2.1,N/A,3,N/A
-interim,adverb,"meanwhile, in the meantime",1.4,2.2,6.2,3,693
-intra,preposition,"(with acc.) (of space) within, inside, on the inside; (of time) during; fewer than",1.3,2.2,N/A,1,704
-ita,adverb,"in this manner, in such a way, so, thus, accordingly, as has been said",1.3,2.1,6.1,6,120
-itaque,conjunction,"and so, and thus, and accordingly",3.4,3.5,N/A,1,208
-iterum,adverb,"again, a second time, once more, anew",1.2,2.2,N/A,3,758
-iuxta,preposition,"(with acc.) near, close to, next to; on par with, like",5.3,5.3,N/A,1,N/A
-longe,adverb,"a long way off, far, far off, at a distance",2.4,2.4,N/A,5,400
-magis,adverb,"more, in a higher degree, more completely",1.3,2.1,N/A,10,90
-mane,adverb,in the morning; early in the morning,4.1,N/A,N/A,0,N/A
-maxime or maxume,adverb,"in the highest degree, especially, exceedingly, very",2.1,2.1,N/A,4,N/A
-mille (pl. milia or millia) or M (n.),noun,"a thousand, ten hundred",3.4,3.4,N/A,2,247
-minus,adverb,less,2.3,2.3,N/A,4,N/A
-modo,adverb,"only, merely, solely, simply, but, no more than",1.3,2.1,N/A,1,152
-mox,adverb,"soon, directly, presently, then",1.4,2.1,6.1,6,469
-multum,adverb,"much, very much, greatly",2.1,2.1,N/A,3,N/A
-nam or namque,conjunction,"for, you see",1.2,2.1,5.6,11,61
-ne,adverb/ conjunction,"no, not, (+ quidem) not even, that not, lest, so that not",1.2,2.3,5.6,15,47
-nec or neque,conjunction,"and not, also not, nor; neither...nor (nec/neque...nec/ neque)",1.1,2.1,N/A,24,19
-necesse,adjective,"necessary, essential; unavoidable, compulsory, inevitable; true",5.3,N/A,N/A,0,773
-ni,adverb/ conjunction,"not; if not, unless",1.3,N/A,N/A,0,100
-nihil or nil,pronoun,nothing,1.2,2.2,N/A,5,55
-nisi,conjunction,"if not, unless, except",1.3,2.1,N/A,4,100
-non,adverb,"not, by no means, not at all",1.1,2.1,N/A,37,6
-nondum,adverb,not yet,1.4,2.1,N/A,1,436
-nonne,adverb,"...right?, ...correct?, ...yes? [indicates a question that expects a “yes” answer]",5.6,N/A,N/A,0,N/A
-num,adverb,"if, whether; now; surely not? [indicates a question that expects a “no” answer]",6.1,N/A,N/A,0,924
-numquam,adverb,"at no time, never",3.6,3.6,N/A,3,251
-nunc,adverb,"now, at present, at this time",1.2,2.2,N/A,17,50
-o,interjection,O! oh!,4.4,4.5,N/A,6,N/A
-ob,preposition,"(with acc.) on account of, for, because of, by reason of, for the sake of",2.1,4.4,N/A,2,449
-olim,adverb,"formerly; once, once upon a time; in the future",4.4,4.4,N/A,1,574
-paene,adverb,"nearly, almost; mostly",3.4,N/A,N/A,0,944
-pariter,adverb,"equally, in an equal degree, in like manner, as well, as much, alike",4.6,4.6,N/A,3,N/A
-parum,adverb,"too little, not enough, insufficiently",2.4,2.4,N/A,1,204
-per,preposition,"(with acc.) through, across, along, among",1.1,2.2,N/A,36,30
-post,preposition/ adverb,"(with acc.) (of space) behind, after; (of time) behind, afterward, after, later",2.4,2.4,N/A,4,164
-postea,adverb,afterward,1.3,2.1,N/A,2,964
-postquam or post quam,adverb,"after that, after, as soon as, when",3.1,3.2,N/A,2,384
-primum,adverb,"at first, first, in the first place, in the beginning",4.6,4.6,N/A,3,252
-prius,adverb,"sooner, first, previously",5.4,N/A,N/A,0,484
-priusquam or prius quam,adverb,"before that, before; sooner, rather",5.4,N/A,N/A,0,484
-pro,preposition,"(with abl.) before, in front of, for",3.4,3.5,N/A,8,128
-procul,adverb,"in the distance, at a distance, away, apart, far, far off",1.4,2.1,N/A,2,397
-prope,preposition,"(with acc.) near, near to",3.6,N/A,N/A,0,189
-propius,adverb,"more nearly, more closely, nearer, closer",2.1,2.1,N/A,3,N/A
-propter,preposition,"(with acc.) near, close to; because of, on account of",1.3,2.2,6.2,3,560
-qua,adverb,"on which side, at which place, in what direction, where, by what way",3.1,3.2,N/A,2,336
-quam,adverb,"in what manner, how greatly, how, how much; as, than; after than, earlier than",1.1,2.1,5.6,8,29
-quamquam,conjunction,"though, although, albeit, notwithstanding that",2.1,2.1,6.1,7,644
-quamvis,adverb/ conjunction,"as you will, as much as you will, however much, as much as possible, very much, extremely",1.4,2.1,N/A,2,489
-quando,adverb/ conjunction,"when, since, because",3.4,N/A,N/A,0,621
-quasi,adverb,"as if, just as if, as though",2.1,2.1,N/A,8,938
-quater,adverb,four times,4.4,4.5,N/A,3,N/A
-quia,conjunction,"because, since",1.3,2.1,6.1,6,132
-quidem,adverb,"assuredly, certainly, in fact, indeed",1.4,2.2,5.6,9,136
-quin,conjunction,"why not; but, indeed, really, in fact",5.1,5.2,N/A,1,456
-quippe,adverb/ conjunction,"of course, as you see, obviously, as one might expect, naturally, by all means",5.4,N/A,N/A,0,499
-quo,adverb,"to where, in where, where; for which reason, to what end, why, in order that, so that",1.4,2.1,N/A,2,305
-quod,conjunction,"that, in that, because, but, though",2.4,2.4,6.1,5,N/A
-quomodo,adverb,"how, in what way; just as",3.4,N/A,N/A,0,831
-quoque,conjunction,"also, too",1.2,3.1,6.1,5,76
-quot,adjective,"how many, as many as, as many...as (tot...quot)",4.1,N/A,N/A,0,N/A
-rursus or rursum,adjective/adverb,"turned back, back, backwards; back again, again, once more",1.2,2.2,5.6,10,440
-saepe,adverb,"often, oft, oftentimes, many times, frequently",3.4,3.5,N/A,3,145
-satis or sat,adjective/adverb,"enough, sufficient, satisfactory, ample, adequate",5.1,N/A,N/A,0,341
-sed,conjunction,"but, on the contrary, but also, but even, but in fact",1.1,2.1,N/A,20,20
-semper,adverb,"ever, always, at all times, continually, perpetually, forever",1.3,2.1,N/A,1,149
-si,conjunction,if,1.1,2.1,N/A,26,16
-sic,adverb,"so, thus, in this manner, in such a manner, in the same way or manner, in like manner, likewise",1.2,4.4,N/A,6,79
-simul,adverb,"at the same time, together, at once, simultaneously",3.6,3.6,N/A,3,274
-sine,preposition,(with abl.) without,3.4,3.5,N/A,2,104
-sive or seu,conjunction,or if,3.1,3.1,N/A,3,362
-statim,adverb,"straightaway, at once, immediately, instantly",1.4,2.2,N/A,4,798
-sub,preposition,"(with abl.) under, below, beneath, underneath, behind; (with acc.) under, below, beneath, up to, toward",2.1,2.2,N/A,12,118
-subito,adverb,"suddenly, immediately, unexpectedly, at once",4.4,4.5,N/A,3,848
-super,preposition,"(with acc. and abl.) above, on top, over",1.1,2.2,N/A,5,401
-supra,adverb,"above, beyond; over; more than; in charge of, in authority over",5.4,5.4,N/A,1,588
-tam,adverb,"in such a degree, as much, so, so much",1.3,5.1,N/A,2,96
-tamen,adverb,"notwithstanding, nevertheless, for all that, however, yet, still",1.2,2.1,5.6,15,58
-tamquam or tanquam,adverb,"as much as, so as, just as, like as, as if, so to speak",2.4,2.4,N/A,1,363
-tandem,adverb,"at length, at last, in the end, finally",2.4,2.4,6.2,4,427
-tantum modo,adverb,"only, merely",3.6,N/A,N/A,0,216
-tantum,adverb,"so much, so greatly; only, merely, but",3.4,3.4,N/A,3,216
-tot,pronoun,"so many, such a number of, as many...as (tot...quot)",2.1,4.4,6.1,6,259
-trans,preposition,"(with acc.) across, over; beyond; on the other side",1.1,N/A,N/A,0,N/A
-tum,adverb,"then, at that time, in those times",1.2,2.2,5.6,12,56
-tunc,adverb,"then, at that time, just then, on that occasion",1.2,2.2,N/A,3,56
-ubi,adverb,"in which place, in what place, where; when, whenever, as soon as, as",1.3,2.2,5.6,10,92
-ubique,adverb,"anywhere, everywhere",3.1,3.1,N/A,1,N/A
-umquam,adverb,"at any time, ever",4.6,4.6,N/A,2,482
-unde,adverb,"from which place, from where, whence",1.4,2.1,N/A,2,300
-ut or uti,adverb/ conjunction,"how, in what way; as, like; when; that, so that",1.1,2.1,5.6,38,15
-vel,conjunction,or; either…or (vel…vel),3.4,3.4,6.1,6,141
-velut or veluti,adverb,"even as, just as, like as, like",1.4,2.1,N/A,1,447
-vero,adverb,"in truth, in fact, certainly, truly, to be sure, surely, assuredly",1.4,2.1,N/A,6,280
-vix,adverb,"with difficulty, with much ado, hardly, scarcely, barely",2.4,2.4,N/A,2,352
+"mille (pl. milia or millia) or M (n.)",noun,"a thousand, ten hundred",3.4,3.4,N/A,2,247
