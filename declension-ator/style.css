@@ -1,0 +1,42 @@
+body {
+  background-color: #F5F5F0;
+  color: #2C2C2C;
+}
+
+/* Custom font utilities not covered by Tailwind default config if needed */
+.font-serif-custom {
+  font-family: 'Cinzel', serif;
+}
+.font-sans-custom {
+  font-family: 'Lato', sans-serif;
+}
+.font-serif-text {
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* Button interactive states */
+.btn-base {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Mobile Landscape optimizations */
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+  .mobile-landscape-hidden {
+    display: none !important;
+  }
+  .mobile-landscape-compact-py {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  .mobile-landscape-compact-p {
+    padding: 1rem !important;
+  }
+  .mobile-landscape-mb-2 {
+    margin-bottom: 0.5rem !important;
+  }
+  .mobile-landscape-text-sm {
+      font-size: 1.5rem !important;
+  }
+}
