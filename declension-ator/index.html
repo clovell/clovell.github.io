@@ -6,121 +6,85 @@
     <title>Magister Declension | Latin Practice</title>
     <meta name="description" content="Practice Latin Noun Declensions" />
     
-    <!-- Libraries via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Tailwind Configuration -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              serif: ['Cinzel', 'serif'],
-              sans: ['Lato', 'sans-serif'],
-            },
-            colors: {
-              roman: {
-                red: '#8B0000',
-                gold: '#C5A059',
-                stone: '#F5F5F0',
-                dark: '#2C2C2C'
-              }
-            }
-          }
-        }
-      }
-    </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="min-h-screen flex flex-col font-sans bg-stone-100">
+  <body>
     
     <!-- Header -->
-    <header class="bg-roman-red text-white py-6 shadow-md border-b-4 border-roman-gold mobile-landscape-hidden">
-      <div class="container mx-auto px-4 text-center">
-        <h1 class="text-3xl md:text-5xl font-serif font-bold tracking-wider uppercase mb-2">
+    <header class="app-header">
+      <div class="container mx-auto px-4">
+        <h1 class="header-title font-serif">
           Declension-Ator
         </h1>
-        <p class="text-roman-gold font-sans text-sm md:text-base tracking-wide">
-          Identify the Noun Declension
-        </p>
       </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8 md:py-12 mobile-landscape-compact-py">
+    <main class="main-container">
       
       <!-- Stats -->
-      <div class="flex justify-center space-x-4 md:space-x-12 mb-8 text-roman-dark">
-        <div class="text-center">
-          <span class="block text-xs font-bold uppercase tracking-widest text-gray-500">Score</span>
-          <span id="score-val" class="text-2xl font-serif font-bold">0 / 0</span>
+      <div class="score-board">
+        <div class="score-item">
+          <span class="score-label font-sans">Score</span>
+          <span id="score-val" class="score-value font-serif">0 / 0</span>
         </div>
-        <div class="text-center">
-          <span class="block text-xs font-bold uppercase tracking-widest text-gray-500">Streak</span>
-          <span class="text-2xl font-serif font-bold text-roman-red"><span id="streak-val">0</span> 🔥</span>
+        <div class="score-item">
+          <span class="score-label font-sans">Streak</span>
+          <span class="score-value font-serif score-highlight"><span id="streak-val">0</span> 🔥</span>
         </div>
       </div>
       
       <!-- Game Card -->
-      <div class="max-w-xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden border border-gray-200">
-        <div class="p-8 md:p-12 text-center bg-stone-50 mobile-landscape-compact-p">
+      <div class="game-card">
+        <div class="game-card-content">
           
           <!-- Noun Display -->
-          <div class="mb-6 mobile-landscape-mb-2 flex flex-wrap justify-center items-baseline gap-3 font-serif-text">
-            <span id="noun-nominative" class="text-4xl md:text-5xl font-bold text-roman-dark mobile-landscape-text-sm">
+          <div class="noun-display">
+            <span id="noun-nominative" class="noun-text">
               ...
             </span>
-            <span id="noun-genitive" class="text-4xl md:text-5xl font-bold text-roman-dark mobile-landscape-text-sm">
+            <span id="noun-genitive" class="noun-text">
               ...
             </span>
-            <span id="noun-gender" class="text-4xl md:text-5xl italic font-bold text-roman-red mobile-landscape-text-sm">
+            <span id="noun-gender" class="noun-gender">
               ...
             </span>
           </div>
           
           <!-- Definition -->
-          <p id="noun-definition" class="text-xl text-gray-600 font-sans italic mb-8 mobile-landscape-mb-2">
+          <p id="noun-definition" class="noun-definition font-sans">
             ...
           </p>
   
           <!-- Buttons -->
-          <div class="grid grid-cols-3 gap-4 mb-4 mobile-landscape-mb-2">
-            <button id="btn-1" class="btn-base py-4 rounded-md font-bold text-lg transition-all shadow-sm border-2 font-serif bg-white border-gray-300 text-gray-700 hover:border-roman-gold hover:text-roman-gold hover:-translate-y-1">
+          <div class="button-grid">
+            <button id="btn-1" class="btn-base">
               1st
             </button>
-            <button id="btn-2" class="btn-base py-4 rounded-md font-bold text-lg transition-all shadow-sm border-2 font-serif bg-white border-gray-300 text-gray-700 hover:border-roman-gold hover:text-roman-gold hover:-translate-y-1">
+            <button id="btn-2" class="btn-base">
               2nd
             </button>
-            <button id="btn-3" class="btn-base py-4 rounded-md font-bold text-lg transition-all shadow-sm border-2 font-serif bg-white border-gray-300 text-gray-700 hover:border-roman-gold hover:text-roman-gold hover:-translate-y-1">
+            <button id="btn-3" class="btn-base">
               3rd
             </button>
           </div>
           
           <!-- Instructions -->
-          <p class="text-xs uppercase tracking-widest text-gray-400 mb-8 mobile-landscape-mb-2 font-sans mobile-landscape-hidden">
-            <span class="hidden md:inline">Click on the declension</span>
-            <span class="md:hidden">Tap on the declension</span>
+          <p class="instruction-text font-sans">
+            Select the correct declension
           </p>
   
           <!-- Feedback / Next Area -->
-          <div id="feedback-area" class="transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
-            <div id="feedback-text" class="text-xl font-bold mb-4 mobile-landscape-mb-2 font-serif text-green-600">
+          <div id="feedback-area" class="feedback-area">
+            <div id="feedback-text" class="feedback-text">
               <!-- Result Text -->
             </div>
-            <button id="next-btn" class="bg-roman-dark text-white px-8 py-3 rounded hover:bg-black transition-colors font-sans font-bold uppercase tracking-wide">
+            <button id="next-btn" class="next-btn font-sans">
               Next Word
             </button>
           </div>
@@ -128,10 +92,10 @@
       </div>
   
       <!-- Quote / Footer -->
-      <div class="mt-12 text-center text-gray-500 text-sm max-w-md mx-auto mobile-landscape-hidden">
-        <p id="quote-latin" class="mb-1 font-serif text-roman-dark italic">...</p>
-        <p id="quote-english" class="mb-4 text-xs text-gray-400">...</p>
-        <p class="text-xs">
+      <div class="footer-quote">
+        <p id="quote-latin" class="quote-latin">...</p>
+        <p id="quote-english" class="quote-english">...</p>
+        <p class="footer-credits">
           Data sourced from Dickinson College Commentaries Core Vocabulary.
         </p>
       </div>
@@ -140,6 +104,7 @@
 
     <!-- App Logic -->
     <script src="nouns.js"></script>
+    <script src="quotes.js"></script>
     <script src="app.js"></script>
   <script type="module" src="/index.tsx"></script>
 </body>

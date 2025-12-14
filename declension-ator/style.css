@@ -1,42 +1,360 @@
-body {
-  background-color: #F5F5F0;
-  color: #2C2C2C;
+/* Variables for Roman Colors */
+:root {
+  --roman-red: #8B0000;
+  --roman-gold: #C5A059;
+  --roman-stone: #F5F5F0;
+  --roman-dark: #2C2C2C;
+  --text-grey: #4B5563;
+  --bg-white: #ffffff;
 }
 
-/* Custom font utilities not covered by Tailwind default config if needed */
-.font-serif-custom {
+body {
+  background-color: var(--roman-stone);
+  color: var(--roman-dark);
+  font-family: 'Lato', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Typography Utilities */
+.font-serif {
   font-family: 'Cinzel', serif;
 }
-.font-sans-custom {
+
+.font-sans {
   font-family: 'Lato', sans-serif;
 }
-.font-serif-text {
+
+/* Header Styles */
+.app-header {
+  background-color: var(--roman-red);
+  color: white;
+  padding: 1.5rem 0;
+  text-align: center;
+  border-bottom: 4px solid var(--roman-gold);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.header-title {
+  font-size: 2.25rem; /* 36px */
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem 0;
+}
+
+.header-subtitle {
+  color: var(--roman-gold);
+  font-size: 1rem;
+  letter-spacing: 0.025em;
+  margin: 0;
+}
+
+/* Main Layout */
+.main-container {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Score Board */
+.score-board {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 2rem;
+  color: var(--roman-dark);
+}
+
+.score-item {
+  text-align: center;
+}
+
+.score-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-grey);
+}
+
+.score-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Cinzel', serif;
+}
+
+.score-highlight {
+  color: var(--roman-red);
+}
+
+/* Game Card */
+.game-card {
+  background-color: var(--bg-white);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  width: 100%;
+  max-width: 36rem; /* max-w-xl */
+}
+
+.game-card-content {
+  padding: 3rem;
+  text-align: center;
+  background-color: #fafaf9; /* stone-50 */
+}
+
+/* Noun Display */
+.noun-display {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.noun-text {
   font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--roman-dark);
 }
 
-/* Button interactive states */
+.noun-gender {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--roman-red);
+}
+
+.noun-definition {
+  font-size: 1.25rem;
+  color: var(--text-grey);
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+/* Button Grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
 .btn-base {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  border-width: 2px;
+  border-style: solid;
+  font-family: 'Cinzel', serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--bg-white);
+  border-color: #d1d5db;
+  color: #374151;
 }
 
-/* Mobile Landscape optimizations */
+.btn-base:hover:not(:disabled) {
+  border-color: var(--roman-gold);
+  color: var(--roman-gold);
+  transform: translateY(-2px);
+}
+
+.btn-base:disabled {
+  cursor: default;
+}
+
+/* States used by JS */
+.btn-correct {
+  background-color: #dcfce7 !important; /* green-100 */
+  border-color: #16a34a !important; /* green-600 */
+  color: #166534 !important; /* green-800 */
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.btn-wrong {
+  background-color: #fee2e2 !important; /* red-100 */
+  border-color: #ef4444 !important; /* red-500 */
+  color: #991b1b !important; /* red-800 */
+}
+
+.btn-dimmed {
+  background-color: #f9fafb !important;
+  border-color: #e5e7eb !important;
+  color: #d1d5db !important;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Feedback Area */
+.instruction-text {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #9ca3af;
+  margin-bottom: 2rem;
+}
+
+.feedback-area {
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(1rem);
+  pointer-events: none;
+  min-height: 80px; /* Reserve space */
+}
+
+.feedback-area.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.feedback-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-family: 'Cinzel', serif;
+}
+
+.feedback-correct { color: #16a34a; }
+.feedback-incorrect { color: var(--roman-red); }
+
+.next-btn {
+  background-color: var(--roman-dark);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.next-btn:hover {
+  background-color: black;
+}
+
+/* Footer / Quotes */
+.footer-quote {
+  margin-top: 3rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+  max-width: 28rem;
+}
+
+.quote-latin {
+  margin-bottom: 0.25rem;
+  font-family: 'Cinzel', serif;
+  color: var(--roman-dark);
+  font-style: italic;
+}
+
+.quote-english {
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.footer-credits {
+  font-size: 0.75rem;
+}
+
+/* --- OPTIMIZATIONS FOR 1366x768 LAPTOPS --- */
+/* Target screens with limited height but desktop width */
+@media screen and (min-width: 1024px) and (max-height: 800px) {
+  .app-header {
+    padding: 0.75rem 0;
+  }
+  
+  .header-title {
+    font-size: 1.75rem;
+  }
+  
+  .main-container {
+    padding: 1rem;
+  }
+  
+  .score-board {
+    margin-bottom: 1rem;
+  }
+  
+  .game-card-content {
+    padding: 1.5rem 2rem;
+  }
+  
+  .noun-display {
+    margin-bottom: 0.5rem;
+  }
+  
+  .noun-text, .noun-gender {
+    font-size: 2.25rem;
+  }
+  
+  .noun-definition {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .instruction-text {
+    margin-bottom: 1rem;
+  }
+  
+  .feedback-area {
+    min-height: 60px;
+  }
+  
+  .footer-quote {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Mobile Optimizations (Portrait) */
+@media (max-width: 640px) {
+  .noun-text, .noun-gender {
+    font-size: 2rem;
+  }
+  .header-title {
+    font-size: 1.5rem;
+  }
+  .game-card-content {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile Landscape (Original Logic maintained via CSS) */
 @media only screen and (max-height: 500px) and (orientation: landscape) {
-  .mobile-landscape-hidden {
+  .app-header, .footer-quote, .instruction-text {
     display: none !important;
   }
-  .mobile-landscape-compact-py {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
+  .main-container {
+    padding: 0.5rem !important;
   }
-  .mobile-landscape-compact-p {
-    padding: 1rem !important;
+  .game-card-content {
+    padding: 0.5rem 1rem !important;
   }
-  .mobile-landscape-mb-2 {
-    margin-bottom: 0.5rem !important;
+  .noun-text, .noun-gender {
+    font-size: 1.5rem !important;
   }
-  .mobile-landscape-text-sm {
-      font-size: 1.5rem !important;
+  .score-board {
+    margin-bottom: 0.5rem;
   }
 }

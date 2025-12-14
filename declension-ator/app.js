@@ -6,18 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  const nouns = window.nouns;
-
-  const QUOTES = [
-    { latin: "Labor omnia vincit.", english: "Work conquers all." },
-    { latin: "Repetitio est mater studiorum.", english: "Repetition is the mother of studies." },
-    { latin: "Ad astra per aspera.", english: "To the stars through difficulties." },
-    { latin: "Nulla dies sine linea.", english: "No day without a line." },
-    { latin: "Fabricando fit faber.", english: "Practice makes perfect." },
-    { latin: "Perfer et obdura; dolor hic tibi proderit olim.", english: "Endure and be tough; this pain will be of use to you someday." },
-    { latin: "Radices litterarum amarae sunt, fructus dulces.", english: "The roots of scholarship are bitter, its fruits are sweet." },
-    { latin: "Non scholae sed vitae discimus.", english: "We learn not for school but for life." }
+  // Check if quotes are loaded
+  const QUOTES = window.quotes || [
+    { latin: "Carpe Diem", english: "Seize the day (Default)" }
   ];
+
+  const nouns = window.nouns;
 
   // State
   let state = {
@@ -111,47 +105,47 @@ document.addEventListener('DOMContentLoaded', () => {
     [1, 2, 3].forEach(d => {
       const btn = els[`btn${d}`];
       
-      // Reset classes
-      btn.className = "btn-base py-4 rounded-md font-bold text-lg border-2 font-serif-custom ";
+      // Reset special classes (keep base class from HTML)
+      btn.className = "btn-base"; 
 
       if (state.result === null) {
-        // Normal state
-        btn.className += "bg-white border-gray-300 text-gray-700 hover:border-roman-gold hover:text-roman-gold hover:-translate-y-1 shadow-sm";
+        // Normal state - styles handled by default CSS
         btn.disabled = false;
       } else {
         // Result state
         btn.disabled = true;
         
         if (d === state.currentNoun.declension) {
-          // This is the correct answer -> Green
-          btn.className += "bg-green-100 border-green-600 text-green-800 scale-105 shadow-md ring-2 ring-green-200 z-10";
+          // This is the correct answer
+          btn.classList.add('btn-correct');
         } else if (d === state.selectedDeclension) {
-          // User picked this and it was wrong -> Red
-          btn.className += "bg-red-100 border-red-500 text-red-800";
+          // User picked this and it was wrong
+          btn.classList.add('btn-wrong');
         } else {
-          // Irrelevant button -> Dimmed
-          btn.className += "bg-gray-50 border-gray-200 text-gray-300 opacity-40 cursor-not-allowed";
+          // Irrelevant button
+          btn.classList.add('btn-dimmed');
         }
       }
     });
 
     // Feedback & Next Button
     if (state.result) {
-      els.feedbackArea.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-      els.feedbackArea.classList.add('opacity-100', 'translate-y-0');
+      els.feedbackArea.classList.add('visible');
       
+      // Reset feedback text color classes
+      els.feedbackText.classList.remove('feedback-correct', 'feedback-incorrect');
+
       if (state.result === 'correct') {
-        els.feedbackText.className = "text-xl font-bold mb-4 mobile-landscape-mb-2 font-serif-custom text-green-600";
+        els.feedbackText.classList.add('feedback-correct');
         els.feedbackText.textContent = "Optime! (Correct)";
       } else {
-        els.feedbackText.className = "text-xl font-bold mb-4 mobile-landscape-mb-2 font-serif-custom text-roman-red";
+        els.feedbackText.classList.add('feedback-incorrect');
         const correctDecl = state.currentNoun.declension;
         const ordinal = correctDecl === 1 ? '1st' : correctDecl === 2 ? '2nd' : '3rd';
         els.feedbackText.textContent = `Eheu! It was ${ordinal} Declension.`;
       }
     } else {
-      els.feedbackArea.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-      els.feedbackArea.classList.remove('opacity-100', 'translate-y-0');
+      els.feedbackArea.classList.remove('visible');
     }
 
     // Quote
