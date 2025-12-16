@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latin Passive Verb Review</title>
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- React & ReactDOM (UMD for no-build environment) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel Standalone for in-browser compilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1, h2, h3, .serif-font {
+        font-family: 'Cinzel', serif;
+      }
+      /* Custom shake animation */
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+      .animate-shake {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-stone-100 text-stone-900 min-h-screen flex flex-col">
+    <div id="root" class="flex-grow flex flex-col"></div>
+
+    <script type="text/babel" data-presets="typescript,react">
+      const { useState, useEffect, useCallback, useRef } = React;
+
+      // ==========================================
+      // CONSTANTS & DATA
+      // ==========================================
+      const VERBS_LIST = [
+        { word: 'amo', principalParts: ['amo', 'amare', 'amavi', 'amatus'], conjugation: 1, definition: 'to love' },
+        { word: 'laudo', principalParts: ['laudo', 'laudare', 'laudavi', 'laudatus'], conjugation: 1, definition: 'to praise' },
+        { word: 'paro', principalParts: ['paro', 'parare', 'paravi', 'paratus'], conjugation: 1, definition: 'to prepare' },
+        { word: 'porto', principalParts: ['porto', 'portare', 'portavi', 'portatus'], conjugation: 1, definition: 'to carry' },
+        { word: 'pugno', principalParts: ['pugno', 'pugnare', 'pugnavi', 'pugnatus'], conjugation: 1, definition: 'to fight' },
+        { word: 'voco', principalParts: ['voco', 'vocare', 'vocavi', 'vocatus'], conjugation: 1, definition: 'to call' },
+        { word: 'do', principalParts: ['do', 'dare', 'dedi', 'datus'], conjugation: 1, definition: 'to give' },
+        { word: 'sto', principalParts: ['sto', 'stare', 'steti', 'status'], conjugation: 1, definition: 'to stand' },
+        { word: 'iuvo', principalParts: ['iuvo', 'iuvare', 'iuvi', 'iutus'], conjugation: 1, definition: 'to help' },
+        { word: 'moneo', principalParts: ['moneo', 'monere', 'monui', 'monitus'], conjugation: 2, definition: 'to warn' },
+        { word: 'habeo', principalParts: ['habeo', 'habere', 'habui', 'habitus'], conjugation: 2, definition: 'to have' },
+        { word: 'teneo', principalParts: ['teneo', 'tenere', 'tenui', 'tentus'], conjugation: 2, definition: 'to hold' },
+        { word: 'moveo', principalParts: ['moveo', 'movere', 'movi', 'motus'], conjugation: 2, definition: 'to move' },
+        { word: 'video', principalParts: ['video', 'videre', 'vidi', 'visus'], conjugation: 2, definition: 'to see' },
+        { word: 'iubeo', principalParts: ['iubeo', 'iubere', 'iussi', 'iussus'], conjugation: 2, definition: 'to order' },
+        { word: 'augeo', principalParts: ['augeo', 'augere', 'auxi', 'auctus'], conjugation: 2, definition: 'to increase' },
+        { word: 'duco', principalParts: ['duco', 'ducere', 'duxi', 'ductus'], conjugation: 3, definition: 'to lead' },
+        { word: 'mitto', principalParts: ['mitto', 'mittere', 'misi', 'missus'], conjugation: 3, definition: 'to send' },
+        { word: 'rego', principalParts: ['rego', 'regere', 'rexi', 'rectus'], conjugation: 3, definition: 'to rule' },
+        { word: 'scribo', principalParts: ['scribo', 'scribere', 'scripsi', 'scriptus'], conjugation: 3, definition: 'to write' },
+        { word: 'pono', principalParts: ['pono', 'ponere', 'posui', 'positus'], conjugation: 3, definition: 'to put, place' },
+        { word: 'vinco', principalParts: ['vinco', 'vincere', 'vici', 'victus'], conjugation: 3, definition: 'to conquer' },
+        { word: 'ago', principalParts: ['ago', 'agere', 'egi', 'actus'], conjugation: 3, definition: 'to do, drive' },
+        { word: 'capio', principalParts: ['capio', 'capere', 'cepi', 'captus'], conjugation: '3io', definition: 'to take' },
+        { word: 'facio', principalParts: ['facio', 'facere', 'feci', 'factus'], conjugation: '3io', definition: 'to make, do' },
+        { word: 'iacio', principalParts: ['iacio', 'iacere', 'ieci', 'iactus'], conjugation: '3io', definition: 'to throw' },
+        { word: 'audio', principalParts: ['audio', 'audire', 'audivi', 'auditus'], conjugation: 4, definition: 'to hear' },
+        { word: 'venio', principalParts: ['venio', 'venire', 'veni', 'ventus'], conjugation: 4, definition: 'to come' },
+        { word: 'invenio', principalParts: ['invenio', 'invenire', 'inveni', 'inventus'], conjugation: 4, definition: 'to find' },
+        { word: 'sentio', principalParts: ['sentio', 'sentire', 'sensi', 'sensus'], conjugation: 4, definition: 'to feel' }
+      ];
+
+      // ==========================================
+      // TYPES (Converted to Objects for Runtime Safety)
+      // ==========================================
+      const Tense = {
+        PerfectPassive: 'Perfect Passive',
+        PluperfectPassive: 'Pluperfect Passive',
+        FuturePerfectPassive: 'Future Perfect Passive'
+      };
+
+      const SoundType = {
+        CLICK: 0,
+        SUCCESS: 1,
+        FAILURE: 2,
+        VICTORY: 3
+      };
+
+      // ==========================================
+      // SERVICES
+      // ==========================================
+      
+      // --- Latin Service ---
+      const VERBS = VERBS_LIST;
+
+      const getRandomVerb = () => {
+        return VERBS[Math.floor(Math.random() * VERBS.length)];
+      };
+
+      const getRandomTense = () => {
+        const tenses = [Tense.PerfectPassive, Tense.PluperfectPassive, Tense.FuturePerfectPassive];
+        return tenses[Math.floor(Math.random() * tenses.length)];
+      };
+
+      const getParticipialStem = (ppp) => {
+        if (ppp.endsWith('us')) {
+          return ppp.slice(0, -2);
+        }
+        return ppp;
+      };
+
+      const getCorrectForms = (verb, tense) => {
+        const ppp = verb.principalParts[3];
+        const stem = getParticipialStem(ppp);
+        
+        let auxSg = [];
+        let auxPl = [];
+        
+        switch (tense) {
+          case Tense.PerfectPassive:
+            auxSg = ['sum', 'es', 'est'];
+            auxPl = ['sumus', 'estis', 'sunt'];
+            break;
+          case Tense.PluperfectPassive:
+            auxSg = ['eram', 'eras', 'erat'];
+            auxPl = ['eramus', 'eratis', 'erant'];
+            break;
+          case Tense.FuturePerfectPassive:
+            auxSg = ['ero', 'eris', 'erit'];
+            auxPl = ['erimus', 'eritis', 'erunt'];
+            break;
+        }
+        
+        const sgEndings = `${stem}us, -a, -um`;
+        const plEndings = `${stem}i, -ae, -a`;
+        
+        return {
+          '1s': `${sgEndings} ${auxSg[0]}`,
+          '2s': `${sgEndings} ${auxSg[1]}`,
+          '3s': `${sgEndings} ${auxSg[2]}`,
+          '1pl': `${plEndings} ${auxPl[0]}`,
+          '2pl': `${plEndings} ${auxPl[1]}`,
+          '3pl': `${plEndings} ${auxPl[2]}`,
+        };
+      };
+
+      const normalize = (str) => {
+        return str.toLowerCase()
+          .replace(/[,.\-\s]/g, '')
+          .replace(/ā/g, 'a').replace(/ē/g, 'e').replace(/ī/g, 'i').replace(/ō/g, 'o').replace(/ū/g, 'u');
+      };
+
+      const checkAnswer = (input, verb, tense, person) => {
+        const normInput = normalize(input);
+        const ppp = verb.principalParts[3];
+        const stem = getParticipialStem(ppp);
+        
+        let expectedAux = '';
+        const isSingular = person.endsWith('s');
+
+        if (isSingular) {
+          const normalizedShorthand = `${stem}usaum`;
+          
+          switch (tense) {
+            case Tense.PerfectPassive:
+               if (person === '1s') expectedAux = 'sum';
+               if (person === '2s') expectedAux = 'es';
+               if (person === '3s') expectedAux = 'est';
+               break;
+            case Tense.PluperfectPassive:
+               if (person === '1s') expectedAux = 'eram';
+               if (person === '2s') expectedAux = 'eras';
+               if (person === '3s') expectedAux = 'erat';
+               break;
+            case Tense.FuturePerfectPassive:
+               if (person === '1s') expectedAux = 'ero';
+               if (person === '2s') expectedAux = 'eris';
+               if (person === '3s') expectedAux = 'erit';
+               break;
+          }
+          
+          if (!normInput.includes(expectedAux)) return false;
+          const inputWithoutAux = normInput.replace(expectedAux, '');
+          return inputWithoutAux === normalizedShorthand || inputWithoutAux === `${stem}us${stem}a${stem}um`;
+          
+        } else {
+          const normalizedShorthand = `${stem}iaea`;
+
+           switch (tense) {
+            case Tense.PerfectPassive:
+               if (person === '1pl') expectedAux = 'sumus';
+               if (person === '2pl') expectedAux = 'estis';
+               if (person === '3pl') expectedAux = 'sunt';
+               break;
+            case Tense.PluperfectPassive:
+               if (person === '1pl') expectedAux = 'eramus';
+               if (person === '2pl') expectedAux = 'eratis';
+               if (person === '3pl') expectedAux = 'erant';
+               break;
+            case Tense.FuturePerfectPassive:
+               if (person === '1pl') expectedAux = 'erimus';
+               if (person === '2pl') expectedAux = 'eritis';
+               if (person === '3pl') expectedAux = 'erunt';
+               break;
+          }
+
+          if (!normInput.includes(expectedAux)) return false;
+          const inputWithoutAux = normInput.replace(expectedAux, '');
+          return inputWithoutAux === normalizedShorthand || inputWithoutAux === `${stem}i${stem}ae${stem}a`;
+        }
+      };
+
+      // --- Audio Service ---
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      let audioCtx = null;
+
+      const playSound = (type) => {
+        // Initialize AudioContext on first user interaction to handle autoplay policies
+        if (!audioCtx) {
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+
+        switch (type) {
+          case SoundType.CLICK:
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, now);
+            oscillator.frequency.exponentialRampToValueAtTime(300, now + 0.1);
+            gainNode.gain.setValueAtTime(0.1, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            oscillator.start(now);
+            oscillator.stop(now + 0.1);
+            break;
+
+          case SoundType.SUCCESS:
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, now);
+            oscillator.frequency.setValueAtTime(659.25, now + 0.1);
+            gainNode.gain.setValueAtTime(0.1, now);
+            gainNode.gain.linearRampToValueAtTime(0, now + 0.3);
+            oscillator.start(now);
+            oscillator.stop(now + 0.3);
+            break;
+
+          case SoundType.FAILURE:
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, now);
+            oscillator.frequency.linearRampToValueAtTime(100, now + 0.3);
+            gainNode.gain.setValueAtTime(0.1, now);
+            gainNode.gain.linearRampToValueAtTime(0, now + 0.3);
+            oscillator.start(now);
+            oscillator.stop(now + 0.3);
+            break;
+
+          case SoundType.VICTORY:
+            const notes = [523.25, 659.25, 783.99, 1046.50]; 
+            notes.forEach((freq, i) => {
+              const osc = audioCtx.createOscillator();
+              const gn = audioCtx.createGain();
+              osc.connect(gn);
+              gn.connect(audioCtx.destination);
+              osc.type = 'triangle';
+              osc.frequency.value = freq;
+              const startTime = now + (i * 0.1);
+              gn.gain.setValueAtTime(0, startTime);
+              gn.gain.linearRampToValueAtTime(0.1, startTime + 0.05);
+              gn.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+              osc.start(startTime);
+              osc.stop(startTime + 0.4);
+            });
+            break;
+        }
+      };
+
+      // ==========================================
+      // COMPONENTS
+      // ==========================================
+
+      const Header = ({ streak }) => {
+        return (
+          <header className="flex justify-between items-center bg-white shadow-md p-4 rounded-xl border border-stone-200 sticky top-0 z-50">
+            <div className="flex items-center gap-2">
+              <div className="bg-amber-600 text-white p-2 rounded-lg font-bold text-xl font-serif">
+                SPQR
+              </div>
+              <h1 className="text-xl md:text-2xl font-bold text-stone-800 hidden sm:block">Latin Passive Review</h1>
+              <h1 className="text-xl font-bold text-stone-800 sm:hidden">Latin Review</h1>
+            </div>
+            <div className="flex items-center gap-2 bg-stone-100 px-4 py-2 rounded-full border border-stone-300">
+              <span className="text-xl">🔥</span>
+              <span className="font-bold text-stone-700">Streak: {streak}</span>
+            </div>
+          </header>
+        );
+      };
+
+      const WelcomeScreen = ({ onStart }) => {
+        return (
+          <div className="bg-white p-8 rounded-2xl shadow-xl max-w-2xl w-full text-center border-t-8 border-amber-600">
+            <h2 className="text-4xl font-bold text-stone-800 mb-6 serif-font">Salve, Discipule!</h2>
+            <p className="text-stone-600 mb-6 text-lg leading-relaxed">
+              Review the Latin <strong>Perfect</strong>, <strong>Pluperfect</strong>, and <strong>Future Perfect</strong> passive tenses.
+            </p>
+            <div className="bg-amber-50 p-6 rounded-xl text-left mb-8 border border-amber-100">
+              <h3 className="font-bold text-amber-800 mb-3 text-xl">Instructions:</h3>
+              <ul className="list-disc pl-5 space-y-2 text-stone-700">
+                <li>You will be given a verb and a target tense.</li>
+                <li>Fill in all 6 forms of the conjugation.</li>
+                <li>
+                  <strong>Crucial:</strong> Provide all genders for the participle.
+                  <br/>
+                  <span className="text-sm text-stone-500 font-mono bg-white px-1 rounded">Correct: laudatus, -a, -um sum</span>
+                </li>
+                <li>Forms must include the correct form of <em>sum</em>.</li>
+              </ul>
+            </div>
+            <button
+              onClick={onStart}
+              className="bg-amber-600 hover:bg-amber-700 text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95"
+            >
+              Incipe (Start)
+            </button>
+          </div>
+        );
+      };
+
+      const VerbCard = ({ verb, tense }) => {
+        return (
+          <div className="w-full bg-stone-800 text-stone-50 p-6 rounded-xl shadow-lg mb-6 text-center border-b-4 border-amber-500">
+            <div className="text-stone-400 uppercase tracking-widest text-xs font-semibold mb-2">Conjugate in the</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-amber-400 mb-4 serif-font">{tense}</h2>
+            
+            <div className="bg-stone-700/50 p-4 rounded-lg inline-block w-full">
+              <div className="text-xl md:text-2xl font-mono mb-2">
+                {verb.principalParts.join(', ')}
+              </div>
+              <div className="text-stone-300 italic">
+                {verb.definition}
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const ConjugationCell = ({ label, value, onChange, status, correctAnswer, disabled }) => {
+        const inputRef = useRef(null);
+
+        let borderColor = "border-stone-300";
+        let bgColor = "bg-white";
+        let icon = null;
+
+        if (status === true) {
+          borderColor = "border-green-500";
+          bgColor = "bg-green-50";
+          icon = <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 font-bold text-xl">✓</span>;
+        } else if (status === false) {
+          borderColor = "border-red-500";
+          bgColor = "bg-red-50";
+          icon = <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-600 font-bold text-xl">✗</span>;
+        }
+
+        return (
+          <div className={`relative group ${status === false ? 'animate-shake' : ''}`}>
+            <label className="block text-xs font-bold text-stone-500 uppercase mb-1 ml-1">
+              {label}
+            </label>
+            <div className="relative">
+              <input
+                ref={inputRef}
+                type="text"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                disabled={disabled || status === true}
+                placeholder="e.g. laudatus, -a, -um sum"
+                className={`w-full p-3 pr-10 rounded-lg border-2 ${borderColor} ${bgColor} 
+                  text-stone-800 font-medium shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400
+                  disabled:opacity-90 disabled:cursor-not-allowed`}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+              />
+              {icon}
+            </div>
+            {status === false && (
+              <div className="text-xs text-red-600 mt-1 pl-1 font-semibold animate-pulse">
+                 Answer: {correctAnswer}
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      const DrillScreen = ({
+        verb,
+        tense,
+        onCorrectRound,
+        onResetStreak,
+        onNextRound
+      }) => {
+        const INITIAL_ANSWERS = { '1s': '', '2s': '', '3s': '', '1pl': '', '2pl': '', '3pl': '' };
+        const INITIAL_VALIDATION = { '1s': null, '2s': null, '3s': null, '1pl': null, '2pl': null, '3pl': null };
+
+        const [answers, setAnswers] = useState(INITIAL_ANSWERS);
+        const [validation, setValidation] = useState(INITIAL_VALIDATION);
+        const [isRoundOver, setIsRoundOver] = useState(false);
+        const [correctForms, setCorrectForms] = useState({});
+
+        useEffect(() => {
+          setAnswers(INITIAL_ANSWERS);
+          setValidation(INITIAL_VALIDATION);
+          setIsRoundOver(false);
+          setCorrectForms(getCorrectForms(verb, tense));
+        }, [verb, tense]);
+
+        const handleInputChange = (key, val) => {
+          setAnswers(prev => ({ ...prev, [key]: val }));
+        };
+
+        const checkAll = () => {
+          const keys = ['1s', '2s', '3s', '1pl', '2pl', '3pl'];
+          const newValidation = {};
+          let allCorrect = true;
+
+          keys.forEach(key => {
+            const isCorrect = checkAnswer(answers[key], verb, tense, key);
+            newValidation[key] = isCorrect;
+            if (!isCorrect) allCorrect = false;
+          });
+
+          setValidation(newValidation);
+          setIsRoundOver(true);
+
+          if (allCorrect) {
+            if (window.confetti) {
+              window.confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+              });
+            }
+            onCorrectRound();
+          } else {
+            onResetStreak();
+          }
+        };
+
+        const handleNext = () => {
+          onNextRound();
+        };
+
+        return (
+          <div className="w-full max-w-4xl animate-fade-in">
+            <VerbCard verb={verb} tense={tense} />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
+              {/* Singular Column */}
+              <div className="space-y-4">
+                <h3 className="text-stone-500 font-bold text-sm uppercase border-b border-stone-300 pb-1">Singular</h3>
+                <ConjugationCell
+                  label="1st Person"
+                  value={answers['1s']}
+                  onChange={(v) => handleInputChange('1s', v)}
+                  status={validation['1s']}
+                  correctAnswer={correctForms['1s']}
+                  disabled={isRoundOver}
+                />
+                <ConjugationCell
+                  label="2nd Person"
+                  value={answers['2s']}
+                  onChange={(v) => handleInputChange('2s', v)}
+                  status={validation['2s']}
+                  correctAnswer={correctForms['2s']}
+                  disabled={isRoundOver}
+                />
+                <ConjugationCell
+                  label="3rd Person"
+                  value={answers['3s']}
+                  onChange={(v) => handleInputChange('3s', v)}
+                  status={validation['3s']}
+                  correctAnswer={correctForms['3s']}
+                  disabled={isRoundOver}
+                />
+              </div>
+
+              {/* Plural Column */}
+              <div className="space-y-4">
+                <h3 className="text-stone-500 font-bold text-sm uppercase border-b border-stone-300 pb-1">Plural</h3>
+                <ConjugationCell
+                  label="1st Person"
+                  value={answers['1pl']}
+                  onChange={(v) => handleInputChange('1pl', v)}
+                  status={validation['1pl']}
+                  correctAnswer={correctForms['1pl']}
+                  disabled={isRoundOver}
+                />
+                <ConjugationCell
+                  label="2nd Person"
+                  value={answers['2pl']}
+                  onChange={(v) => handleInputChange('2pl', v)}
+                  status={validation['2pl']}
+                  correctAnswer={correctForms['2pl']}
+                  disabled={isRoundOver}
+                />
+                <ConjugationCell
+                  label="3rd Person"
+                  value={answers['3pl']}
+                  onChange={(v) => handleInputChange('3pl', v)}
+                  status={validation['3pl']}
+                  correctAnswer={correctForms['3pl']}
+                  disabled={isRoundOver}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              {!isRoundOver ? (
+                <button
+                  onClick={checkAll}
+                  className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-xl shadow-md text-lg transition-transform active:scale-95 w-full md:w-auto"
+                >
+                  Check Answers
+                </button>
+              ) : (
+                <button
+                  onClick={handleNext}
+                  className="bg-stone-800 hover:bg-stone-900 text-white font-bold py-3 px-8 rounded-xl shadow-md text-lg transition-transform active:scale-95 w-full md:w-auto flex items-center justify-center gap-2"
+                >
+                  Next Verb <span>→</span>
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      // ==========================================
+      // MAIN APP
+      // ==========================================
+
+      const App = () => {
+        const [gameState, setGameState] = useState('welcome');
+        const [streak, setStreak] = useState(0);
+        const [currentVerb, setCurrentVerb] = useState(VERBS[0]);
+        const [currentTense, setCurrentTense] = useState(getRandomTense());
+
+        const startGame = useCallback(() => {
+          setGameState('playing');
+          nextRound();
+          playSound(SoundType.CLICK);
+        }, []);
+
+        const nextRound = useCallback(() => {
+          setCurrentVerb(getRandomVerb());
+          setCurrentTense(getRandomTense());
+        }, []);
+
+        const handleCorrectRound = useCallback(() => {
+          setStreak((prev) => prev + 1);
+          if ((streak + 1) % 5 === 0) {
+            playSound(SoundType.VICTORY);
+          } else {
+            playSound(SoundType.SUCCESS);
+          }
+        }, [streak]);
+
+        const handleResetStreak = useCallback(() => {
+          setStreak(0);
+          playSound(SoundType.FAILURE);
+        }, []);
+
+        return (
+          <div className="flex flex-col min-h-screen max-w-4xl mx-auto w-full p-4 md:p-6 lg:p-8">
+            <Header streak={streak} />
+            
+            <main className="flex-grow flex flex-col items-center justify-center w-full mt-6">
+              {gameState === 'welcome' && (
+                <WelcomeScreen onStart={startGame} />
+              )}
+              
+              {gameState === 'playing' && (
+                <DrillScreen 
+                  verb={currentVerb}
+                  tense={currentTense}
+                  onCorrectRound={handleCorrectRound}
+                  onResetStreak={handleResetStreak}
+                  onNextRound={nextRound}
+                />
+              )}
+            </main>
+
+            <footer className="mt-12 text-center text-stone-500 text-sm py-4">
+              <p>Latin Passive Voice Review &bull; Dickinson Core Vocabulary</p>
+            </footer>
+          </div>
+        );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
