@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Declensionator | Identify the Declension of Latin Nouns</title>
-    <meta name="description" content="Identify Latin Noun Declensions" />
+    <title>Magister Declension | Latin Practice</title>
+    <meta name="description" content="Practice Latin Noun Declensions" />
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Fonts: Added Libre Baskerville -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Quattrocento:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
@@ -15,11 +15,15 @@
 </head>
   <body>
     
+    <!-- Effects Overlays -->
+    <div id="flash-overlay" class="flash-overlay"></div>
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
     <!-- Header -->
     <header class="app-header">
       <div class="container mx-auto px-4">
         <h1 class="header-title font-serif">
-          Declensionator
+          Declension-Ator
         </h1>
       </div>
     </header>
@@ -27,6 +31,15 @@
     <!-- Main Content -->
     <main class="main-container">
       
+      <!-- Vocab Selector -->
+      <div class="selector-container">
+        <label for="vocab-select" class="selector-label font-sans">Vocabulary:</label>
+        <select id="vocab-select" class="vocab-selector">
+          <option value="dickinson">Dickinson Core (Default)</option>
+          <option value="ecceRomani">Ecce Romani</option>
+        </select>
+      </div>
+
       <!-- Stats -->
       <div class="score-board">
         <div class="score-item">
@@ -40,7 +53,7 @@
       </div>
       
       <!-- Game Card -->
-      <div class="game-card">
+      <div id="game-card" class="game-card">
         <div class="game-card-content">
           
           <!-- Noun Display -->
@@ -57,7 +70,7 @@
           </div>
           
           <!-- Definition -->
-          <p id="noun-definition" class="noun-definition font-sans">
+          <p id="noun-definition" class="noun-definition font-serif">
             ...
           </p>
   
