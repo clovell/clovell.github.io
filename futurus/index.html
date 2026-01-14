@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latin Future Tense Master</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+    
+    <!-- Libraries (Loaded from CDN for standalone usage) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/htm@3.1.1/dist/htm.umd.js" crossorigin></script>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-roman-cream text-roman-stone antialiased">
+    <div id="root"></div>
+
+    <!-- Application Data and Logic -->
+    <!-- These are loaded sequentially to ensure data is available to the app -->
+    <script src="verbs.js"></script>
+    <script src="app.js"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
