@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin Irregular Adjective Quiz</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f4f6f7;
+            --card-bg: #ffffff;
+            --success: #27ae60;
+            --error: #c0392b;
+        }
+
+        body {
+            font-family: 'Georgia', serif; /* Serif for a classic academic feel */
+            background-color: var(--bg);
+            color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .controls {
+            margin-bottom: 2rem;
+            background: #ecf0f1;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        select {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            border: 1px solid #bdc3c7;
+        }
+
+        .quiz-area {
+            margin-top: 1.5rem;
+        }
+
+        .word-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .feedback {
+            margin-top: 1.5rem;
+            font-weight: bold;
+            min-height: 1.5rem;
+        }
+
+        .correct { color: var(--success); }
+        .incorrect { color: var(--error); }
+
+        .hint {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Adjectiva Irregularia</h1>
+    
+    <div class="controls">
+        <label for="mode-select">Select Quiz Mode:</label>
+        <select id="mode-select" onchange="setMode()">
+            <option value="forms">Forms (Comparative & Superlative)</option>
+            <option value="definitions">English Definitions</option>
+        </select>
+    </div>
+
+    <div class="quiz-area">
+        <div id="word-display" class="word-display">bonus</div>
+
+        <div id="forms-inputs">
+            <div class="input-group">
+                <label>Comparative (e.g., <em>melior</em>)</label>
+                <input type="text" id="comp-input" placeholder="Enter comparative form..." autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label>Superlative (e.g., <em>optimus, -a, -um</em>)</label>
+                <input type="text" id="super-input" placeholder="Enter full superlative form..." autocomplete="off">
+            </div>
+        </div>
+
+        <div id="def-inputs" class="hidden">
+            <div class="input-group">
+                <label>English Definition</label>
+                <input type="text" id="def-input" placeholder="Enter definition..." autocomplete="off">
+            </div>
+        </div>
+
+        <button class="btn" onclick="checkAnswer()">Check Answer</button>
+        
+        <div id="feedback" class="feedback"></div>
+        <div id="next-btn-container" class="hidden">
+            <button class="btn" style="background-color: var(--success);" onclick="nextQuestion()">Next Word</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data Structure
+    const adjectives = [
+        { 
+            word: "bonus", 
+            comp: ["melior"], 
+            super: "optimus, -a, -um", 
+            def: ["good"] 
+        },
+        { 
+            word: "malus", 
+            comp: ["peior"], 
+            super: "pessimus, -a, -um", 
+            def: ["bad"] 
+        },
+        { 
+            word: "magnus", 
+            comp: ["maior"], 
+            super: "maximus, -a, -um", 
+            def: ["great", "large", "big"] 
+        },
+        { 
+            word: "parvus", 
+            comp: ["minor"], 
+            super: "minimus, -a, -um", 
+            def: ["small", "little"] 
+        },
+        { 
+            word: "multus", 
+            // Note: plus is neuter, but standard dictionary listing for comparative
+            comp: ["plus"], 
+            super: "plurimus, -a, -um", 
+            def: ["much", "many"] 
+        }
+    ];
+
+    let currentMode = "forms";
+    let currentIndex = 0;
+
+    function setMode() {
+        currentMode = document.getElementById('mode-select').value;
+        const formsInputs = document.getElementById('forms-inputs');
+        const defInputs = document.getElementById('def-inputs');
+        
+        // Reset state
+        resetInputs();
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-btn-container').classList.add('hidden');
+
+        if (currentMode === 'forms') {
+            formsInputs.classList.remove('hidden');
+            defInputs.classList.add('hidden');
+        } else {
+            formsInputs.classList.add('hidden');
+            defInputs.classList.remove('hidden');
+        }
+        
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        // Simple random selection (ensuring we don't pick the exact same one twice if possible)
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * adjectives.length);
+        } while (newIndex === currentIndex && adjectives.length > 1);
+        
+        currentIndex = newIndex;
+        document.getElementById('word-display').innerText = adjectives[currentIndex].word;
+        
+        resetInputs();
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-btn-container').classList.add('hidden');
+    }
+
+    function resetInputs() {
+        document.getElementById('comp-input').value = "";
+        document.getElementById('super-input').value = "";
+        document.getElementById('def-input').value = "";
+        
+        // Re-enable inputs if they were disabled
+        document.querySelectorAll('input').forEach(input => input.disabled = false);
+    }
+
+    // Helper: Normalize string (remove macrons, whitespace, lower case)
+    function cleanInput(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    }
+
+    function checkAnswer() {
+        const currentWord = adjectives[currentIndex];
+        let isCorrect = false;
+        let message = "";
+
+        if (currentMode === 'forms') {
+            const userComp = cleanInput(document.getElementById('comp-input').value);
+            const userSuper = cleanInput(document.getElementById('super-input').value);
+            
+            // Validate Comparative (allow macrons or no macrons via normalization)
+            // We check if the user input matches the comparative root
+            const compCorrect = currentWord.comp.some(c => cleanInput(c) === userComp);
+            
+            //

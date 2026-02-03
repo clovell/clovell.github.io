@@ -1,0 +1,5 @@
+{
+  "name": "Gradus Adjectivorum",
+  "description": "A Latin quiz application for practicing irregular comparative and superlative adjectives (bonus, malus, magnus, parvus, multus). Features multiple modes including full gender forms and English definitions.",
+  "requestFramePermissions": []
+}
