@@ -7,16 +7,94 @@
     --correct-border: #27ae60;
     --incorrect-bg: #fdedec;
     --incorrect-border: #e74c3c;
+    --sidebar-width: 260px; /* Slightly widened to fit the new text */
 }
 
 body {
     font-family: 'Georgia', serif;
     background-color: var(--bg-color);
     color: var(--text-color);
+    margin: 0;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: white;
+    border-right: 1px solid #ddd;
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    overflow-y: auto; 
+}
+
+.sidebar h2 {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+/* New styling for the category heading */
+.category-heading {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.25rem;
+    user-select: none; /* Prevents selection */
+}
+
+.word-select {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.25rem;
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* New styling for the bolded demonstratives */
+.word-select.demonstrative {
+    font-size: 1.15rem;
+    font-weight: bold;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.word-select:hover {
+    background-color: #f0f4f8;
+}
+
+.word-select.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.main-content {
+    flex: 1;
     display: flex;
     justify-content: center;
-    padding: 2rem;
-    margin: 0;
+    align-items: flex-start;
+    padding: 3rem 2rem;
+    overflow-y: auto;
 }
 
 .container {
@@ -35,155 +113,46 @@ header {
     padding-bottom: 1rem;
 }
 
-h1 {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    margin: 0 0 1rem 0;
-}
+h1 { color: var(--primary-color); font-size: 1.75rem; margin: 0 0 1rem 0; }
+h2 { font-size: 1.2rem; color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid #eee; }
 
-h2 {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    border-bottom: 1px solid #eee;
-}
+.controls button { background-color: #ecf0f1; color: #7f8c8d; margin: 0 0.5rem; }
+.controls button.active { background-color: var(--accent-color); color: white; }
 
-.controls button {
-    background-color: #ecf0f1;
-    color: #7f8c8d;
-    margin: 0 0.5rem;
-}
+.instructions { text-align: center; font-style: italic; color: #666; margin-bottom: 1rem; }
 
-.controls button.active {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-.instructions {
-    text-align: center;
-    font-style: italic;
-    color: #666;
-    margin-bottom: 1rem;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1rem;
-}
-
-th, td {
-    padding: 0.5rem;
-    text-align: left;
-}
-
-th {
-    font-weight: bold;
-    color: #555;
-    border-bottom: 2px solid #ddd;
-}
-
-td:first-child {
-    font-weight: bold;
-    color: #555;
-    width: 15%;
-}
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+th, td { padding: 0.5rem; text-align: left; }
+th { font-weight: bold; color: #555; border-bottom: 2px solid #ddd; }
+td:first-child { font-weight: bold; color: #555; width: 15%; }
 
 table input {
-    width: 90%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: inherit;
-    text-align: center;
-    transition: all 0.2s;
+    width: 90%; padding: 0.5rem; font-size: 1rem; border: 1px solid #ccc;
+    border-radius: 4px; font-family: inherit; text-align: center; transition: all 0.2s;
 }
 
-table input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 3px rgba(52, 152, 219, 0.5);
-}
+table input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 3px rgba(52, 152, 219, 0.5); }
+table input.correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: #1e8449; }
+table input.incorrect { background-color: var(--incorrect-bg); border-color: var(--incorrect-border); color: #c0392b; }
 
-table input.correct {
-    background-color: var(--correct-bg);
-    border-color: var(--correct-border);
-    color: #1e8449;
-}
-
-table input.incorrect {
-    background-color: var(--incorrect-bg);
-    border-color: var(--incorrect-border);
-    color: #c0392b;
-}
-
-.action-row {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
+.action-row { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
 
 button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background-color 0.2s;
+    padding: 0.75rem 1.5rem; font-size: 1rem; background-color: var(--accent-color);
+    color: white; border: none; border-radius: 4px; cursor: pointer;
+    font-family: inherit; transition: background-color 0.2s;
 }
+button:hover { background-color: #2980b9; }
 
-button:hover {
-    background-color: #2980b9;
-}
+#clear-chart-btn { background-color: #95a5a6; }
+#clear-chart-btn:hover { background-color: #7f8c8d; }
 
-#clear-chart-btn {
-    background-color: #95a5a6;
-}
-
-#clear-chart-btn:hover {
-    background-color: #7f8c8d;
-}
-
-/* Quiz Mode Styles */
-#prompt-container {
-    text-align: center;
-}
-
-#question-text {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-}
-
-.input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 1.5rem;
-}
-
-.input-group input {
-    flex: 1;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-#quiz-feedback {
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    min-height: 1.5em;
-}
+#prompt-container { text-align: center; }
+#question-text { font-size: 1.25rem; font-weight: bold; margin-bottom: 1.5rem; }
+.input-group { display: flex; gap: 10px; margin-bottom: 1.5rem; }
+.input-group input { flex: 1; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; }
+#quiz-feedback { text-align: center; font-size: 1.1rem; font-weight: bold; margin-bottom: 1rem; min-height: 1.5em; }
 
 .text-correct { color: var(--correct-border); }
 .text-incorrect { color: var(--incorrect-border); }
-
 .hidden { display: none; }
