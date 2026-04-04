@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin Verb Synopsis: Indicative Active</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav id="controls" class="hidden-nav">
+        <div id="current-verb-display"></div>
+        <div id="target-form-display" class="target-badge"></div>
+        <button id="new-verb-btn">Start with a New Verb</button>
+    </nav>
+
+    <main id="scroller">
+        
+        <section class="card" id="step-0">
+            <div class="content intro-content">
+                <h1 class="main-title">Latin Verb Synopsis Tutorial</h1>
+                
+                <div class="mode-selection" id="mode-buttons">
+                    <button class="mode-btn" onclick="startTutorial(false)">Start Pure Tutorial</button>
+                    <button class="mode-btn guided-btn" onclick="startTutorial(true)">Start Guided Tutorial</button>
+                </div>
+                
+                <div id="step-0-verb-display" class="hidden">
+                    <div id="s0-parts" class="giant-latin stem"></div>
+                    <div id="s0-trans" class="translation-text"></div>
+                    <div id="s0-target" class="elegant-target mt-1"></div>
+                </div>
+            </div>
+            <div class="next-step-arrow hidden" id="step-0-arrow" onclick="scrollToCard('step-1')">
+                Next Step: The Personal Ending <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-1">
+            <h2>1. The Personal Ending</h2>
+            <div class="content">
+                <p class="instruction">Identify the standard active personal ending for the <strong id="s1-person-target"></strong>.</p>
+                <div class="calculation" style="font-size: 2.5rem;">
+                    <span class="highlight ending" id="s1-ending"></span>
+                </div>
+                <p class="translation-tip">Note: These apply to the Present, Imperfect, Future, Pluperfect, and Future Perfect. The Perfect tense uses its own unique set of endings.</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-2')">
+                Next Step: Identify the Conjugation <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-2">
+            <h2>2. Identify the Conjugation</h2>
+            <div class="content">
+                <div class="verb-display large-text" id="pp-display"></div>
+                <div class="flowchart" id="conj-flowchart"></div>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-3')">
+                Next Step: Find the Present Base <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-3">
+            <h2>3. Find the Present Base</h2>
+            <div class="content">
+                <p class="instruction">Remove the <em>-re</em> from the infinitive (2nd Principal Part).</p>
+                <div class="calculation">
+                    <span id="step3-infinitive"></span> - <span class="strike">re</span> = <span class="highlight stem" id="step3-base"></span>
+                </div>
+                <p class="translation-tip">Tip: This base carries the core meaning of the verb.</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-4')">
+                Next Step: The Present Tense <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-4">
+            <h2>4. The Present Tense</h2>
+            <div class="content">
+                <p class="instruction">Add the connecting vowel and personal ending.</p>
+                <div class="hint-box" id="hint-present"></div>
+                <table class="conjugation-table" id="table-present"></table>
+                <p class="translation-tip">Translate as: "verbs", "is verbing", or "does verb".</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-5')">
+                Next Step: The Imperfect Tense <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-5">
+            <h2>5. The Imperfect Tense</h2>
+            <div class="content">
+                <p class="instruction">Base + Connecting Vowel + <span class="tense">-ba-</span> + Personal Ending.</p>
+                <div class="hint-box" id="hint-imperfect"></div>
+                <div class="formula-box" id="imp-stem"></div>
+                <table class="conjugation-table" id="table-imperfect"></table>
+                <p class="translation-tip">Translate as: "was verbing", "used to verb", or "kept verbing".</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-6')">
+                Next Step: The Future Tense <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-6">
+            <h2>6. The Future Tense</h2>
+            <div class="content">
+                <p class="instruction">Distinguish between 1st/2nd and 3rd/4th conjugations.</p>
+                <div class="hint-box" id="hint-future"></div>
+                <div class="split-view">
+                    <div class="split-side" id="future-rule-1">
+                        <h3>1st & 2nd Conj.</h3>
+                        <p><strong>Bō, Bi, Bu</strong></p>
+                    </div>
+                    <div class="split-side" id="future-rule-2">
+                        <h3>3rd & 4th Conj.</h3>
+                        <p><strong>Ham & 5 Eggs</strong></p>
+                    </div>
+                </div>
+                <table class="conjugation-table" id="table-future"></table>
+                <p class="translation-tip">Translate as: "will verb".</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-7')">
+                Next Step: The Perfect Stem <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-7">
+            <h2>7. The Perfect Stem</h2>
+            <div class="content">
+                <p class="instruction">Go to the <strong>3rd Principal Part</strong> and remove the <em>-ī</em>.</p>
+                <div class="calculation">
+                    <span id="step7-3pp"></span> - <span class="strike" style="text-decoration: line-through; color: #bbb;">ī</span> = <span class="highlight perf-stem" id="step7-stem"></span>
+                </div>
+                <p class="translation-tip">Tip: This stem is used for all tenses in the Perfect System.</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-8')">
+                Next Step: The Perfect Tense <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-8">
+            <h2>8. The Perfect Tense</h2>
+            <div class="content">
+                <p class="instruction">Add the special Perfect Ending.</p>
+                <div class="hint-box">The perfect active endings are: <span class="ending">-ī, -istī, -it, -imus, -istis, -ērunt</span>.</div>
+                <table class="conjugation-table" id="table-perfect"></table>
+                <p class="translation-tip">Translate as: "verbed" or "has verbed".</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-9')">
+                Next Step: The Pluperfect Tense <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-9">
+            <h2>9. The Pluperfect Tense</h2>
+            <div class="content">
+                <p class="instruction">Perfect Stem + <span class="tense">-erā-</span> + Regular Ending.</p>
+                <div class="formula-box">
+                    <span class="perf-stem" id="plu-stem"></span><span class="tense">erā</span><span class="ending">-</span>
+                </div>
+                <table class="conjugation-table" id="table-pluperfect"></table>
+                <p class="translation-tip">Translate as: "had verbed".</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-10')">
+                Next Step: The Future Perfect Tense <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-10">
+            <h2>10. The Future Perfect Tense</h2>
+            <div class="content">
+                <p class="instruction">Perfect Stem + <span class="tense">-eri-</span> + Regular Ending.</p>
+                <p style="font-size:0.8rem; color:#666;">(Note: 1st person singular uses <span class="tense">-er</span><span class="ending">ō</span>)</p>
+                <div class="formula-box">
+                    <span class="perf-stem" id="fp-stem"></span><span class="tense">eri</span><span class="ending">-</span>
+                </div>
+                <table class="conjugation-table" id="table-futureperfect"></table>
+                <p class="translation-tip">Translate as: "will have verbed".</p>
+            </div>
+            <div class="next-step-arrow" onclick="scrollToCard('step-11')">
+                Next Step: Full Synopsis <br> ▼
+            </div>
+        </section>
+
+        <section class="card" id="step-11">
+            <h2>Full Indicative Active Synopsis</h2>
+            <div class="elegant-target mb-2" id="final-target-badge"></div>
+            <div class="content" style="max-width: 950px; padding: 1rem;">
+                <div class="table-container" style="overflow-x: auto;">
+                    <table class="conjugation-table full-synopsis" id="table-master"></table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="verbs.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
