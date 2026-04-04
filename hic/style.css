@@ -7,7 +7,7 @@
     --correct-border: #27ae60;
     --incorrect-bg: #fdedec;
     --incorrect-border: #e74c3c;
-    --sidebar-width: 260px; /* Slightly widened to fit the new text */
+    --sidebar-width: 350px; /* Widened slightly more to fit the new font formatting */
 }
 
 body {
@@ -41,7 +41,6 @@ body {
     padding-bottom: 0.5rem;
 }
 
-/* New styling for the category heading */
 .category-heading {
     font-size: 0.85rem;
     color: #7f8c8d;
@@ -52,14 +51,14 @@ body {
     padding-left: 0.5rem;
     border-bottom: 1px solid #eee;
     padding-bottom: 0.25rem;
-    user-select: none; /* Prevents selection */
+    user-select: none;
 }
 
 .word-select {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     margin-bottom: 0.25rem;
     background-color: transparent;
     color: var(--text-color);
@@ -70,13 +69,21 @@ body {
     transition: background-color 0.2s, color 0.2s;
 }
 
-/* New styling for the bolded demonstratives */
-.word-select.demonstrative {
-    font-size: 1.15rem;
+/* New specific formatting for Latin and Translations */
+.word-select .latin {
     font-weight: bold;
-    padding-top: 0.85rem;
-    padding-bottom: 0.85rem;
-    margin-bottom: 0.5rem;
+}
+
+.word-select .translation {
+    font-weight: normal;
+    font-style: italic;
+    color: #7f8c8d;
+    font-size: 0.9em;
+    margin-left: 0.25rem;
+}
+
+.word-select.demonstrative .latin {
+    font-size: 1.1rem;
 }
 
 .word-select:hover {
@@ -86,6 +93,10 @@ body {
 .word-select.active {
     background-color: var(--accent-color);
     color: white;
+}
+
+.word-select.active .translation {
+    color: rgba(255, 255, 255, 0.85); /* Keeps the translation readable against the blue background */
 }
 
 .main-content {
