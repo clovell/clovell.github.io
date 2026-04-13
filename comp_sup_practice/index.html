@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Latin Adjective Practice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Latin Comparative & Superlative Workshop</h1>
+    <nav>
+        <button onclick="setMode('tutorial')">Tutorial</button>
+        <button onclick="setMode('formation')">Level I: Formation</button>
+        <button onclick="setMode('inflection')">Level II: Inflection</button>
+    </nav>
+</header>
+
+<main>
+    <section id="tutorial-mode" class="active-section">
+        <h2>Formation Tutorial</h2>
+        <div class="content-block">
+            <h3>Finding the Base</h3>
+            <p>To form comparatives and superlatives, you must first isolate the base of the positive adjective. For 1st/2nd declension adjectives, remove the <em>-a</em> or <em>-us</em>. For 3rd declension, remove the <em>-is</em> from the genitive singular.</p>
+            
+            <h3>The Comparative Degree</h3>
+            <p><strong>Formula:</strong> Base + <em>-ior</em> (M/F) or <em>-ius</em> (N) + 3rd Declension Endings.</p>
+            <p>Example: <em>longus, -a, -um</em> (Base: <em>long-</em>) &rarr; <em>longior, longius</em>.</p>
+
+            <h3>The Superlative Degree</h3>
+            <p><strong>Formula:</strong> Base + <em>-issim-</em> + 1st/2nd Declension Endings.</p>
+            <p>Example: <em>long-</em> &rarr; <em>longissimus, -a, -um</em>.</p>
+            <p><em>Note: Adjectives ending in -er or -lis may use -rimus or -limus.</em></p>
+        </div>
+    </section>
+
+    <section id="formation-mode" class="hidden">
+        <h2>Level I: Basic Formation</h2>
+        <p>Convert the given adjective to the requested degree (Nominative Singular).</p>
+        
+        <div id="formation-question-box" class="question-box">
+            <p><strong>Adjective:</strong> <span id="f-adj-display">---</span></p>
+            <p><strong>Target:</strong> <span id="f-target-display">---</span></p>
+            
+            <div class="input-group">
+                <input type="text" id="f-user-input" placeholder="Type Latin here..." autocomplete="off">
+                <button onclick="checkFormation()">Submit</button>
+            </div>
+            <p id="f-feedback" class="feedback"></p>
+            <button onclick="nextFormationQuestion()" class="next-btn">Next Question</button>
+        </div>
+    </section>
+
+    <section id="inflection-mode" class="hidden">
+        <h2>Level II: Advanced Inflection</h2>
+        <p>Generate the specific Latin form based on the parameters provided.</p>
+        
+        <div id="inflection-question-box" class="question-box">
+            <p><strong>Adjective:</strong> <span id="i-adj-display">---</span></p>
+            <p><strong>Parameters:</strong> <span id="i-params-display">---</span></p>
+            
+            <div class="input-group">
+                <input type="text" id="i-user-input" placeholder="Type Latin form..." autocomplete="off">
+                <button onclick="checkInflection()">Submit</button>
+            </div>
+            <p id="i-feedback" class="feedback"></p>
+            <button onclick="nextInflectionQuestion()" class="next-btn">Next Question</button>
+        </div>
+    </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
