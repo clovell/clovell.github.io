@@ -1,0 +1,164 @@
+body {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    background-color: #f9f7f1;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0dbce;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.streak-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c5e3b;
+}
+
+.verb-display h2 {
+    font-size: 2rem;
+    margin: 10px 0;
+    letter-spacing: 1px;
+}
+
+.verb-display h3 {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #666;
+    margin-top: 0;
+}
+
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.action-section {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0dbce;
+}
+
+.primary-btn {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    background-color: #2c5e3b;
+    color: white;
+}
+
+.primary-btn:hover {
+    background-color: #1f422a;
+}
+
+.secondary-btn {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    background-color: #4a5c6a;
+    color: white;
+}
+
+.secondary-btn:hover {
+    background-color: #35424d;
+}
+
+/* Utility class to hide the button */
+.hidden {
+    display: none !important;
+}
+
+.chart-section {
+    margin-bottom: 40px;
+}
+
+.chart-section h2 {
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.grid-chart {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.header-cell, .row-label {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9e5d9;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.header-cell.empty {
+    background-color: transparent;
+}
+
+.input-cell {
+    display: flex;
+    align-items: center;
+}
+
+.input-cell.disabled {
+    background-color: #f0f0f0;
+    color: #999;
+    justify-content: center;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 1.1rem;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #4a5c6a;
+}
+
+input.correct {
+    border-color: #4caf50;
+    background-color: #e8f5e9;
+}
+
+input.incorrect {
+    border-color: #f44336;
+    background-color: #ffebee;
+}

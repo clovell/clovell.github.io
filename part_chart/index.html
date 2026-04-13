@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin Verb Morphology Practice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Participial and Infinitival Forms</h1>
+            <div class="streak-container">Streak: <span id="streak-counter">0</span></div>
+            <div class="verb-display">
+                <h2 id="principal-parts">Loading...</h2>
+                <h3 id="verb-meaning"></h3>
+            </div>
+        </header>
+
+        <main>
+            <section class="chart-section">
+                <h2>Participles</h2>
+                <div class="grid-chart">
+                    <div class="header-cell empty"></div>
+                    <div class="header-cell">Active</div>
+                    <div class="header-cell">Passive</div>
+
+                    <div class="row-label">Present</div>
+                    <div class="input-cell"><input type="text" data-form="presActPart" data-hint="e.g., amans, amantis" placeholder="e.g., amans, amantis"></div>
+                    <div class="input-cell disabled">N/A</div>
+
+                    <div class="row-label">Perfect</div>
+                    <div class="input-cell disabled">N/A</div>
+                    <div class="input-cell"><input type="text" data-form="perfPassPart" data-hint="e.g., amatus, -a, -um" placeholder="e.g., amatus, -a, -um"></div>
+
+                    <div class="row-label">Future</div>
+                    <div class="input-cell"><input type="text" data-form="futActPart" data-hint="e.g., amaturus, -a, -um" placeholder="e.g., amaturus, -a, -um"></div>
+                    <div class="input-cell disabled">N/A</div>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2>Infinitives</h2>
+                <div class="grid-chart">
+                    <div class="header-cell empty"></div>
+                    <div class="header-cell">Active</div>
+                    <div class="header-cell">Passive</div>
+
+                    <div class="row-label">Present</div>
+                    <div class="input-cell"><input type="text" data-form="presActInf" data-hint="e.g., amare" placeholder="e.g., amare"></div>
+                    <div class="input-cell"><input type="text" data-form="presPassInf" data-hint="e.g., amari" placeholder="e.g., amari"></div>
+
+                    <div class="row-label">Perfect</div>
+                    <div class="input-cell"><input type="text" data-form="perfActInf" data-hint="e.g., amavisse" placeholder="e.g., amavisse"></div>
+                    <div class="input-cell"><input type="text" data-form="perfPassInf" data-hint="e.g., amatus, -a, -um esse" placeholder="e.g., amatus, -a, -um esse"></div>
+
+                    <div class="row-label">Future</div>
+                    <div class="input-cell"><input type="text" data-form="futActInf" data-hint="e.g., amaturus, -a, -um esse" placeholder="e.g., amaturus, -a, -um esse"></div>
+                    <div class="input-cell"><input type="text" data-form="futPassInf" data-hint="(Optional) e.g., amatum iri" placeholder="(Optional) e.g., amatum iri"></div>
+                </div>
+            </section>
+            
+            <div class="action-section">
+                <button id="check-answers-btn" class="primary-btn">Check Answers</button>
+                <button id="next-verb-btn" class="secondary-btn hidden">Next Verb</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="vocab.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

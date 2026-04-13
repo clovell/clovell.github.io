@@ -4,117 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Latin Declension Practice</title>
-    <style>
-        :root {
-            --bg-color: #fcfbf9;
-            --text-color: #333;
-            --border-color: #ccc;
-            --correct-bg: #e6f4ea;
-            --incorrect-bg: #fce8e6;
-            --primary-btn: #4a5d82;
-            --secondary-btn: #e0e0e0;
-        }
-        body {
-            font-family: "Georgia", serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            line-height: 1.6;
-        }
-        h1, h2, h3 {
-            text-align: center;
-            font-weight: normal;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        button {
-            font-family: inherit;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            background-color: var(--secondary-btn);
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        button.active, button:hover {
-            background-color: var(--primary-btn);
-            color: white;
-            border-color: var(--primary-btn);
-        }
-        .container {
-            display: none;
-            background: white;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .container.active {
-            display: block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1.5rem;
-        }
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 0.75rem;
-            text-align: left;
-        }
-        th {
-            background-color: #f5f5f5;
-            width: 20%;
-        }
-        input[type="text"] {
-            font-family: inherit;
-            font-size: 1rem;
-            width: 100%;
-            padding: 0.5rem;
-            box-sizing: border-box;
-            border: 1px solid var(--border-color);
-            border-radius: 3px;
-        }
-        input.correct {
-            background-color: var(--correct-bg);
-            border-color: #34a853;
-        }
-        input.incorrect {
-            background-color: var(--incorrect-bg);
-            border-color: #ea4335;
-        }
-        .controls {
-            display: flex;
-            justify-content: space-between;
-        }
-        #quiz-prompt {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        #quiz-feedback {
-            margin-top: 1rem;
-            text-align: center;
-            font-weight: bold;
-            min-height: 1.5rem;
-        }
-        .quiz-input-group {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        .quiz-input-group input {
-            width: 50%;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -125,7 +15,16 @@
     </nav>
 
     <div id="chart-mode" class="container active">
-        <h2 id="chart-lemma"></h2>
+        <div class="header-controls">
+            <h2 id="chart-lemma"></h2>
+            <div class="options-group">
+                <label class="toggle-label">
+                    <input type="checkbox" id="vocative-toggle" onchange="loadNewChart()"> 
+                    Include Vocative
+                </label>
+                <div id="score-display">Perfect Charts: <span id="score-count">0</span> | Streak: <span id="streak-count">0</span></div>
+            </div>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -137,9 +36,9 @@
             <tbody id="chart-body">
                 </tbody>
         </table>
-        <div class="controls">
-            <button onclick="checkChart()">Check Answers</button>
-            <button onclick="loadNewChart()">Next Noun</button>
+        <div class="controls action-controls">
+            <button id="btn-check" class="btn-check" onclick="checkChart()">Check Answers</button>
+            <button id="btn-next" class="btn-next" style="display: none;" onclick="loadNewChart()">Next Noun &rarr;</button>
         </div>
     </div>
 
@@ -150,173 +49,12 @@
             <button onclick="checkQuiz()">Submit</button>
         </div>
         <div class="controls" style="justify-content: center;">
-            <button onclick="loadNewQuiz()">Next Question</button>
+            <button class="btn-next" onclick="loadNewQuiz()">Next Question &rarr;</button>
         </div>
         <div id="quiz-feedback"></div>
     </div>
 
-    <script>
-        const cases = ['nom', 'gen', 'dat', 'acc', 'abl', 'voc'];
-        const numbers = ['sg', 'pl'];
-        const caseLabels = ['Nominative', 'Genitive', 'Dative', 'Accusative', 'Ablative', 'Vocative'];
-        
-        const vocabulary = [
-            {
-                lemma: "puella, puellae, f.",
-                forms: {
-                    nom_sg: "puella", gen_sg: "puellae", dat_sg: "puellae", acc_sg: "puellam", abl_sg: "puellā", voc_sg: "puella",
-                    nom_pl: "puellae", gen_pl: "puellārum", dat_pl: "puellīs", acc_pl: "puellās", abl_pl: "puellīs", voc_pl: "puellae"
-                }
-            },
-            {
-                lemma: "animus, animī, m.",
-                forms: {
-                    nom_sg: "animus", gen_sg: "animī", dat_sg: "animō", acc_sg: "animum", abl_sg: "animō", voc_sg: "anime",
-                    nom_pl: "animī", gen_pl: "animōrum", dat_pl: "animīs", acc_pl: "animōs", abl_pl: "animīs", voc_pl: "animī"
-                }
-            },
-            {
-                lemma: "bellum, bellī, n.",
-                forms: {
-                    nom_sg: "bellum", gen_sg: "bellī", dat_sg: "bellō", acc_sg: "bellum", abl_sg: "bellō", voc_sg: "bellum",
-                    nom_pl: "bella", gen_pl: "bellōrum", dat_pl: "bellīs", acc_pl: "bella", abl_pl: "bellīs", voc_pl: "bella"
-                }
-            },
-            {
-                lemma: "rēx, rēgis, m.",
-                forms: {
-                    nom_sg: "rēx", gen_sg: "rēgis", dat_sg: "rēgī", acc_sg: "rēgem", abl_sg: "rēge", voc_sg: "rēx",
-                    nom_pl: "rēgēs", gen_pl: "rēgum", dat_pl: "rēgibus", acc_pl: "rēgēs", abl_pl: "rēgibus", voc_pl: "rēgēs"
-                }
-            },
-            {
-                lemma: "corpus, corporis, n.",
-                forms: {
-                    nom_sg: "corpus", gen_sg: "corporis", dat_sg: "corporī", acc_sg: "corpus", abl_sg: "corpore", voc_sg: "corpus",
-                    nom_pl: "corpora", gen_pl: "corporum", dat_pl: "corporibus", acc_pl: "corpora", abl_pl: "corporibus", voc_pl: "corpora"
-                }
-            },
-            {
-                lemma: "pars, partis, f.",
-                forms: {
-                    nom_sg: "pars", gen_sg: "partis", dat_sg: "partī", acc_sg: "partem", abl_sg: "parte", voc_sg: "pars",
-                    nom_pl: "partēs", gen_pl: "partium", dat_pl: "partibus", acc_pl: "partēs", abl_pl: "partibus", voc_pl: "partēs"
-                }
-            }
-        ];
-
-        let currentNoun = null;
-        let currentQuizKey = null;
-
-        function switchMode(mode) {
-            document.getElementById('chart-mode').classList.remove('active');
-            document.getElementById('quiz-mode').classList.remove('active');
-            document.getElementById('btn-chart').classList.remove('active');
-            document.getElementById('btn-quiz').classList.remove('active');
-
-            document.getElementById(`${mode}-mode`).classList.add('active');
-            document.getElementById(`btn-${mode}`).classList.add('active');
-
-            if (mode === 'chart') loadNewChart();
-            if (mode === 'quiz') loadNewQuiz();
-        }
-
-        function removeMacrons(str) {
-            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        }
-
-        function isCorrect(userInput, correctAnswer) {
-            const input = userInput.trim().toLowerCase();
-            const answer = correctAnswer.toLowerCase();
-            const hasMacrons = /[āēīōūĀĒĪŌŪ]/.test(input);
-
-            if (hasMacrons) {
-                return input === answer;
-            } else {
-                return input === removeMacrons(answer);
-            }
-        }
-
-        function getRandomNoun() {
-            return vocabulary[Math.floor(Math.random() * vocabulary.length)];
-        }
-
-        function loadNewChart() {
-            currentNoun = getRandomNoun();
-            document.getElementById('chart-lemma').innerText = currentNoun.lemma;
-            const tbody = document.getElementById('chart-body');
-            tbody.innerHTML = '';
-
-            cases.forEach((c, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <th>${caseLabels[index]}</th>
-                    <td><input type="text" data-key="${c}_sg" autocomplete="off"></td>
-                    <td><input type="text" data-key="${c}_pl" autocomplete="off"></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function checkChart() {
-            const inputs = document.querySelectorAll('#chart-body input');
-            inputs.forEach(input => {
-                const key = input.getAttribute('data-key');
-                const correctAnswer = currentNoun.forms[key];
-                
-                input.classList.remove('correct', 'incorrect');
-                if (input.value.trim() === '') return;
-
-                if (isCorrect(input.value, correctAnswer)) {
-                    input.classList.add('correct');
-                } else {
-                    input.classList.add('incorrect');
-                }
-            });
-        }
-
-        function loadNewQuiz() {
-            currentNoun = getRandomNoun();
-            const randomCase = cases[Math.floor(Math.random() * cases.length)];
-            const randomNum = numbers[Math.floor(Math.random() * numbers.length)];
-            currentQuizKey = `${randomCase}_${randomNum}`;
-
-            const caseIndex = cases.indexOf(randomCase);
-            const numLabel = randomNum === 'sg' ? 'singular' : 'plural';
-            
-            document.getElementById('quiz-prompt').innerHTML = `Provide the <strong>${caseLabels[caseIndex].toLowerCase()} ${numLabel}</strong> of <em>${currentNoun.lemma}</em>`;
-            
-            const inputField = document.getElementById('quiz-input');
-            inputField.value = '';
-            inputField.classList.remove('correct', 'incorrect');
-            inputField.focus();
-            
-            document.getElementById('quiz-feedback').innerText = '';
-            document.getElementById('quiz-feedback').style.color = 'inherit';
-        }
-
-        function checkQuiz() {
-            const inputField = document.getElementById('quiz-input');
-            const feedback = document.getElementById('quiz-feedback');
-            const correctAnswer = currentNoun.forms[currentQuizKey];
-
-            inputField.classList.remove('correct', 'incorrect');
-
-            if (inputField.value.trim() === '') return;
-
-            if (isCorrect(inputField.value, correctAnswer)) {
-                inputField.classList.add('correct');
-                feedback.innerText = 'Correct!';
-                feedback.style.color = '#34a853';
-            } else {
-                inputField.classList.add('incorrect');
-                feedback.innerHTML = `Incorrect. The correct form is <strong>${correctAnswer}</strong>.`;
-                feedback.style.color = '#ea4335';
-            }
-        }
-
-        // Initialize
-        loadNewChart();
-    </script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

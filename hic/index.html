@@ -3,123 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hic, Haec, Hoc Paradigm & Quiz</title>
+    <title>Latin Pronoun & Adjective Practice</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Demonstrative: hic, haec, hoc</h1>
-            <div class="controls">
-                <button id="mode-chart-btn" class="active">Chart Mode</button>
-                <button id="mode-quiz-btn">Quiz Mode</button>
-            </div>
-        </header>
-
-        <div id="chart-mode" class="mode-view">
-            <p class="instructions">Complete the paradigm. Tab navigates across the row.</p>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h2>Choose an adjective:</h2>
             
-            <h2>Singular</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Case</th><th>Masculine</th><th>Feminine</th><th>Neuter</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nom</td>
-                        <td><input type="text" data-answers="hic"></td>
-                        <td><input type="text" data-answers="haec"></td>
-                        <td><input type="text" data-answers="hoc"></td>
-                    </tr>
-                    <tr>
-                        <td>Gen</td>
-                        <td><input type="text" data-answers="huius,hūius"></td>
-                        <td><input type="text" data-answers="huius,hūius"></td>
-                        <td><input type="text" data-answers="huius,hūius"></td>
-                    </tr>
-                    <tr>
-                        <td>Dat</td>
-                        <td><input type="text" data-answers="huic"></td>
-                        <td><input type="text" data-answers="huic"></td>
-                        <td><input type="text" data-answers="huic"></td>
-                    </tr>
-                    <tr>
-                        <td>Acc</td>
-                        <td><input type="text" data-answers="hunc"></td>
-                        <td><input type="text" data-answers="hanc"></td>
-                        <td><input type="text" data-answers="hoc"></td>
-                    </tr>
-                    <tr>
-                        <td>Abl</td>
-                        <td><input type="text" data-answers="hoc,hōc"></td>
-                        <td><input type="text" data-answers="hac,hāc"></td>
-                        <td><input type="text" data-answers="hoc,hōc"></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Plural</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Case</th><th>Masculine</th><th>Feminine</th><th>Neuter</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nom</td>
-                        <td><input type="text" data-answers="hi,hī"></td>
-                        <td><input type="text" data-answers="hae"></td>
-                        <td><input type="text" data-answers="haec"></td>
-                    </tr>
-                    <tr>
-                        <td>Gen</td>
-                        <td><input type="text" data-answers="horum,hōrum"></td>
-                        <td><input type="text" data-answers="harum,hārum"></td>
-                        <td><input type="text" data-answers="horum,hōrum"></td>
-                    </tr>
-                    <tr>
-                        <td>Dat</td>
-                        <td><input type="text" data-answers="his,hīs"></td>
-                        <td><input type="text" data-answers="his,hīs"></td>
-                        <td><input type="text" data-answers="his,hīs"></td>
-                    </tr>
-                    <tr>
-                        <td>Acc</td>
-                        <td><input type="text" data-answers="hos,hōs"></td>
-                        <td><input type="text" data-answers="has,hās"></td>
-                        <td><input type="text" data-answers="haec"></td>
-                    </tr>
-                    <tr>
-                        <td>Abl</td>
-                        <td><input type="text" data-answers="his,hīs"></td>
-                        <td><input type="text" data-answers="his,hīs"></td>
-                        <td><input type="text" data-answers="his,hīs"></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="action-row">
-                <button id="check-chart-btn">Check Chart</button>
-                <button id="clear-chart-btn">Clear</button>
-            </div>
-        </div>
-        
-        <div id="quiz-mode" class="mode-view hidden">
-            <div id="prompt-container">
-                <p id="question-text">Loading...</p>
-            </div>
+            <button class="word-select demonstrative active" data-word="hic"><span class="latin">hic, haec, hoc</span> <span class="translation">(this)</span></button>
+            <button class="word-select demonstrative" data-word="ille"><span class="latin">ille, illa, illud</span> <span class="translation">(that)</span></button>
+            <button class="word-select demonstrative" data-word="is"><span class="latin">is, ea, id</span> <span class="translation">(he/she/it; this/that)</span></button>
+            <button class="word-select demonstrative" data-word="iste"><span class="latin">iste, ista, istud</span> <span class="translation">(that of yours)</span></button>
             
-            <div class="input-group">
-                <input type="text" id="quiz-input" placeholder="Enter the Latin form" autocomplete="off">
-                <button id="quiz-submit-btn">Check</button>
-            </div>
+            <h3 class="category-heading">unus nauta adjectives</h3>
+            <button class="word-select" data-word="unus"><span class="latin">ūnus, -a, -um</span> <span class="translation">(one)</span></button>
+            <button class="word-select" data-word="nullus"><span class="latin">nūllus, -a, -um</span> <span class="translation">(no, none)</span></button>
+            <button class="word-select" data-word="ullus"><span class="latin">ūllus, -a, -um</span> <span class="translation">(any)</span></button>
+            <button class="word-select" data-word="solus"><span class="latin">sōlus, -a, -um</span> <span class="translation">(alone, only)</span></button>
+            <button class="word-select" data-word="neuter"><span class="latin">neuter, neutra, neutrum</span> <span class="translation">(neither)</span></button>
+            <button class="word-select" data-word="alius"><span class="latin">alius, -a, -ud</span> <span class="translation">(other, another)</span></button>
+            <button class="word-select" data-word="uter"><span class="latin">uter, utra, utrum</span> <span class="translation">(which of two)</span></button>
+            <button class="word-select" data-word="totus"><span class="latin">tōtus, -a, -um</span> <span class="translation">(whole, entire)</span></button>
+            <button class="word-select" data-word="alter"><span class="latin">alter, altera, alterum</span> <span class="translation">(the other of two)</span></button>
+        </aside>
 
-            <div id="quiz-feedback"></div>
-            <button id="quiz-next-btn" class="hidden">Next Form</button>
-        </div>
+        <main class="main-content">
+            <div class="container">
+                <header>
+                    <h1 id="current-word-title"><span class="latin">hic, haec, hoc</span> <span class="translation">(this)</span></h1>
+                    <div class="controls">
+                        <button id="mode-chart-btn" class="active">Chart Mode</button>
+                        <button id="mode-quiz-btn">Quiz Mode</button>
+                    </div>
+                </header>
+
+                <div id="chart-mode" class="mode-view">
+                    <p class="instructions">Complete the paradigm. Tab navigates across the row.</p>
+                    
+                    <h2>Singular</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Case</th><th>Masculine</th><th>Feminine</th><th>Neuter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nom</td>
+                                <td><input type="text" data-case="Nominative" data-number="Singular" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Nominative" data-number="Singular" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Nominative" data-number="Singular" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Gen</td>
+                                <td><input type="text" data-case="Genitive" data-number="Singular" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Genitive" data-number="Singular" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Genitive" data-number="Singular" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Dat</td>
+                                <td><input type="text" data-case="Dative" data-number="Singular" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Dative" data-number="Singular" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Dative" data-number="Singular" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Acc</td>
+                                <td><input type="text" data-case="Accusative" data-number="Singular" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Accusative" data-number="Singular" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Accusative" data-number="Singular" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Abl</td>
+                                <td><input type="text" data-case="Ablative" data-number="Singular" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Ablative" data-number="Singular" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Ablative" data-number="Singular" data-gender="Neuter"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Plural</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Case</th><th>Masculine</th><th>Feminine</th><th>Neuter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nom</td>
+                                <td><input type="text" data-case="Nominative" data-number="Plural" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Nominative" data-number="Plural" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Nominative" data-number="Plural" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Gen</td>
+                                <td><input type="text" data-case="Genitive" data-number="Plural" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Genitive" data-number="Plural" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Genitive" data-number="Plural" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Dat</td>
+                                <td><input type="text" data-case="Dative" data-number="Plural" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Dative" data-number="Plural" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Dative" data-number="Plural" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Acc</td>
+                                <td><input type="text" data-case="Accusative" data-number="Plural" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Accusative" data-number="Plural" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Accusative" data-number="Plural" data-gender="Neuter"></td>
+                            </tr>
+                            <tr>
+                                <td>Abl</td>
+                                <td><input type="text" data-case="Ablative" data-number="Plural" data-gender="Masculine"></td>
+                                <td><input type="text" data-case="Ablative" data-number="Plural" data-gender="Feminine"></td>
+                                <td><input type="text" data-case="Ablative" data-number="Plural" data-gender="Neuter"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="action-row">
+                        <button id="check-chart-btn">Check Chart</button>
+                        <button id="clear-chart-btn">Clear</button>
+                    </div>
+                </div>
+                
+                <div id="quiz-mode" class="mode-view hidden">
+                    <div id="prompt-container">
+                        <p id="question-text">Loading...</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="text" id="quiz-input" placeholder="Enter the Latin form" autocomplete="off">
+                        <button id="quiz-submit-btn">Check</button>
+                    </div>
+
+                    <div id="quiz-feedback"></div>
+                    <button id="quiz-next-btn" class="hidden">Next Form</button>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script src="script.js"></script>
