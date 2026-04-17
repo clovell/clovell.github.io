@@ -22,16 +22,69 @@ header {
     margin-bottom: 30px;
     border-bottom: 2px solid #e0dbce;
     padding-bottom: 20px;
-    position: relative;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .streak-container {
-    position: absolute;
-    top: 0;
-    right: 0;
     font-size: 1.2rem;
     font-weight: bold;
     color: #2c5e3b;
+}
+
+.tutorial-link-btn {
+    display: inline-block;
+    background-color: #4a90e2;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.tutorial-link-btn:hover {
+    background-color: #357abd;
+}
+
+.tutorial-page h1 {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.tutorial-page .subtitle {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #666;
+    margin-top: 0;
+}
+
+.tutorial-content {
+    margin-bottom: 30px;
+}
+
+.tutorial-content h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    color: #4a5c6a;
+}
+
+.tutorial-content h3 {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: #2c5e3b;
+}
+
+.tutorial-content p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-top: 5px;
 }
 
 .verb-display h2 {
@@ -60,7 +113,7 @@ button {
 .action-section {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Space between buttons */
+    gap: 15px; 
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #e0dbce;
@@ -88,7 +141,6 @@ button {
     background-color: #35424d;
 }
 
-/* Utility class to hide the button */
 .hidden {
     display: none !important;
 }
@@ -161,4 +213,42 @@ input.correct {
 input.incorrect {
     border-color: #f44336;
     background-color: #ffebee;
+}
+
+/* Table Styles for Tutorial Page */
+.reference-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 30px 0;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.reference-table th, 
+.reference-table td {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.reference-table thead {
+    background-color: #e9e5d9;
+    color: #333;
+}
+
+.reference-table th {
+    font-weight: bold;
+}
+
+.reference-table tbody tr {
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+}
+
+.reference-table tbody tr:nth-child(even) {
+    background-color: #fcfbf8;
+}
+
+.reference-table tbody tr:hover {
+    background-color: #f0eade;
 }

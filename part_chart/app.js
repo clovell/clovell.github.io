@@ -58,7 +58,6 @@ function loadRandomVerb() {
     document.getElementById('principal-parts').textContent = verb.principalParts;
     document.getElementById('verb-meaning').textContent = verb.meaning;
     
-    // Hide the 'Next Verb' button again for the new question
     document.getElementById('next-verb-btn').classList.add('hidden');
     
     const inputs = document.querySelectorAll('input[type="text"]');
@@ -103,7 +102,6 @@ function validateInput(userVal, expectedAnswers) {
 function checkAnswers() {
     if (verbCompleted) return; 
 
-    // Reveal the 'Next Verb' button once answers are checked
     document.getElementById('next-verb-btn').classList.remove('hidden');
 
     const inputs = document.querySelectorAll('input[type="text"]');
