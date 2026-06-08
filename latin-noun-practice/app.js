@@ -80,8 +80,10 @@ function buildGrid() {
   plHeader.textContent = 'Plural';
   grid.appendChild(plHeader);
 
-  // Input rows
-  CASES.forEach(function(cas) {
+  // Input rows — tabindex is set so Tab moves down each column
+  // (sg nom → sg gen → ... → sg abl → pl nom → ... → pl abl)
+  var numCases = CASES.length;
+  CASES.forEach(function(cas, caseIdx) {
     var isDative = cas === 'dat';
 
     var label = document.createElement('div');
@@ -89,12 +91,14 @@ function buildGrid() {
     label.textContent = CASE_LABELS[cas] + (isDative ? '*' : '');
     grid.appendChild(label);
 
-    ['sg', 'pl'].forEach(function(num) {
+    ['sg', 'pl'].forEach(function(num, numIdx) {
       var input = document.createElement('input');
       input.type = 'text';
       input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '');
       input.dataset.num = num;
       input.dataset.case = cas;
+      input.tabIndex = numIdx * numCases + caseIdx + 1;
+      input.disabled = !state.declensionIdentified;
       input.autocapitalize = 'off';
       input.autocomplete = 'off';
       input.autocorrect = 'off';
@@ -230,10 +234,10 @@ function nextWord() {
   var expected = getExpectedDeclension(next);
   state.declensionIdentified = expected > 3;
 
-  // Clear all inputs
+  // Clear all inputs — disable if declension still needs identifying
   document.querySelectorAll('.grid-input').forEach(function(input) {
     input.value = '';
-    input.disabled = false;
+    input.disabled = !state.declensionIdentified;
     input.classList.remove('correct', 'incorrect', 'completed');
   });
 
@@ -321,12 +325,10 @@ function render() {
   // Grid disabled state
   els.inputGrid.classList.toggle('disabled', !state.declensionIdentified);
 
-  // Disable inputs when completed
-  if (state.isCompleted) {
-    document.querySelectorAll('.grid-input').forEach(function(input) {
-      input.disabled = true;
-    });
-  }
+  // Disable inputs when declension not yet identified or when completed
+  document.querySelectorAll('.grid-input').forEach(function(input) {
+    input.disabled = !state.declensionIdentified || state.isCompleted;
+  });
 
   // Buttons
   if (state.isCompleted) {
