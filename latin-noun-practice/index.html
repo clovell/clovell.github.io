@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Practice declining Latin nouns across all five cases. Covers 2nd and 3rd declension neuters, with streak tracking, sound effects, and instant feedback." />
+  <title>Latin Noun Declension Practice — Grammatica Latina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <div class="header-left">
+        <h1 class="site-title">Grammatica Latina</h1>
+        <p class="page-title">Noun Practice</p>
+      </div>
+      <div class="header-right">
+        <div class="accuracy-display">
+          <span class="stat-label">Session Accuracy</span>
+          <span class="stat-value" id="accuracy-value">100%</span>
+        </div>
+        <div class="streak-badge">
+          <span class="streak-label">🔥 STREAK</span>
+          <span class="streak-value" id="streak-value">0</span>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="word-section">
+        <h2 class="word-display" id="word-display"></h2>
+
+        <div class="declension-selector" id="declension-selector">
+          <p class="selector-label">Identify Declension:</p>
+          <div class="selector-buttons" id="selector-buttons"></div>
+        </div>
+
+        <div class="tutorial" id="tutorial">
+          <div class="tutorial-icon">💡</div>
+          <div class="tutorial-body">
+            <strong class="tutorial-title">Identifying the Declension</strong>
+            <p class="tutorial-subtitle">Look at the genitive singular ending (the second part of the entry):</p>
+            <ul class="tutorial-list">
+              <li><span class="ending-chip">-ae</span> 1st</li>
+              <li><span class="ending-chip">-ī</span> 2nd</li>
+              <li><span class="ending-chip">-is</span> 3rd</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-grid" id="input-grid"></div>
+    </main>
+
+    <footer id="footer">
+      <div class="toggles">
+        <label class="toggle-label">
+          <span class="toggle-track" id="macron-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <input type="checkbox" class="sr-only" id="macron-toggle" checked />
+          <span class="toggle-text">Macrons Optional</span>
+        </label>
+        <label class="toggle-label">
+          <span class="toggle-track" id="dative-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <input type="checkbox" class="sr-only" id="dative-toggle" />
+          <span class="toggle-text">Include Dative</span>
+        </label>
+        <label class="toggle-label">
+          <span class="toggle-track" id="sound-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <input type="checkbox" class="sr-only" id="sound-toggle" checked />
+          <span class="toggle-text">Sound <span id="sound-icon">🔊</span></span>
+        </label>
+      </div>
+      <div class="actions">
+        <span class="enter-hint" id="enter-hint">Press <kbd>Enter</kbd></span>
+        <button id="skip-btn" class="btn btn-ghost">Skip</button>
+        <button id="check-btn" class="btn btn-primary">Check Answers</button>
+        <button id="next-btn" class="btn btn-primary btn-pulse" style="display:none">
+          Next Word
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="vocabulary.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

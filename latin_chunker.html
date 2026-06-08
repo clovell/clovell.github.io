@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin Sentence Mapper</title>
+    <style>
+        /* * STUDIO TYPOGRAPHY & THEME */
+        :root {
+            --bg-color: #f8f9fa;
+            --panel-bg: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --primary-color: #0d6efd;
+            --secondary-color: #198754;
+            --hover-color: #e9ecef;
+            --split-color: #dc3545;
+            --indent-size: 40px;
+        }
+
+        body {
+            font-family: 'Arno Pro', 'Gentium Plus', 'Times New Roman', serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+
+        header {
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* * WORKSPACE LAYOUT */
+        main {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            flex-grow: 1;
+            overflow: hidden;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            main {
+                grid-template-rows: 1fr;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .panel-header {
+            background-color: #f1f3f5;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #495057;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-body {
+            padding: 1rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        /* * CONTROLS & INPUTS */
+        textarea {
+            width: 100%;
+            height: 100px;
+            resize: none;
+            font-family: inherit;
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            font-family: system-ui, -apple-system, sans-serif;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+            font-weight: 500;
+        }
+
+        button.primary { background-color: var(--primary-color); color: white; }
+        button.primary:hover { background-color: #0b5ed7; }
+
+        button.success { background-color: var(--secondary-color); color: white; }
+        button.success:hover { background-color: #146c43; }
+
+        button.outline { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+        button.outline:hover { background-color: var(--hover-color); }
+
+        /* * INTERACTIVE TOKEN SPLITTER */
+        #tokenWorkspace {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: center;
+            font-size: 1.5rem;
+            line-height: 2;
+        }
+
+        .token {
+            display: inline-block;
+            cursor: pointer;
+            padding: 0 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .token:hover { background-color: var(--hover-color); }
+
+        .boundary {
+            display: inline-block;
+            width: 16px;
+            height: 24px;
+            cursor: pointer;
+            position: relative;
+            vertical-align: middle;
+        }
+        .boundary::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            height: 80%;
+            width: 2px;
+            background-color: transparent;
+            transition: background-color 0.2s;
+        }
+        .boundary:hover::after { background-color: #adb5bd; }
+        .boundary.active::after { background-color: var(--split-color); width: 3px; }
+
+        /* * MAP ARCHITECTURE VIEWER */
+        #mapArea {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-bottom: 2rem;
+        }
+
+        .chunk-row {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.5rem;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+            border-radius: 4px;
+            /* Default border, overridden by JS */
+            border-left: 4px solid var(--border-color); 
+        }
+
+        .chunk-content {
+            flex-grow: 1;
+            font-size: 1.5rem;
+            padding-left: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .chunk-controls {
+            display: flex;
+            gap: 4px;
+            opacity: 0.2;
+            transition: opacity 0.2s;
+        }
+        .chunk-row:hover .chunk-controls { opacity: 1; }
+
+        .btn-indent {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            padding: 0;
+        }
+        .btn-indent:hover { background: #dee2e6; }
+
+        /* * PRESENTATION / READ-ONLY MODE */
+        body.presentation-mode main { grid-template-columns: 1fr; padding: 0; gap: 0; }
+        body.presentation-mode #authoringPanel { display: none; }
+        body.presentation-mode .panel { border: none; box-shadow: none; border-radius: 0; }
+        body.presentation-mode .chunk-controls { display: none; }
+        body.presentation-mode .chunk-content { font-size: 2rem; }
+
+        @media print {
+            header, .panel-header, #authoringPanel, .chunk-controls { display: none !important; }
+            body { background-color: white; }
+            main { display: block; padding: 0; margin: 0; }
+            .panel { border: none; box-shadow: none; }
+            .chunk-content { font-size: 16pt; color: black; }
+            .chunk-row { break-inside: avoid; margin-bottom: 8px; border: none; border-left: 4px solid #ccc; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>Latin Sentence Mapper <span style="font-weight: 300; color: var(--text-muted);">| Studio Edition</span></h1>
+        </div>
+        <div class="header-controls">
+            <button class="outline" id="btnPresentation" onclick="togglePresentationMode()">Projector View</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="panel" id="authoringPanel">
+            <div class="panel-header">1. Define Boundaries</div>
+            <div class="panel-body" style="display: flex; flex-direction: column;">
+                <textarea id="latinInput">Ōlim in māgnā deōrum rēgiā Iuppiter, quī rēx deōrum erat, nūntium ad terram mīsit ut hominēs monēret.</textarea>
+                <button class="primary" style="align-self: flex-start; padding: 0.75rem 1.5rem;" onclick="initWorkspace()">Load Text</button>
+                
+                <hr style="width: 100%; border: 0; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+                
+                <p style="font-family: system-ui; font-size: 0.9rem; color: var(--text-muted); margin-top: 0;">Click between words to split into cognitive chunks.</p>
+                <div id="tokenWorkspace">
+                    <span style="color: var(--text-muted); font-family: system-ui; font-size: 1rem;">Load text to begin splitting.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="previewPanel">
+            <div class="panel-header">
+                <span>2. Sentence Architecture</span>
+                <button class="success" onclick="exportStudentHTML()">Generate HTML for LMS</button>
+            </div>
+            <div class="panel-body">
+                <div id="mapArea">
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let state = {
+            words: [],
+            boundaries: [],
+            indents: [],
+            isPresentationMode: false
+        };
+
+        // Curated palette for distinct, readable syntax highlighting
+        const indentColors = [
+            { bg: '#e8f4f8', border: '#3498db' }, // Level 0: Light Blue
+            { bg: '#eef7e6', border: '#2ecc71' }, // Level 1: Light Green
+            { bg: '#fdf3e1', border: '#f39c12' }, // Level 2: Light Orange
+            { bg: '#f4ebf9', border: '#9b59b6' }, // Level 3: Light Purple
+            { bg: '#fcebea', border: '#e74c3c' }, // Level 4: Light Red
+            { bg: '#e6f9f6', border: '#1abc9c' }, // Level 5: Light Teal
+            { bg: '#fcf3cf', border: '#f1c40f' }, // Level 6: Light Yellow
+            { bg: '#eaeded', border: '#95a5a6' }  // Level 7+: Light Gray (fallback)
+        ];
+
+        function getColorProfile(level) {
+            // Cap the color level at the max array index to prevent errors
+            const index = Math.min(level, indentColors.length - 1);
+            return indentColors[index];
+        }
+
+        function initWorkspace() {
+            const text = document.getElementById('latinInput').value.trim();
+            if (!text) return;
+
+            state.words = text.split(/\s+/).filter(w => w.length > 0);
+            state.boundaries = new Array(state.words.length).fill(false);
+            state.boundaries[state.boundaries.length - 1] = true;
+            state.indents = [];
+
+            renderWorkspace();
+            updateMap();
+        }
+
+        function renderWorkspace() {
+            const workspace = document.getElementById('tokenWorkspace');
+            workspace.innerHTML = '';
+
+            state.words.forEach((word, index) => {
+                const tokenSpan = document.createElement('span');
+                tokenSpan.className = 'token';
+                tokenSpan.textContent = word;
+                tokenSpan.onclick = () => toggleBoundary(index);
+                workspace.appendChild(tokenSpan);
+
+                if (index < state.words.length - 1) {
+                    const boundarySpan = document.createElement('span');
+                    boundarySpan.className = `boundary ${state.boundaries[index] ? 'active' : ''}`;
+                    boundarySpan.onclick = () => toggleBoundary(index);
+                    workspace.appendChild(boundarySpan);
+                }
+            });
+        }
+
+        function toggleBoundary(index) {
+            if (index >= state.words.length - 1) return;
+            state.boundaries[index] = !state.boundaries[index];
+            renderWorkspace();
+            updateMap();
+        }
+
+        function updateMap() {
+            const chunks = [];
+            let currentChunkWords = [];
+
+            for (let i = 0; i < state.words.length; i++) {
+                currentChunkWords.push(state.words[i]);
+                if (state.boundaries[i]) {
+                    chunks.push(currentChunkWords.join(' '));
+                    currentChunkWords = [];
+                }
+            }
+
+            while (state.indents.length < chunks.length) { state.indents.push(0); }
+            if (state.indents.length > chunks.length) { state.indents = state.indents.slice(0, chunks.length); }
+
+            renderMapUI(chunks);
+        }
+
+        function renderMapUI(chunks) {
+            const mapArea = document.getElementById('mapArea');
+            mapArea.innerHTML = '';
+
+            if (chunks.length === 0) {
+                mapArea.innerHTML = '<span style="color: var(--text-muted); font-family: system-ui;">Map architecture will appear here.</span>';
+                return;
+            }
+
+            chunks.forEach((chunkText, chunkIndex) => {
+                const indentLevel = state.indents[chunkIndex];
+                const colors = getColorProfile(indentLevel);
+                
+                const row = document.createElement('div');
+                row.className = 'chunk-row';
+                row.style.marginLeft = `calc(${indentLevel} * var(--indent-size))`;
+                row.style.backgroundColor = colors.bg;
+                row.style.borderLeft = `4px solid ${colors.border}`;
+
+                const content = document.createElement('div');
+                content.className = 'chunk-content';
+                content.textContent = chunkText;
+
+                const controls = document.createElement('div');
+                controls.className = 'chunk-controls';
+
+                const btnOut = document.createElement('button');
+                btnOut.className = 'btn-indent';
+                btnOut.innerHTML = '←';
+                btnOut.onclick = () => adjustIndent(chunkIndex, -1);
+
+                const btnIn = document.createElement('button');
+                btnIn.className = 'btn-indent';
+                btnIn.innerHTML = '→';
+                btnIn.onclick = () => adjustIndent(chunkIndex, 1);
+
+                controls.appendChild(btnOut);
+                controls.appendChild(btnIn);
+
+                row.appendChild(content);
+                row.appendChild(controls);
+                mapArea.appendChild(row);
+            });
+        }
+
+        function adjustIndent(chunkIndex, direction) {
+            let newIndent = state.indents[chunkIndex] + direction;
+            if (newIndent < 0) newIndent = 0;
+            if (newIndent > 7) newIndent = 7;
+            state.indents[chunkIndex] = newIndent;
+            
+            const chunks = [];
+            let currentChunkWords = [];
+            for (let i = 0; i < state.words.length; i++) {
+                currentChunkWords.push(state.words[i]);
+                if (state.boundaries[i]) {
+                    chunks.push(currentChunkWords.join(' '));
+                    currentChunkWords = [];
+                }
+            }
+            renderMapUI(chunks);
+        }
+
+        function togglePresentationMode() {
+            state.isPresentationMode = !state.isPresentationMode;
+            if (state.isPresentationMode) {
+                document.body.classList.add('presentation-mode');
+                document.getElementById('btnPresentation').textContent = "Exit Projector View";
+                document.getElementById('btnPresentation').className = "primary";
+            } else {
+                document.body.classList.remove('presentation-mode');
+                document.getElementById('btnPresentation').textContent = "Projector View";
+                document.getElementById('btnPresentation').className = "outline";
+            }
+        }
+
+        function exportStudentHTML() {
+            const chunks = [];
+            let currentChunkWords = [];
+            for (let i = 0; i < state.words.length; i++) {
+                currentChunkWords.push(state.words[i]);
+                if (state.boundaries[i]) {
+                    chunks.push(currentChunkWords.join(' '));
+                    currentChunkWords = [];
+                }
+            }
+
+            if (chunks.length === 0) {
+                alert("Please load and parse text before exporting.");
+                return;
+            }
+
+            let mapHTML = '';
+            chunks.forEach((chunkText, index) => {
+                const indentLevel = state.indents[index];
+                const indentMargin = indentLevel * 40;
+                const colors = getColorProfile(indentLevel);
+                
+                // Embed the distinct colors into the exported HTML
+                mapHTML += `<div class="chunk" style="margin-left: ${indentMargin}px; background-color: ${colors.bg}; border-left-color: ${colors.border};">${chunkText}</div>\n`;
+            });
+
+            const htmlTemplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin Reading Guide</title>
+    <style>
+        body { font-family: 'Arno Pro', 'Gentium Plus', 'Times New Roman', serif; background-color: #ffffff; color: #212529; margin: 0; padding: 40px 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 800px; }
+        .chunk { 
+            font-size: 1.5rem; 
+            line-height: 1.6; 
+            margin-bottom: 8px; 
+            padding: 8px 12px; 
+            border: 1px solid #dee2e6;
+            border-left-width: 4px;
+            border-left-style: solid;
+            border-radius: 4px; 
+            transition: transform 0.2s; 
+        }
+        .chunk:hover { transform: translateX(4px); }
+        @media (max-width: 600px) { .chunk { font-size: 1.25rem; } body { padding: 20px 10px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        ${mapHTML}
+    </div>
+</body>
+</html>`;
+
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; box-sizing: border-box;';
+            
+            const textArea = document.createElement('textarea');
+            textArea.value = htmlTemplate;
+            textArea.style.cssText = 'width: 100%; max-width: 800px; height: 60%; font-family: monospace; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2);';
+            textArea.setAttribute('readonly', true);
+            
+            const controlsDiv = document.createElement('div');
+            controlsDiv.style.cssText = 'display: flex; gap: 10px;';
+
+            const copyBtn = document.createElement('button');
+            copyBtn.textContent = 'Copy Code';
+            copyBtn.className = 'success';
+            copyBtn.onclick = () => {
+                textArea.select();
+                document.execCommand('copy');
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => copyBtn.textContent = 'Copy Code', 2000);
+            };
+
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Close';
+            closeBtn.className = 'primary';
+            closeBtn.onclick = () => document.body.removeChild(overlay);
+
+            const instructions = document.createElement('p');
+            instructions.textContent = 'Browser downloads blocked. Copy the HTML code below and save it as a new file (e.g., reading-map.html) to share with your students.';
+            instructions.style.cssText = 'color: white; font-family: system-ui; font-size: 1.1rem; margin-bottom: 1rem; text-align: center;';
+
+            controlsDiv.appendChild(copyBtn);
+            controlsDiv.appendChild(closeBtn);
+
+            overlay.appendChild(instructions);
+            overlay.appendChild(textArea);
+            overlay.appendChild(controlsDiv);
+            document.body.appendChild(overlay);
+            
+            textArea.select();
+        }
+
+        window.onload = initWorkspace;
+    </script>
+</body>
+</html>
