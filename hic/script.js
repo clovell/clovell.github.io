@@ -115,15 +115,20 @@ function mapParadigmToChart() {
     });
 }
 
-// Word Selection Logic
+// Word Selection Logic (BUG FIX APPLIED HERE)
 wordSelectBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-        wordSelectBtns.forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
+        // Because of the spans, we must reference 'btn' (the button the listener is attached to) 
+        // rather than 'e.target' (which might be the inner span text).
         
-        currentWord = e.target.dataset.word;
+        wordSelectBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active'); 
+        
+        currentWord = btn.dataset.word;
         activeParadigm = paradigms[currentWord];
-        wordTitle.textContent = e.target.textContent;
+        
+        // Use innerHTML instead of textContent so the bold/italic spans transfer directly to the title
+        wordTitle.innerHTML = btn.innerHTML; 
         
         mapParadigmToChart();
         loadQuizQuestion();

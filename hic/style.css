@@ -7,7 +7,7 @@
     --correct-border: #27ae60;
     --incorrect-bg: #fdedec;
     --incorrect-border: #e74c3c;
-    --sidebar-width: 350px; /* Widened slightly more to fit the new font formatting */
+    --sidebar-width: 350px;
 }
 
 body {
@@ -69,17 +69,24 @@ body {
     transition: background-color 0.2s, color 0.2s;
 }
 
-/* New specific formatting for Latin and Translations */
-.word-select .latin {
+/* Updated formatting classes to be universal */
+.latin {
     font-weight: bold;
 }
 
-.word-select .translation {
+.translation {
     font-weight: normal;
     font-style: italic;
     color: #7f8c8d;
-    font-size: 0.9em;
     margin-left: 0.25rem;
+}
+
+.word-select .translation {
+    font-size: 0.9em;
+}
+
+h1 .translation {
+    font-size: 0.65em; /* Scales down the translation nicely next to the large H1 Latin */
 }
 
 .word-select.demonstrative .latin {
@@ -96,7 +103,7 @@ body {
 }
 
 .word-select.active .translation {
-    color: rgba(255, 255, 255, 0.85); /* Keeps the translation readable against the blue background */
+    color: rgba(255, 255, 255, 0.85); 
 }
 
 .main-content {
