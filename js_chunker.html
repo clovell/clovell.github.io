@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="la">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin Phrasing Engine</title>
+    <style>
+        /* Base typography prioritizing classical readability and Chromebook scaling */
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #2c5282;
+            --border-color: #cbd5e0;
+            --indent-size: 2.5rem;
+        }
+
+        body {
+            font-family: 'Arno Pro', 'Gentium', 'Times New Roman', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 1.125rem; /* Scalable base font */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Interface Elements */
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 1rem;
+            font-family: inherit;
+            font-size: 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            resize: vertical;
+            box-sizing: border-box;
+            line-height: 1.5;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.25rem;
+            font-family: inherit;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            align-self: flex-start;
+        }
+
+        button:hover {
+            background-color: #1a365d;
+        }
+
+        /* Display Output */
+        #output-container {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .phrase-chunk {
+            line-height: 1.8;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            transition: background-color 0.2s ease;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .phrase-chunk:hover {
+            background-color: #edf2f7; /* Subtle highlight for reading focus */
+        }
+
+        /* Instructions */
+        .instructions {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="instructions">
+            Enter Latin text below. The parser will attempt to isolate prepositional phrases and subordinate clauses, indenting them based on syntactical dependency.
+        </div>
+        
+        <textarea id="latin-input" spellcheck="false">Ōlim rēx in magnā aulā sedet.</textarea>
+        
+        <button onclick="processText()">Parse Syntax</button>
+        
+        <div id="output-container"></div>
+    </div>
+
+    <script>
+        /**
+         * Lexical Dictionaries
+         * These arrays drive the heuristic state machine. 
+         * Macrons are omitted here because input text is normalized before checking against these lists.
+         */
+        const DICT = {
+            prepositions: ['in', 'ad', 'ab', 'a', 'ex', 'e', 'de', 'cum', 'sine', 'pro', 'prae', 'sub', 'super', 'inter', 'per', 'ob', 'propter', 'post', 'ante', 'circum', 'contra', 'trans', 'apud'],
+            subordinators: ['qui', 'quae', 'quod', 'quem', 'quam', 'cuius', 'cui', 'quibus', 'quorum', 'quarum', 'ut', 'ne', 'cum', 'si', 'nisi', 'quia', 'quoniam', 'dum', 'ubi', 'postquam'],
+            // A highly restrictive list of unambiguous 3rd/1st person verb endings to avoid false positives on nouns.
+            verbEndings: ['t', 'nt', 'tur', 'ntur', 'mus', 'tis', 'mur', 'mini', 'bam', 'bas', 'bat', 'bant', 'bo', 'bis', 'bit', 'bunt'],
+            irregularVerbs: ['est', 'sunt', 'erat', 'erant', 'erit', 'erunt', 'sit', 'sint', 'esset', 'essent', 'it', 'eunt', 'fert', 'ferunt']
+        };
+
+        /**
+         * Determines if a word is likely a verb based on heuristic endings and irregulars.
+         */
+        function isVerb(word) {
+            let clean = normalizeWord(word);
+            
+            // Explicitly rule out common short words that share verb endings (e.g., 'ut', 'et', 'at')
+            const nonVerbs = ['et', 'ut', 'at', 'ast', 'sed', 'non', 'aut', 'vel', 'nec', 'sic', 'ita', 'tam', 'quam', 'nam', 'enim'];
+            if (nonVerbs.includes(clean)) return false;
+            
+            if (DICT.irregularVerbs.includes(clean)) return true;
+            if (clean.length <= 2) return false;
+
+            for (let ending of DICT.verbEndings) {
+                if (clean.endsWith(ending)) return true;
+            }
+            return false;
+        }
+
+        /**
+         * Strips punctuation and macrons ONLY for the purpose of dictionary matching.
+         * The original word is preserved for the final output.
+         */
+        function normalizeWord(word) {
+            return word.toLowerCase()
+                       .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove macrons
+                       .replace(/[.,;:!?"]/g, ''); // Remove punctuation
+        }
+
+        /**
+         * Main Parsing Engine
+         * Implements a stack-based state machine to track syntactical depth.
+         */
+        function parseLatin(text) {
+            const words = text.trim().split(/\s+/);
+            const chunks = [];
+            
+            let currentChunk = [];
+            let currentLevel = 0;
+            let triggerStack = []; // Tracks *why* we indented: 'prep' or 'sub'
+
+            // Helper to flush current words into a completed chunk
+            const flushChunk = () => {
+                if (currentChunk.length > 0) {
+                    chunks.push({
+                        text: currentChunk.join(' '),
+                        level: currentLevel
+                    });
+                    currentChunk = [];
+                }
+            };
+
+            for (let i = 0; i < words.length; i++) {
+                let word = words[i];
+                let cleanWord = normalizeWord(word);
+
+                let isPrep = DICT.prepositions.includes(cleanWord);
+                let isSub = DICT.subordinators.includes(cleanWord);
+                let isV = isVerb(word);
+                let hasTerminalPunc = /[.:!?]$/.test(word);
+
+                if (isPrep || isSub) {
+                    // We hit a new phrase. Flush whatever we currently have.
+                    flushChunk();
+                    
+                    // Push the reason for indenting onto the stack
+                    let triggerType = isPrep ? 'prep' : 'sub';
+                    triggerStack.push(triggerType);
+                    currentLevel++;
+                    
+                    currentChunk.push(word);
+                } 
+                else if (isV) {
+                    // We hit a verb. We must determine where it belongs based on the stack.
+                    let currentContext = triggerStack[triggerStack.length - 1];
+
+                    if (currentContext === 'prep') {
+                        // Prepositional phrases do not take verbs. 
+                        // Therefore, this phrase ends BEFORE the verb.
+                        flushChunk();
+                        triggerStack.pop();
+                        currentLevel = Math.max(0, currentLevel - 1);
+                        currentChunk.push(word);
+                    } 
+                    else if (currentContext === 'sub') {
+                        // Subordinate clauses DO take verbs. The verb ends the clause.
+                        currentChunk.push(word);
+                        flushChunk();
+                        triggerStack.pop();
+                        currentLevel = Math.max(0, currentLevel - 1);
+                    } 
+                    else {
+                        // Main level verb.
+                        currentChunk.push(word);
+                    }
+                } 
+                else {
+                    // Standard word (noun, adjective, adverb)
+                    currentChunk.push(word);
+                }
+
+                // Hard reset on terminal punctuation to prevent bleeding across sentences
+                if (hasTerminalPunc) {
+                    flushChunk();
+                    currentLevel = 0;
+                    triggerStack = [];
+                }
+            }
+            
+            // Flush anything remaining
+            flushChunk();
+            return chunks;
+        }
+
+        /**
+         * Interface Controller
+         */
+        function processText() {
+            const input = document.getElementById('latin-input').value;
+            const container = document.getElementById('output-container');
+            
+            if (!input) return;
+
+            const parsedChunks = parseLatin(input);
+            container.innerHTML = '';
+
+            parsedChunks.forEach(chunk => {
+                const div = document.createElement('div');
+                div.className = 'phrase-chunk';
+                div.textContent = chunk.text;
+                // Apply visual indentation based on the calculated level
+                div.style.marginLeft = `calc(${chunk.level} * var(--indent-size))`;
+                container.appendChild(div);
+            });
+        }
+
+        // Initialize on load
+        window.onload = processText;
+    </script>
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latin Vocab Retro Review</title>
+    <style>
+        /* 
+         * GLOBAL STYLES & CSS VARIABLES
+         * Implementing an 80s arcade aesthetic optimized for low-end devices.
+         * Using native fonts, CSS shadows, and simple animations to avoid performance drops.
+         */
+        :root {
+            --neon-green: #39ff14;
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-yellow: #ffff00;
+            --bg-color: #050505;
+            --panel-bg: #111;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--neon-green);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            /* Subtle CRT scanline overlay */
+            background-image: linear-gradient(rgba(0, 255, 0, 0.03) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+        }
+
+        /* 
+         * GAME CONTAINER 
+         * Scalable for various resolutions, maintaining a focused aspect 
+         * area while taking advantage of available viewport space.
+         */
+        #game-container {
+            width: 95vw;
+            max-width: 800px;
+            height: 90vh;
+            max-height: 600px;
+            background-color: var(--panel-bg);
+            border: 4px solid var(--neon-green);
+            border-radius: 15px;
+            box-shadow: 0 0 15px var(--neon-green), inset 0 0 15px var(--neon-green);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* SCREEN MANAGEMENT */
+        .screen {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* TYPOGRAPHY & NEON EFFECTS */
+        h1, h2 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .title-glitch {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--neon-pink);
+            text-shadow: 2px 2px 0px var(--neon-cyan), -2px -2px 0px var(--neon-yellow);
+            animation: pulse 2s infinite alternate;
+        }
+
+        .instructions {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            color: #ccc;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        /* BUTTONS */
+        button {
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            padding: 15px 30px;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.1s ease-in-out;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        button:hover, button:focus {
+            background: var(--neon-green);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--neon-green);
+            outline: none;
+        }
+
+        /* GAMEPLAY UI */
+        #hud {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-bottom: 2px dashed var(--neon-green);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #streak-display { color: var(--neon-cyan); }
+        #best-display { color: var(--neon-yellow); }
+
+        #word-display {
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+            margin-top: 40px;
+            margin-bottom: 40px;
+            text-transform: lowercase;
+        }
+
+        #options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        @media (min-width: 600px) {
+            #options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-btn {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            padding: 20px 10px;
+            word-wrap: break-word;
+        }
+
+        /* ANIMATIONS & EFFECTS */
+        @keyframes pulse {
+            0% { opacity: 0.8; text-shadow: 0 0 10px var(--neon-pink); }
+            100% { opacity: 1; text-shadow: 0 0 20px var(--neon-pink), 0 0 30px var(--neon-pink); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            border-color: red !important;
+            color: red !important;
+            box-shadow: 0 0 15px red !important;
+        }
+
+        .correct-flash {
+            background: var(--neon-green) !important;
+            color: var(--bg-color) !important;
+        }
+
+        /* CELEBRATION OVERLAY */
+        #celebration-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #celebration-overlay.show {
+            opacity: 1;
+        }
+
+        #celebration-text {
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: var(--neon-yellow);
+            text-align: center;
+            text-shadow: 0 0 20px var(--neon-yellow);
+            transform: scale(0.5);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #celebration-overlay.show #celebration-text {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- START SCREEN -->
+        <div id="start-screen" class="screen active">
+            <h1 class="title-glitch">LATIN LEXICON</h1>
+            <p class="instructions">
+                Match the Latin vocabulary word to its correct English definition.<br><br>
+                Based on vocabulary from image_ecb57f.png (Chapters 1-4).<br><br>
+                Build your streak. Audio required for maximum experience.
+            </p>
+            <button id="start-btn">INSERT COIN (Start)</button>
+        </div>
+
+        <!-- GAMEPLAY SCREEN -->
+        <div id="game-screen" class="screen">
+            <div id="hud">
+                <div id="streak-display">STREAK: <span id="current-streak">0</span></div>
+                <div id="best-display">HIGH: <span id="best-streak">0</span></div>
+            </div>
+            
+            <div id="word-display">word</div>
+            
+            <div id="options-grid">
+                <!-- Buttons injected via JS -->
+            </div>
+        </div>
+
+        <!-- CELEBRATION OVERLAY -->
+        <div id="celebration-overlay">
+            <div id="celebration-text">STREAK MILESTONE!</div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * VOCABULARY DATA
+         * Transcribed exactly from "image_ecb57f.png" Chapters 1 through 4.
+         */
+        const vocabulary = [
+            // Chapter 1
+            { latin: "puella", english: "girl" },
+            { latin: "nōmine", english: "by name, called" },
+            { latin: "habitat", english: "lives" },
+            { latin: "villa", english: "country house" },
+            { latin: "altera", english: "another, a second" },
+            { latin: "laeta", english: "happy, glad" },
+            { latin: "iam", english: "now, already" },
+            { latin: "sedet", english: "sits" },
+            { latin: "legit", english: "reads" },
+            { latin: "scrībit", english: "writes" },
+            // Chapter 2
+            { latin: "quoque", english: "also" },
+            { latin: "amīcae", english: "friends" },
+            { latin: "hodiē", english: "today" },
+            { latin: "sed", english: "but" },
+            { latin: "ambulat", english: "walks" },
+            { latin: "dēfessa", english: "tired" },
+            { latin: "strēnua", english: "active, energetic" },
+            { latin: "currit", english: "runs" },
+            { latin: "tandem", english: "at last, at length" },
+            { latin: "lentē", english: "slowly" },
+            // Chapter 3
+            { latin: "puer", english: "boy" },
+            { latin: "eādem", english: "the same" },
+            { latin: "hortō", english: "garden" },
+            { latin: "clāmant", english: "shout" },
+            { latin: "rident", english: "laugh, smile" },
+            { latin: "vir", english: "man" },
+            { latin: "servus", english: "slave" },
+            { latin: "sōlus", english: "alone" },
+            { latin: "īrātus", english: "angry" },
+            { latin: "cadit", english: "falls" },
+            // Chapter 4
+            { latin: "semper", english: "always" },
+            { latin: "amat", english: "loves, likes" },
+            { latin: "dormit", english: "sleeps" },
+            { latin: "magnus", english: "big, large, great" },
+            { latin: "audit", english: "hears, listens to" },
+            { latin: "videt", english: "sees" },
+            { latin: "vōx", english: "voice" },
+            { latin: "terret", english: "frightens, terrifies" },
+            { latin: "tum", english: "at that moment, then" },
+            { latin: "nihil", english: "nothing" }
+        ];
+
+        /**
+         * AUDIO ENGINE
+         * Generates complex synthesized retro waveforms using Web Audio API.
+         * Implements simulated reverb via a feedback delay network to keep the application 
+         * entirely self-contained without needing external impulse response files.
+         */
+        const AudioEngine = (function() {
+            let ctx = null;
+            let masterGain = null;
+            let delayNode = null;
+            let feedbackGain = null;
+
+            function init() {
+                if (ctx) return;
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                ctx = new AudioContext();
+                
+                masterGain = ctx.createGain();
+                masterGain.gain.value = 0.4;
+                
+                // Simple Delay/Reverb Network
+                delayNode = ctx.createDelay();
+                delayNode.delayTime.value = 0.15; // 150ms slapback
+                
+                feedbackGain = ctx.createGain();
+                feedbackGain.gain.value = 0.3; // Decay factor
+                
+                delayNode.connect(feedbackGain);
+                feedbackGain.connect(delayNode);
+                
+                // Connect dry and wet signals to master
+                delayNode.connect(masterGain);
+                masterGain.connect(ctx.destination);
+            }
+
+            // Core synthesis function
+            function playOscillator(freq, type, duration, vol, slideFreq = null) {
+                if (!ctx) return;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                if (slideFreq) {
+                    osc.frequency.exponentialRampToValueAtTime(slideFreq, ctx.currentTime + duration);
+                }
+                
+                gain.gain.setValueAtTime(vol, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(masterGain);
+                
+                // Route to delay for echo effect
+                gain.connect(delayNode);
+                
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            }
+
+            return {
+                init: init,
+                
+                playBlip: function() {
+                    playOscillator(880, 'square', 0.1, 0.2);
+                },
+                
+                playCorrect: function() {
+                    // Quick major arpeggio
+                    playOscillator(440, 'square', 0.15, 0.2);
+                    setTimeout(() => playOscillator(554.37, 'square', 0.15, 0.2), 100);
+                    setTimeout(() => playOscillator(659.25, 'square', 0.2, 0.2), 200);
+                },
+                
+                playIncorrect: function() {
+                    // Low descending saw wave
+                    playOscillator(150, 'sawtooth', 0.4, 0.3, 50);
+                },
+                
+                playFanfare: function() {
+                    // Complex layered celebration sound
+                    const root = 523.25; // C5
+                    const third = 659.25; // E5
+                    const fifth = 783.99; // G5
+                    
+                    // Rhythmic intro
+                    playOscillator(root, 'square', 0.1, 0.2);
+                    setTimeout(() => playOscillator(root, 'square', 0.1, 0.2), 150);
+                    setTimeout(() => playOscillator(root, 'square', 0.1, 0.2), 300);
+                    
+                    // Flourish
+                    setTimeout(() => {
+                        playOscillator(root, 'sawtooth', 0.4, 0.2);
+                        playOscillator(third, 'sawtooth', 0.4, 0.2);
+                        playOscillator(fifth, 'sawtooth', 0.4, 0.2);
+                    }, 450);
+                }
+            };
+        })();
+
+        /**
+         * GAME STATE & LOGIC
+         */
+        const Game = (function() {
+            let currentStreak = 0;
+            let bestStreak = 0;
+            let currentQuestion = null;
+            let isProcessing = false;
+
+            // DOM Elements
+            const screens = {
+                start: document.getElementById('start-screen'),
+                game: document.getElementById('game-screen')
+            };
+            const els = {
+                word: document.getElementById('word-display'),
+                optionsGrid: document.getElementById('options-grid'),
+                streak: document.getElementById('current-streak'),
+                best: document.getElementById('best-streak'),
+                overlay: document.getElementById('celebration-overlay'),
+                overlayText: document.getElementById('celebration-text')
+            };
+
+            function init() {
+                document.getElementById('start-btn').addEventListener('click', startGame);
+                
+                // Load best streak from local storage if available
+                if(localStorage.getItem('latinRetroBestStreak')) {
+                    bestStreak = parseInt(localStorage.getItem('latinRetroBestStreak'));
+                    els.best.innerText = bestStreak;
+                }
+            }
+
+            function startGame() {
+                AudioEngine.init();
+                AudioEngine.playBlip();
+                
+                screens.start.classList.remove('active');
+                screens.game.classList.add('active');
+                
+                currentStreak = 0;
+                updateStats();
+                nextQuestion();
+            }
+
+            function updateStats() {
+                els.streak.innerText = currentStreak;
+                els.best.innerText = bestStreak;
+            }
+
+            function getRandomElements(arr, count) {
+                const shuffled = [...arr].sort(() => 0.5 - Math.random());
+                return shuffled.slice(0, count);
+            }
+
+            function nextQuestion() {
+                isProcessing = false;
+                els.optionsGrid.innerHTML = '';
+                
+                // Pick a target word
+                const targetIdx = Math.floor(Math.random() * vocabulary.length);
+                currentQuestion = vocabulary[targetIdx];
+                
+                // Pick 3 distractors
+                const distractorsPool = vocabulary.filter((_, idx) => idx !== targetIdx);
+                const distractors = getRandomElements(distractorsPool, 3);
+                
+                // Combine and shuffle options
+                const allOptions = [currentQuestion, ...distractors].sort(() => 0.5 - Math.random());
+                
+                // Render UI
+                els.word.innerText = currentQuestion.latin;
+                
+                allOptions.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerText = opt.english;
+                    btn.onclick = () => handleSelection(btn, opt.english === currentQuestion.english);
+                    els.optionsGrid.appendChild(btn);
+                });
+            }
+
+            function handleSelection(btnElement, isCorrect) {
+                if (isProcessing) return;
+                isProcessing = true;
+
+                if (isCorrect) {
+                    currentStreak++;
+                    if (currentStreak > bestStreak) {
+                        bestStreak = currentStreak;
+                        localStorage.setItem('latinRetroBestStreak', bestStreak);
+                    }
+                    updateStats();
+                    
+                    btnElement.classList.add('correct-flash');
+                    
+                    // Check for milestones (Multiples of 10)
+                    if (currentStreak > 0 && currentStreak % 10 === 0) {
+                        triggerCelebration(`STREAK: ${currentStreak}!`);
+                    } else {
+                        AudioEngine.playCorrect();
+                    }
+
+                    setTimeout(nextQuestion, 600);
+                } else {
+                    currentStreak = 0;
+                    updateStats();
+                    
+                    AudioEngine.playIncorrect();
+                    btnElement.classList.add('shake');
+                    
+                    // Show correct answer by flashing it
+                    Array.from(els.optionsGrid.children).forEach(child => {
+                        if (child.innerText === currentQuestion.english) {
+                            child.style.borderColor = "var(--neon-green)";
+                            child.style.color = "var(--bg-color)";
+                            child.style.background = "var(--neon-green)";
+                        }
+                    });
+
+                    setTimeout(nextQuestion, 1200);
+                }
+            }
+
+            function triggerCelebration(msg) {
+                AudioEngine.playFanfare();
+                els.overlayText.innerText = msg;
+                els.overlay.classList.add('show');
+                
+                // Color cycle text
+                let hue = 0;
+                const cycle = setInterval(() => {
+                    els.overlayText.style.color = `hsl(${hue}, 100%, 50%)`;
+                    els.overlayText.style.textShadow = `0 0 20px hsl(${hue}, 100%, 50%)`;
+                    hue += 20;
+                }, 50);
+
+                setTimeout(() => {
+                    clearInterval(cycle);
+                    els.overlayText.style.color = "var(--neon-yellow)";
+                    els.overlayText.style.textShadow = "0 0 20px var(--neon-yellow)";
+                    els.overlay.classList.remove('show');
+                }, 2000);
+            }
+
+            return { init };
+        })();
+
+        // Bootstrap Game
+        document.addEventListener('DOMContentLoaded', Game.init);
+    </script>
+</body>
+</html>
