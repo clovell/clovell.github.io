@@ -1,0 +1,67 @@
+# =============================================================================
+# Latin Practice Vocabulary
+# Format: entry<TAB>translation
+# Lines starting with # and blank lines are ignored.
+# =============================================================================
+
+# NOUNS
+# Format: nomSg, genSg, gender<TAB>translation
+# For 3rd declension i-stems: nomSg, genSg, -ium, gender<TAB>translation
+#                             or nomSg, genSg, marium, gender<TAB>translation
+
+puella, -ae, f.	girl
+hortus, -ī, m.	garden
+puer, puerī, m.	boy
+bellum, -ī, n.	war
+cōnsilium, -ī, n.	plan, advice
+dōnum, -ī, n.	gift
+oppidum, -ī, n.	town
+perīculum, -ī, n.	danger
+plaustrum, -ī, n.	wagon, cart
+saxum, -ī, n.	rock
+verbum, -ī, n.	word
+māter, mātris, f.	mother
+opus, operis, n.	work
+caput, capitis, n.	head
+carmen, carminis, n.	song, poem
+corpus, corporis, n.	body
+flūmen, flūminis, n.	river
+iter, itineris, n.	journey, route
+lēx, lēgis, f.	law
+nōmen, nōminis, n.	name
+rēx, rēgis, m.	king
+tempus, temporis, n.	time
+vulnus, vulneris, n.	wound
+mare, maris, -ium, n.	sea
+
+# ADJECTIVES
+# Format: dictionary_entry<TAB>translation
+# 2-1-2:
+#   "bonus, -a, -um<TAB>good" or "pulcher, pulchra, pulchrum<TAB>beautiful"
+# 3rd Declension formats supported:
+#   3 terminations: "ācer, ācris, ācre<TAB>sharp, keen"
+#   3 parts listed: "fortis, fortis, forte<TAB>brave, strong"
+#   2 terminations: "fortis, forte<TAB>brave, strong" or "fortis, -e<TAB>brave, strong"
+#   1 termination (4 parts): "ingēns, ingēns, ingēns, gen. ingentis<TAB>huge, vast"
+#   1 termination (2 parts): "ingēns, ingentis<TAB>huge, vast" or "ingēns, gen. ingentis<TAB>huge, vast"
+
+ācer, ācris, ācre	sharp, keen
+
+bonus, -a, -um	good
+magnus, -a, -um	large, great
+malus, -a, -um	bad, evil
+multus, -a, -um	much, many
+parvus, -a, -um	small
+pulcher, pulchra, pulchrum	beautiful
+miser, misera, miserum	wretched, sad
+novus, -a, -um	new
+longus, -a, -um	long
+fortis, -e	brave, strong
+brevis, -e	short, brief
+gravis, -e	heavy, serious
+omnis, -e	all, every
+facilis, -e	easy
+difficilis, -e	difficult
+dulcis, -e	sweet
+ingēns, ingentis	huge, vast
+fēlīx, fēlīcis	happy, fortunate

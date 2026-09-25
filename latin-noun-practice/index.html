@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Practice declining Latin nouns across all five cases. Covers 2nd and 3rd declension neuters, with streak tracking, sound effects, and instant feedback." />
-  <title>Latin Noun Declension Practice — Grammatica Latina</title>
+  <meta name="description" content="Practice Latin noun, adjective, and noun-adjective agreement declensions across all five cases with streak tracking, sound effects, and instant feedback." />
+  <title>Latin Declension Practice</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -15,8 +15,8 @@
   <div id="app">
     <header id="header">
       <div class="header-left">
-        <h1 class="site-title">Grammatica Latina</h1>
-        <p class="page-title">Noun Practice</p>
+        <span class="site-title">Grammatica Latina</span>
+        <h1 class="page-title">Latin Declension Practice</h1>
       </div>
       <div class="header-right">
         <div class="accuracy-display">
@@ -30,21 +30,49 @@
       </div>
     </header>
 
+    <nav class="mode-nav" aria-label="Practice Mode">
+      <div class="mode-selector" id="mode-selector">
+        <button class="mode-btn active" data-mode="noun" id="mode-noun">Nouns</button>
+        <button class="mode-btn" data-mode="adjective" id="mode-adj">Adjectives</button>
+        <button class="mode-btn" data-mode="pair" id="mode-pair">Noun + Adjective</button>
+        <button class="mode-btn" data-mode="endings" id="mode-endings">Just the Endings</button>
+      </div>
+    </nav>
+
     <main id="main">
       <div class="word-section">
+        <div class="endings-selectors hidden" id="endings-selectors">
+          <div class="endings-selector-group">
+            <span class="selector-label">Declension:</span>
+            <div class="selector-buttons" id="endings-decl-buttons">
+              <button class="decl-btn active" data-decl="1">1st</button>
+              <button class="decl-btn" data-decl="2">2nd</button>
+              <button class="decl-btn" data-decl="3">3rd</button>
+            </div>
+          </div>
+          <div class="endings-selector-group">
+            <span class="selector-label">Gender:</span>
+            <div class="selector-buttons" id="endings-gender-buttons">
+              <button class="decl-btn" data-gen="m">Masc.</button>
+              <button class="decl-btn active" data-gen="f">Fem.</button>
+              <button class="decl-btn" data-gen="n">Neut.</button>
+            </div>
+          </div>
+        </div>
+
         <h2 class="word-display" id="word-display"></h2>
 
         <div class="declension-selector" id="declension-selector">
-          <p class="selector-label">Identify Declension:</p>
+          <p class="selector-label" id="selector-label">Identify Declension:</p>
           <div class="selector-buttons" id="selector-buttons"></div>
         </div>
 
         <div class="tutorial" id="tutorial">
           <div class="tutorial-icon">💡</div>
-          <div class="tutorial-body">
-            <strong class="tutorial-title">Identifying the Declension</strong>
-            <p class="tutorial-subtitle">Look at the genitive singular ending (the second part of the entry):</p>
-            <ul class="tutorial-list">
+          <div class="tutorial-body" id="tutorial-body">
+            <strong class="tutorial-title" id="tutorial-title">Identifying the Declension</strong>
+            <p class="tutorial-subtitle" id="tutorial-subtitle">Look at the genitive singular ending (the second part of the entry):</p>
+            <ul class="tutorial-list" id="tutorial-list">
               <li><span class="ending-chip">-ae</span> 1st</li>
               <li><span class="ending-chip">-ī</span> 2nd</li>
               <li><span class="ending-chip">-is</span> 3rd</li>
@@ -73,6 +101,13 @@
           <span class="toggle-text">Include Dative</span>
         </label>
         <label class="toggle-label">
+          <span class="toggle-track" id="istem-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <input type="checkbox" class="sr-only" id="istem-toggle" />
+          <span class="toggle-text">Include i-stems</span>
+        </label>
+        <label class="toggle-label">
           <span class="toggle-track" id="sound-track">
             <span class="toggle-thumb"></span>
           </span>
@@ -92,7 +127,7 @@
     </footer>
   </div>
 
-  <script src="vocabulary.js"></script>
+  <script src="declension.js"></script>
   <script src="audio.js"></script>
   <script src="app.js"></script>
 </body>
