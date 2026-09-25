@@ -55,7 +55,7 @@
             <div class="selector-buttons" id="endings-gender-buttons">
               <button class="decl-btn" data-gen="m">Masc.</button>
               <button class="decl-btn active" data-gen="f">Fem.</button>
-              <button class="decl-btn" data-gen="n">Neut.</button>
+              <button class="decl-btn" data-gen="n" disabled title="1st declension has no neuter nouns">Neut.</button>
             </div>
           </div>
         </div>
@@ -99,6 +99,13 @@
           </span>
           <input type="checkbox" class="sr-only" id="dative-toggle" />
           <span class="toggle-text">Include Dative</span>
+        </label>
+        <label class="toggle-label">
+          <span class="toggle-track" id="neuter-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <input type="checkbox" class="sr-only" id="neuter-toggle" />
+          <span class="toggle-text">Include Neuter Nouns</span>
         </label>
         <label class="toggle-label">
           <span class="toggle-track" id="istem-track">

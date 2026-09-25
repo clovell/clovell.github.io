@@ -10,8 +10,57 @@
 #                             or nomSg, genSg, marium, gender<TAB>translation
 
 puella, -ae, f.	girl
+vīlla, -ae, f.	house, country house
+amīcus, -ī, m.	friend
+amīca, -ae, f.	friend
+puer, -ī, m.	boy
 hortus, -ī, m.	garden
-puer, puerī, m.	boy
+servus, -ī, m.	slave, enslaved person
+vir, virī, m.	man
+vōx, vōcis, f.	voice
+silva, -ae, f.	forest, woods
+lupus, -ī, m.	wolf
+pater, patris, m.	father
+māter, mātris, f.	mother
+ancilla, -ae, f.	slave woman
+cibus, -ī, m.	food
+aqua, -ae, f.	water
+nūntius, nūntiī, m.	messenger
+prīnceps, prīncipis, m.	emperor
+tempus, temporis, n.	time
+cubiculum, -ī, n.	bedroom
+baculum, -ī, n.	staff, stick
+equus, -ī, m.	horse
+dominus, -ī, m.	master, enslaver
+īra, -ae, f.	anger
+porta, -ae, f.	gate
+canis, canis, m./f.	dog
+vēstīgium, -ī, n.	track, trace, footprint
+pēs, pedis, m.	foot
+aurīga, aurīgae, m.	charioteer
+cīvis, cīvis, -ium, m./f.	citizen
+pars, partis, -ium, f.	part
+iter, itineris, n.	journey, trip, route
+culpa, -ae, f.	fault, blame
+ars, artis, -ium, f.	art, skill
+pulvis, pulveris, m.	dust
+onus, oneris, n.	burden, load
+bōs, bovis, m./f.	cow, ox, cattle
+animus, animī, m.	mind
+hospes, hospitis, m./f.	guest, host
+caelum, -ī, n.	heaven, sky
+aedificium, -ī, n.	building
+caupōna, -ae, f.	inn
+caupō, caupōnis, m.	innkeeper
+homō, hominis, m.	human being, man
+cēna, -ae, f.	dinner
+lectus, -ī, m.	bed, couch
+mīles, mīlitis, m.	soldier
+fabula, -ae, f.	story
+somnus, -ī, m.	sleep
+corpus, corporis, n.	body
+lūx, lūcis, f.	light
+sepulcrum, -ī, n.	tomb
 bellum, -ī, n.	war
 cōnsilium, -ī, n.	plan, advice
 dōnum, -ī, n.	gift
@@ -20,13 +69,10 @@ perīculum, -ī, n.	danger
 plaustrum, -ī, n.	wagon, cart
 saxum, -ī, n.	rock
 verbum, -ī, n.	word
-māter, mātris, f.	mother
 opus, operis, n.	work
 caput, capitis, n.	head
 carmen, carminis, n.	song, poem
-corpus, corporis, n.	body
 flūmen, flūminis, n.	river
-iter, itineris, n.	journey, route
 lēx, lēgis, f.	law
 nōmen, nōminis, n.	name
 rēx, rēgis, m.	king
@@ -56,12 +102,12 @@ pulcher, pulchra, pulchrum	beautiful
 miser, misera, miserum	wretched, sad
 novus, -a, -um	new
 longus, -a, -um	long
-fortis, -e	brave, strong
-brevis, -e	short, brief
-gravis, -e	heavy, serious
-omnis, -e	all, every
-facilis, -e	easy
-difficilis, -e	difficult
-dulcis, -e	sweet
-ingēns, ingentis	huge, vast
-fēlīx, fēlīcis	happy, fortunate
+fortis, fortis, forte	brave, strong
+brevis, brevis, breve	short, brief
+gravis, gravis, grave	heavy, serious
+omnis, omnis, omne	all, every
+facilis, facilis, facile	easy
+difficilis, difficilis, difficile	difficult
+dulcis, dulcis, dulce	sweet
+ingēns, ingēns, ingēns, gen. ingentis	huge, vast
+fēlīx, fēlīx, fēlīx, gen. fēlīcis	happy, fortunate

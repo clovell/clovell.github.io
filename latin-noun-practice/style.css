@@ -257,9 +257,29 @@ footer {
 
 /* Pair Mode Grid */
 .input-grid.mode-pair {
-  max-width: 56rem;
+  max-width: 58rem;
   grid-template-columns: 80px 1fr 1fr 1fr 1fr;
   gap: 0.35rem 0.4rem;
+}
+
+.input-grid.mode-pair .plural-start {
+  margin-left: 0.75rem;
+  position: relative;
+}
+
+.input-grid.mode-pair .plural-start::before {
+  content: '';
+  position: absolute;
+  left: -0.45rem;
+  top: -0.25rem;
+  bottom: -0.25rem;
+  width: 1px;
+  background: var(--stone-300);
+}
+
+.input-grid.mode-pair .grid-superheader.plural-start::before {
+  top: 0;
+  bottom: 0;
 }
 
 .grid-superheader {
@@ -344,6 +364,20 @@ footer {
 .grid-input.correct { border-color: var(--green-400); background: rgba(240,253,244,0.3); color: var(--green-800); }
 .grid-input.incorrect { border-color: var(--red-300); background: var(--red-50); color: var(--red-800); }
 .grid-input.completed { opacity: 0.8; }
+
+.col-neuter-disabled {
+  opacity: 0.35;
+  color: var(--stone-400);
+}
+
+.grid-input.neuter-disabled {
+  background: var(--stone-100);
+  border-color: var(--stone-200);
+  color: var(--stone-400);
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
 .dative-row { display: flex; } /* overridden by hide-dative */
 .input-grid.hide-dative .dative-row,
@@ -433,6 +467,8 @@ kbd {
   .selector-buttons { gap: 0.75rem; }
   .input-grid { grid-template-columns: 120px 1fr 1fr; gap: 0.5rem 1rem; padding: 0; }
   .input-grid.mode-pair { grid-template-columns: 100px 1fr 1fr 1fr 1fr; gap: 0.5rem 0.75rem; }
+  .input-grid.mode-pair .plural-start { margin-left: 1.25rem; }
+  .input-grid.mode-pair .plural-start::before { left: -0.7rem; top: -0.35rem; bottom: -0.35rem; }
   .adj-container { flex-direction: row; gap: 2rem; justify-content: center; }
   .adj-card { flex: 1; padding: 1.25rem 1.5rem; }
   .adj-subgrid { grid-template-columns: 100px 1fr 1fr 1fr; gap: 0.5rem 0.75rem; }

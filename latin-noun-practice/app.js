@@ -8,6 +8,7 @@ var state = {
   mode: 'noun', // 'noun' | 'adjective' | 'pair' | 'endings'
   currentWord: null,
   includeDative: false,
+  includeNeuter: false,
   includeIStems: false,
   ignoreMacrons: true,
   soundEnabled: true,
@@ -55,10 +56,13 @@ async function loadVocabulary() {
 // ===== Helpers =====
 function getActiveNouns() {
   var list = nounVocabulary.filter(function(w) {
+    if (!state.includeNeuter && w.gender && w.gender.startsWith('n')) return false;
     if (!state.includeIStems && w.isIStem) return false;
     return true;
   });
-  return list.length > 0 ? list : nounVocabulary;
+  if (list.length > 0) return list;
+  var nonNeuter = nounVocabulary.filter(function(w) { return !w.gender || !w.gender.startsWith('n'); });
+  return nonNeuter.length > 0 ? nonNeuter : nounVocabulary;
 }
 
 function getActiveAdjectives() {
@@ -175,7 +179,7 @@ function buildGrid() {
 
       GENDERS.forEach(function(gen) {
         var header = document.createElement('div');
-        header.className = 'grid-header';
+        header.className = 'grid-header' + (!state.includeNeuter && gen === 'n' ? ' col-neuter-disabled' : '');
         header.textContent = GENDER_LABELS[gen];
         subgrid.appendChild(header);
       });
@@ -190,12 +194,19 @@ function buildGrid() {
         GENDERS.forEach(function(gen) {
           var input = document.createElement('input');
           input.type = 'text';
-          input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '');
+          var isNeuterDisabled = (!state.includeNeuter && gen === 'n');
+          input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '') + (isNeuterDisabled ? ' neuter-disabled' : '');
           input.dataset.num = num;
           input.dataset.case = cas;
           input.dataset.gen = gen;
-          input.tabIndex = tabCounter++;
-          input.disabled = !state.declensionIdentified;
+          if (isNeuterDisabled) {
+            input.tabIndex = -1;
+            input.disabled = true;
+            input.placeholder = '—';
+          } else {
+            input.tabIndex = tabCounter++;
+            input.disabled = !state.declensionIdentified;
+          }
           input.autocapitalize = 'off';
           input.autocomplete = 'off';
           input.autocorrect = 'off';
@@ -221,7 +232,7 @@ function buildGrid() {
     container.appendChild(sgSuper);
 
     var plSuper = document.createElement('div');
-    plSuper.className = 'grid-superheader span-2';
+    plSuper.className = 'grid-superheader span-2 plural-start';
     plSuper.textContent = 'Plural';
     container.appendChild(plSuper);
 
@@ -229,38 +240,37 @@ function buildGrid() {
     var emptyHeader2 = document.createElement('div');
     container.appendChild(emptyHeader2);
 
-    ['Noun', 'Adjective', 'Noun', 'Adjective'].forEach(function(sub) {
+    ['Noun', 'Adjective', 'Noun', 'Adjective'].forEach(function(sub, idx) {
       var header = document.createElement('div');
-      header.className = 'grid-subheader';
+      header.className = 'grid-subheader' + (idx === 2 ? ' plural-start' : '');
       header.textContent = sub;
       container.appendChild(header);
     });
 
-    var tabIdx = 1;
-    CASES.forEach(function(cas) {
+    CASES.forEach(function(cas, caseIdx) {
       var isDative = cas === 'dat';
       var label = document.createElement('div');
       label.className = 'case-label' + (isDative ? ' optional dative-row' : '');
       label.textContent = CASE_LABELS[cas] + (isDative ? '*' : '');
       container.appendChild(label);
 
-      // Sg Noun, Sg Adj, Pl Noun, Pl Adj
+      // Tab order: Sg Noun -> Sg Adj -> next row ... then Pl Noun -> Pl Adj -> next row
       var cols = [
-        { num: 'sg', role: 'noun' },
-        { num: 'sg', role: 'adj' },
-        { num: 'pl', role: 'noun' },
-        { num: 'pl', role: 'adj' }
+        { num: 'sg', role: 'noun', tabIdx: caseIdx * 2 + 1, isPluralStart: false },
+        { num: 'sg', role: 'adj',  tabIdx: caseIdx * 2 + 2, isPluralStart: false },
+        { num: 'pl', role: 'noun', tabIdx: 10 + caseIdx * 2 + 1, isPluralStart: true },
+        { num: 'pl', role: 'adj',  tabIdx: 10 + caseIdx * 2 + 2, isPluralStart: false }
       ];
 
       cols.forEach(function(col) {
         var input = document.createElement('input');
         input.type = 'text';
-        input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '');
+        input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '') + (col.isPluralStart ? ' plural-start' : '');
         input.dataset.num = col.num;
         input.dataset.case = cas;
         input.dataset.role = col.role;
         input.placeholder = col.role === 'noun' ? 'noun' : 'adj';
-        input.tabIndex = tabIdx++;
+        input.tabIndex = col.tabIdx;
         input.disabled = !state.declensionIdentified;
         input.autocapitalize = 'off';
         input.autocomplete = 'off';
@@ -348,6 +358,9 @@ function renderEndingsSelectors() {
       if (state.endingsDeclension === 1 && g === 'n') {
         btn.disabled = true;
         btn.title = '1st declension has no neuter nouns';
+      } else if (state.endingsDeclension === 2 && g === 'f') {
+        btn.disabled = true;
+        btn.title = '2nd declension has no regular feminine nouns';
       } else {
         btn.disabled = false;
         btn.removeAttribute('title');
@@ -360,12 +373,15 @@ function handleEndingsDeclSelect(decl) {
   state.endingsDeclension = decl;
   if (decl === 1 && state.endingsGender === 'n') {
     state.endingsGender = 'f';
+  } else if (decl === 2 && state.endingsGender === 'f') {
+    state.endingsGender = 'm';
   }
   resetEndingsPractice();
 }
 
 function handleEndingsGenderSelect(gen) {
   if (state.endingsDeclension === 1 && gen === 'n') return;
+  if (state.endingsDeclension === 2 && gen === 'f') return;
   state.endingsGender = gen;
   resetEndingsPractice();
 }
@@ -425,6 +441,7 @@ function handleCheck() {
   inputs.forEach(function(input) {
     var cas = input.dataset.case;
     if (!state.includeDative && cas === 'dat') return;
+    if (state.mode === 'adjective' && !state.includeNeuter && input.dataset.gen === 'n') return;
 
     var num = input.dataset.num;
     var userInput = input.value;
@@ -468,6 +485,7 @@ function handleCheck() {
     state.isCompleted = true;
 
     inputs.forEach(function(input) {
+      if (state.mode === 'adjective' && !state.includeNeuter && input.dataset.gen === 'n') return;
       if (!input.classList.contains('incorrect')) input.classList.add('completed');
       input.disabled = true;
     });
@@ -553,7 +571,12 @@ function nextWord(resetGrid) {
   } else {
     document.querySelectorAll('.grid-input').forEach(function(input) {
       input.value = '';
-      input.disabled = !state.declensionIdentified;
+      if (state.mode === 'adjective' && !state.includeNeuter && input.dataset.gen === 'n') {
+        input.disabled = true;
+        input.tabIndex = -1;
+      } else {
+        input.disabled = !state.declensionIdentified;
+      }
       input.classList.remove('correct', 'incorrect', 'completed');
     });
   }
@@ -582,6 +605,7 @@ function switchMode(newMode) {
 function setupToggles() {
   var macronToggle = document.getElementById('macron-toggle');
   var dativeToggle = document.getElementById('dative-toggle');
+  var neuterToggle = document.getElementById('neuter-toggle');
   var istemToggle = document.getElementById('istem-toggle');
   var soundToggle = document.getElementById('sound-toggle');
 
@@ -596,6 +620,21 @@ function setupToggles() {
     document.querySelectorAll('.input-grid, .adj-container').forEach(function(grid) {
       grid.classList.toggle('hide-dative', !state.includeDative);
     });
+  });
+
+  neuterToggle.addEventListener('change', function() {
+    state.includeNeuter = this.checked;
+    document.getElementById('neuter-track').classList.toggle('checked', this.checked);
+    if (state.mode === 'adjective') {
+      buildGrid();
+      render();
+    } else if (!state.includeNeuter) {
+      if (state.mode === 'noun' && state.currentWord && state.currentWord.gender && state.currentWord.gender.startsWith('n')) {
+        nextWord();
+      } else if (state.mode === 'pair' && state.currentWord && state.currentWord.noun && state.currentWord.noun.gender && state.currentWord.noun.gender.startsWith('n')) {
+        nextWord();
+      }
+    }
   });
 
   istemToggle.addEventListener('change', function() {
@@ -623,6 +662,7 @@ function setupToggles() {
 
   // Set initial states
   document.getElementById('macron-track').classList.toggle('checked', state.ignoreMacrons);
+  document.getElementById('neuter-track').classList.toggle('checked', state.includeNeuter);
   document.getElementById('istem-track').classList.toggle('checked', state.includeIStems);
   document.getElementById('sound-track').classList.toggle('checked', state.soundEnabled);
   document.querySelectorAll('.input-grid, .adj-container').forEach(function(grid) {
@@ -701,6 +741,11 @@ function render() {
 
   // Disable / Enable inputs
   document.querySelectorAll('.grid-input').forEach(function(input) {
+    if (state.mode === 'adjective' && !state.includeNeuter && input.dataset.gen === 'n') {
+      input.disabled = true;
+      input.tabIndex = -1;
+      return;
+    }
     input.disabled = !state.declensionIdentified || state.isCompleted;
   });
 

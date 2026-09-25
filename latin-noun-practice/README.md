@@ -8,7 +8,7 @@ Interactive quiz app for practicing Latin noun and adjective declensions, plus n
   - **Nouns**: Practice declining 1st, 2nd, and 3rd declension nouns in singular and plural.
   - **Adjectives**: Practice declining full paradigms across all three genders (Masculine, Feminine, Neuter) for 2-1-2 and 3rd declension adjectives.
   - **Noun-Adjective Pairs**: Practice declining a noun and agreeing adjective together (reinforcing gender agreement across different declensions).
-  - **Just the Endings**: Practice pure noun endings by selecting declension (1st, 2nd, 3rd) and gender (Masc, Fem, Neut). Correctly respects the i-stem toggle (3rd declension ablative singular is `-e` unless Neuter with i-stem toggle enabled, where it is `-ī`).
+  - **Just the Endings**: Practice pure noun endings by selecting declension (1st, 2nd, 3rd) and gender (Masc, Fem, Neut). Restricts options by declension (no neuter in 1st declension; no feminine in 2nd declension) and respects the i-stem toggle.
 - **Simplified Tab-Delimited Vocabulary**: Vocabulary entries are simple lines formatted as `dictionary_entry<TAB>definition`, making them easy to edit or copy from spreadsheets. Supports flexible dictionary formats:
   - **Nouns**: `puella, -ae, f.` or `mare, maris, -ium, n.`
   - **2-1-2 Adjectives**: `bonus, -a, -um` or `pulcher, pulchra, pulchrum`
@@ -23,6 +23,7 @@ Interactive quiz app for practicing Latin noun and adjective declensions, plus n
 - **Configurable Toggles**:
   - **Macrons Optional**: Toggle macron sensitivity.
   - **Include Dative**: Toggle inclusion of the dative case.
+  - **Include Neuter Nouns**: Off by default; excludes neuter nouns from Nouns and Noun + Adjective modes, and greys out neuter columns in Adjectives mode.
   - **Include i-stems**: Toggle whether 3rd declension i-stem nouns and adjectives are included in the practice pool.
   - **Sound Effects**: Audio feedback with streak milestones and confetti.
 - **Fully Static**: Just open `index.html` in a web browser.
