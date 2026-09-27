@@ -100,9 +100,45 @@ function normalizeLatin(text) {
 function isCorrectForm(input, correctForms) {
   if (!correctForms || !Array.isArray(correctForms)) return false;
   var normInput = normalizeLatin(input);
-  return correctForms.some(function(form) {
+  var directMatch = correctForms.some(function(form) {
     return normalizeLatin(form) === normInput;
   });
+  if (directMatch) return true;
+
+  // Handle multi-token ending combinations (e.g. "us, r", "-us, -r", "us, r, er", "us er r", "us / r", etc.)
+  if (normInput) {
+    var rawTokens = normInput.split(/[,/;\s]+|\b(?:or|and)\b/).filter(Boolean);
+    if (rawTokens.length > 1) {
+      var tokens = rawTokens.map(function(t) {
+        return t.replace(/^-+|-+$/g, '').trim();
+      }).filter(Boolean);
+
+      if (tokens.length > 1) {
+        var validCleanEndings = [];
+        correctForms.forEach(function(f) {
+          var clean = normalizeLatin(f).replace(/^-+|-+$/g, '').trim();
+          if (clean && clean !== '—' && clean !== 'var' && clean !== 'varies' && clean !== 'none') {
+            var parts = clean.split(/[,/;\s]+|\b(?:or|and)\b/).filter(Boolean);
+            parts.forEach(function(p) {
+              var cleanP = p.replace(/^-+|-+$/g, '').trim();
+              if (cleanP && !validCleanEndings.includes(cleanP)) {
+                validCleanEndings.push(cleanP);
+              }
+            });
+          }
+        });
+
+        if (validCleanEndings.length > 1) {
+          var allValid = tokens.every(function(t) {
+            return validCleanEndings.includes(t);
+          });
+          if (allValid) return true;
+        }
+      }
+    }
+  }
+
+  return false;
 }
 
 function ordinalSuffix(n) {

@@ -887,9 +887,19 @@ var LatinDeclension = (function() {
           }
         };
       } else {
+        var baseNom = ['-us', '-er', '-r', '-ir'];
+        var comboStrings = [
+          'us, r', '-us, -r', 'us, -r', '-us, r',
+          'us, er', '-us, -er', 'us, -er', '-us, er',
+          'us, r, er', 'us, er, r', 'us er r', 'us r er',
+          'us r', 'us er', 'er, r', '-er, -r', 'r, er',
+          'r, us', '-r, -us', 'er, us', '-er, -us',
+          '-us, -r, -er', '-us, -er, -r',
+          'us / r', 'us / er', 'us / r / er', 'us / er / r', 'us/r/er', 'us/er/r', 'us/r', 'us/er'
+        ];
         return {
           sg: {
-            nom: withHyphenVariants(['-us', '-er']),
+            nom: withHyphenVariants(baseNom).concat(comboStrings),
             gen: withHyphenVariants(['-ī', '-i']),
             dat: withHyphenVariants(['-ō', '-o']),
             acc: withHyphenVariants(['-um']),
