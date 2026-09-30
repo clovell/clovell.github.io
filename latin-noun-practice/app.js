@@ -152,27 +152,28 @@ function buildGrid() {
   var numCases = CASES.length;
 
   if (state.mode === 'noun' || state.mode === 'endings') {
-    container.className = 'input-grid' + (!state.includeDative ? ' hide-dative' : '');
+    container.className = 'decl-container mode-noun' + (!state.includeDative ? ' hide-dative' : '');
 
-    // Header row
-    var emptyHeader = document.createElement('div');
-    container.appendChild(emptyHeader);
+    var numCases = CASES.length;
+    ['sg', 'pl'].forEach(function(num, numIdx) {
+      var card = document.createElement('div');
+      card.className = 'decl-card';
 
-    ['Singular', 'Plural'].forEach(function(title) {
-      var header = document.createElement('div');
-      header.className = 'grid-header';
-      header.textContent = title;
-      container.appendChild(header);
-    });
+      var title = document.createElement('h3');
+      title.className = 'decl-card-title';
+      title.textContent = num === 'sg' ? 'Singular' : 'Plural';
+      card.appendChild(title);
 
-    CASES.forEach(function(cas, caseIdx) {
-      var isDative = cas === 'dat';
-      var label = document.createElement('div');
-      label.className = 'case-label' + (isDative ? ' optional dative-row' : '');
-      label.textContent = CASE_LABELS[cas] + (isDative ? '*' : '');
-      container.appendChild(label);
+      var subgrid = document.createElement('div');
+      subgrid.className = 'decl-subgrid';
 
-      ['sg', 'pl'].forEach(function(num, numIdx) {
+      CASES.forEach(function(cas, caseIdx) {
+        var isDative = cas === 'dat';
+        var label = document.createElement('div');
+        label.className = 'case-label' + (isDative ? ' optional dative-row' : '');
+        label.textContent = CASE_LABELS[cas] + (isDative ? '*' : '');
+        subgrid.appendChild(label);
+
         var input = document.createElement('input');
         input.type = 'text';
         input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '');
@@ -190,8 +191,11 @@ function buildGrid() {
           }
         }
         input.addEventListener('input', function() { input.classList.remove('correct', 'incorrect', 'completed'); });
-        container.appendChild(input);
+        subgrid.appendChild(input);
       });
+
+      card.appendChild(subgrid);
+      container.appendChild(card);
     });
   } else if (state.mode === 'adjective') {
     container.className = 'adj-container' + (!state.includeDative ? ' hide-dative' : '');
@@ -256,65 +260,60 @@ function buildGrid() {
       container.appendChild(card);
     });
   } else if (state.mode === 'pair') {
-    container.className = 'input-grid mode-pair' + (!state.includeDative ? ' hide-dative' : '');
+    container.className = 'decl-container mode-pair' + (!state.includeDative ? ' hide-dative' : '');
 
-    // Row 1: Superheaders
-    var emptyHeader1 = document.createElement('div');
-    container.appendChild(emptyHeader1);
+    ['sg', 'pl'].forEach(function(num) {
+      var card = document.createElement('div');
+      card.className = 'decl-card pair-card';
 
-    var sgSuper = document.createElement('div');
-    sgSuper.className = 'grid-superheader span-2';
-    sgSuper.textContent = 'Singular';
-    container.appendChild(sgSuper);
+      var title = document.createElement('h3');
+      title.className = 'decl-card-title';
+      title.textContent = num === 'sg' ? 'Singular' : 'Plural';
+      card.appendChild(title);
 
-    var plSuper = document.createElement('div');
-    plSuper.className = 'grid-superheader span-2 plural-start';
-    plSuper.textContent = 'Plural';
-    container.appendChild(plSuper);
+      var subgrid = document.createElement('div');
+      subgrid.className = 'pair-subgrid';
 
-    // Row 2: Subheaders (Noun / Adj)
-    var emptyHeader2 = document.createElement('div');
-    container.appendChild(emptyHeader2);
+      // Header row
+      var emptyHeader = document.createElement('div');
+      subgrid.appendChild(emptyHeader);
 
-    ['Noun', 'Adjective', 'Noun', 'Adjective'].forEach(function(sub, idx) {
-      var header = document.createElement('div');
-      header.className = 'grid-subheader' + (idx === 2 ? ' plural-start' : '');
-      header.textContent = sub;
-      container.appendChild(header);
-    });
-
-    CASES.forEach(function(cas, caseIdx) {
-      var isDative = cas === 'dat';
-      var label = document.createElement('div');
-      label.className = 'case-label' + (isDative ? ' optional dative-row' : '');
-      label.textContent = CASE_LABELS[cas] + (isDative ? '*' : '');
-      container.appendChild(label);
-
-      // Tab order: Sg Noun -> Sg Adj -> next row ... then Pl Noun -> Pl Adj -> next row
-      var cols = [
-        { num: 'sg', role: 'noun', tabIdx: caseIdx * 2 + 1, isPluralStart: false },
-        { num: 'sg', role: 'adj',  tabIdx: caseIdx * 2 + 2, isPluralStart: false },
-        { num: 'pl', role: 'noun', tabIdx: 10 + caseIdx * 2 + 1, isPluralStart: true },
-        { num: 'pl', role: 'adj',  tabIdx: 10 + caseIdx * 2 + 2, isPluralStart: false }
-      ];
-
-      cols.forEach(function(col) {
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '') + (col.isPluralStart ? ' plural-start' : '');
-        input.dataset.num = col.num;
-        input.dataset.case = cas;
-        input.dataset.role = col.role;
-        input.placeholder = col.role === 'noun' ? 'noun' : 'adj';
-        input.tabIndex = col.tabIdx;
-        input.disabled = !state.declensionIdentified;
-        input.autocapitalize = 'off';
-        input.autocomplete = 'off';
-        input.autocorrect = 'off';
-        input.spellcheck = false;
-        input.addEventListener('input', function() { input.classList.remove('correct', 'incorrect', 'completed'); });
-        container.appendChild(input);
+      ['Noun', 'Adjective'].forEach(function(sub) {
+        var header = document.createElement('div');
+        header.className = 'grid-header';
+        header.textContent = sub;
+        subgrid.appendChild(header);
       });
+
+      CASES.forEach(function(cas, caseIdx) {
+        var isDative = cas === 'dat';
+        var label = document.createElement('div');
+        label.className = 'case-label' + (isDative ? ' optional dative-row' : '');
+        label.textContent = CASE_LABELS[cas] + (isDative ? '*' : '');
+        subgrid.appendChild(label);
+
+        ['noun', 'adj'].forEach(function(role, roleIdx) {
+          var input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'grid-input latin-text' + (isDative ? ' dative-row' : '');
+          input.dataset.num = num;
+          input.dataset.case = cas;
+          input.dataset.role = role;
+          input.placeholder = role;
+          var baseOffset = num === 'sg' ? 0 : 10;
+          input.tabIndex = baseOffset + caseIdx * 2 + roleIdx + 1;
+          input.disabled = !state.declensionIdentified;
+          input.autocapitalize = 'off';
+          input.autocomplete = 'off';
+          input.autocorrect = 'off';
+          input.spellcheck = false;
+          input.addEventListener('input', function() { input.classList.remove('correct', 'incorrect', 'completed'); });
+          subgrid.appendChild(input);
+        });
+      });
+
+      card.appendChild(subgrid);
+      container.appendChild(card);
     });
   }
 }
@@ -645,6 +644,16 @@ function setupToggles() {
   var istemToggle = document.getElementById('istem-toggle');
   var soundToggle = document.getElementById('sound-toggle');
 
+  var optionsBtn = document.getElementById('options-toggle-btn');
+  var togglesWrapper = document.getElementById('toggles-wrapper');
+  if (optionsBtn && togglesWrapper) {
+    optionsBtn.addEventListener('click', function() {
+      var isOpen = togglesWrapper.classList.toggle('open');
+      optionsBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      optionsBtn.classList.toggle('active', isOpen);
+    });
+  }
+
   macronToggle.addEventListener('change', function() {
     state.ignoreMacrons = this.checked;
     document.getElementById('macron-track').classList.toggle('checked', this.checked);
@@ -653,7 +662,7 @@ function setupToggles() {
   dativeToggle.addEventListener('change', function() {
     state.includeDative = this.checked;
     document.getElementById('dative-track').classList.toggle('checked', this.checked);
-    document.querySelectorAll('.input-grid, .adj-container').forEach(function(grid) {
+    document.querySelectorAll('.input-grid, .adj-container, .decl-container').forEach(function(grid) {
       grid.classList.toggle('hide-dative', !state.includeDative);
     });
   });
@@ -701,7 +710,7 @@ function setupToggles() {
   document.getElementById('neuter-track').classList.toggle('checked', state.includeNeuter);
   document.getElementById('istem-track').classList.toggle('checked', state.includeIStems);
   document.getElementById('sound-track').classList.toggle('checked', state.soundEnabled);
-  document.querySelectorAll('.input-grid, .adj-container').forEach(function(grid) {
+  document.querySelectorAll('.input-grid, .adj-container, .decl-container').forEach(function(grid) {
     grid.classList.toggle('hide-dative', !state.includeDative);
   });
 }
