@@ -449,7 +449,7 @@ footer {
 }
 
 .toggles-wrapper.open {
-  display: block;
+  display: block !important;
 }
 
 @keyframes optFadeIn {
@@ -531,7 +531,7 @@ kbd {
 .btn-pulse { animation: pulse 2s ease-in-out infinite; }
 
 /* ===== Desktop Responsive ===== */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 520px) {
   #app {
     height: 100vh;
     padding: 1rem 2rem;
