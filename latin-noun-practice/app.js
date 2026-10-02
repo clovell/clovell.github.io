@@ -74,6 +74,68 @@ function getActiveAdjectives() {
   return list.length > 0 ? list : adjectiveVocabulary;
 }
 
+var decks = {
+  quiz: [],
+  noun: [],
+  adjective: [],
+  pairNoun: [],
+  pairAdj: []
+};
+var lastDrawn = {
+  quiz: null,
+  noun: null,
+  adjective: null,
+  pairNoun: null,
+  pairAdj: null
+};
+
+function resetDecks() {
+  decks.quiz = [];
+  decks.noun = [];
+  decks.adjective = [];
+  decks.pairNoun = [];
+  decks.pairAdj = [];
+}
+
+function getNextFromDeck(deckKey, getItemsFn) {
+  var pool = getItemsFn();
+  if (!pool || pool.length === 0) return null;
+  if (pool.length === 1) return pool[0];
+
+  // Filter existing deck to only include items currently in the active pool
+  var poolMap = {};
+  pool.forEach(function(item) {
+    poolMap[item.id] = true;
+  });
+
+  var deck = (decks[deckKey] || []).filter(function(item) {
+    return poolMap[item.id] === true;
+  });
+
+  if (deck.length === 0) {
+    deck = pool.slice();
+    // Fisher-Yates shuffle
+    for (var i = deck.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = deck[i];
+      deck[i] = deck[j];
+      deck[j] = temp;
+    }
+    // Prevent the first item of the new deck from being the exact same as the last item drawn
+    if (lastDrawn[deckKey] && deck.length > 1 && deck[0].id === lastDrawn[deckKey].id) {
+      var swapIdx = 1 + Math.floor(Math.random() * (deck.length - 1));
+      var swapTemp = deck[0];
+      deck[0] = deck[swapIdx];
+      deck[swapIdx] = swapTemp;
+    }
+  }
+
+  var chosen = deck.shift();
+  decks[deckKey] = deck;
+  lastDrawn[deckKey] = chosen;
+  return chosen;
+}
+
 function getRandomItem(arr, currentId) {
   if (!arr || arr.length === 0) return null;
   if (arr.length === 1) return arr[0];
@@ -552,16 +614,23 @@ function nextQuizQuestion() {
   var nouns = getActiveNouns();
   if (!nouns || nouns.length === 0) return;
 
-  var noun = getRandomItem(nouns, state.currentQuiz && state.currentQuiz.noun ? state.currentQuiz.noun.id : null);
+  var noun = getNextFromDeck('quiz', getActiveNouns);
   var cases = ['nom', 'gen', 'acc', 'abl'];
   if (state.includeDative) cases.push('dat');
   var numbers = ['sg', 'pl'];
 
-  var pickedNum = numbers[Math.floor(Math.random() * numbers.length)];
-  var pickedCas = cases[Math.floor(Math.random() * cases.length)];
+  // Gather unique surface forms of this noun across active cases and numbers
+  var distinctForms = [];
+  numbers.forEach(function(n) {
+    cases.forEach(function(c) {
+      var pf = noun.forms[n][c][0];
+      if (!distinctForms.includes(pf)) {
+        distinctForms.push(pf);
+      }
+    });
+  });
 
-  var targetForms = noun.forms[pickedNum][pickedCas];
-  var targetForm = targetForms[0];
+  var targetForm = distinctForms[Math.floor(Math.random() * distinctForms.length)];
 
   var matches = [];
   numbers.forEach(function(n) {
@@ -764,16 +833,12 @@ function nextWord(resetGrid) {
 
   var next = null;
   if (state.mode === 'noun') {
-    var nouns = getActiveNouns();
-    next = getRandomItem(nouns, state.currentWord ? state.currentWord.id : null);
+    next = getNextFromDeck('noun', getActiveNouns);
   } else if (state.mode === 'adjective') {
-    var adjs = getActiveAdjectives();
-    next = getRandomItem(adjs, state.currentWord ? state.currentWord.id : null);
+    next = getNextFromDeck('adjective', getActiveAdjectives);
   } else if (state.mode === 'pair') {
-    var nouns = getActiveNouns();
-    var adjs = getActiveAdjectives();
-    var n = getRandomItem(nouns, null);
-    var a = getRandomItem(adjs, null);
+    var n = getNextFromDeck('pairNoun', getActiveNouns);
+    var a = getNextFromDeck('pairAdj', getActiveAdjectives);
     next = LatinDeclension.createNounAdjectivePair(n, a);
   }
 
@@ -871,6 +936,7 @@ function setupToggles() {
 
   neuterToggle.addEventListener('change', function() {
     state.includeNeuter = this.checked;
+    resetDecks();
     document.getElementById('neuter-track').classList.toggle('checked', this.checked);
     if (state.mode === 'adjective') {
       buildGrid();
@@ -890,6 +956,7 @@ function setupToggles() {
 
   istemToggle.addEventListener('change', function() {
     state.includeIStems = this.checked;
+    resetDecks();
     document.getElementById('istem-track').classList.toggle('checked', this.checked);
     if (state.mode === 'endings') {
       render();

@@ -76,7 +76,6 @@ flūmen, flūminis, n.	river
 lēx, lēgis, f.	law
 nōmen, nōminis, n.	name
 rēx, rēgis, m.	king
-tempus, temporis, n.	time
 vulnus, vulneris, n.	wound
 mare, maris, -ium, n.	sea
 
