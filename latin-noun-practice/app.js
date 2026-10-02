@@ -5,8 +5,9 @@ var GENDERS = ['m', 'f', 'n'];
 var GENDER_LABELS = { m: 'Masc.', f: 'Fem.', n: 'Neut.' };
 
 var state = {
-  mode: 'noun', // 'noun' | 'adjective' | 'pair' | 'endings'
+  mode: 'noun', // 'noun' | 'adjective' | 'pair' | 'endings' | 'quiz'
   currentWord: null,
+  currentQuiz: null,
   includeDative: false,
   includeNeuter: false,
   includeIStems: false,
@@ -315,6 +316,80 @@ function buildGrid() {
       card.appendChild(subgrid);
       container.appendChild(card);
     });
+  } else if (state.mode === 'quiz') {
+    container.className = 'quiz-container' + (!state.includeDative ? ' hide-dative' : '');
+
+    var card = document.createElement('div');
+    card.className = 'quiz-matrix-card';
+
+    var header = document.createElement('div');
+    header.className = 'quiz-matrix-header';
+    var caseColHeader = document.createElement('span');
+    caseColHeader.className = 'quiz-header-cell case-col-header';
+    caseColHeader.textContent = 'Case';
+    header.appendChild(caseColHeader);
+
+    var sgHeader = document.createElement('span');
+    sgHeader.className = 'quiz-header-cell';
+    sgHeader.textContent = 'Singular';
+    header.appendChild(sgHeader);
+
+    var plHeader = document.createElement('span');
+    plHeader.className = 'quiz-header-cell';
+    plHeader.textContent = 'Plural';
+    header.appendChild(plHeader);
+
+    card.appendChild(header);
+
+    var body = document.createElement('div');
+    body.className = 'quiz-matrix-body';
+
+    CASES.forEach(function(cas) {
+      var isDative = cas === 'dat';
+      var row = document.createElement('div');
+      row.className = 'quiz-row' + (isDative ? ' dative-row' : '');
+
+      var label = document.createElement('span');
+      label.className = 'quiz-case-label' + (isDative ? ' optional' : '');
+      label.textContent = CASE_LABELS[cas] + (isDative ? '*' : '');
+      row.appendChild(label);
+
+      ['sg', 'pl'].forEach(function(num) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-choice-btn';
+        btn.dataset.cas = cas;
+        btn.dataset.num = num;
+        btn.id = 'quiz-' + cas + '-' + num;
+
+        var checkIcon = document.createElement('span');
+        checkIcon.className = 'choice-check';
+        checkIcon.textContent = '✓';
+        btn.appendChild(checkIcon);
+
+        var textSpan = document.createElement('span');
+        textSpan.className = 'choice-label';
+        textSpan.textContent = num === 'sg' ? 'Singular' : 'Plural';
+        btn.appendChild(textSpan);
+
+        var feedbackSpan = document.createElement('span');
+        feedbackSpan.className = 'choice-feedback';
+        btn.appendChild(feedbackSpan);
+
+        btn.addEventListener('click', function() {
+          if (state.isCompleted) return;
+          this.classList.toggle('selected');
+          updateQuizCheckButtonState();
+        });
+
+        row.appendChild(btn);
+      });
+
+      body.appendChild(row);
+    });
+
+    card.appendChild(body);
+    container.appendChild(card);
   }
 }
 
@@ -467,7 +542,123 @@ function handleDeclensionSelect(selected) {
   }
 }
 
+function updateQuizCheckButtonState() {
+  if (state.mode !== 'quiz' || state.isCompleted) return;
+  var anySelected = document.querySelectorAll('.quiz-choice-btn.selected').length > 0;
+  if (els.checkBtn) els.checkBtn.disabled = !anySelected;
+}
+
+function nextQuizQuestion() {
+  var nouns = getActiveNouns();
+  if (!nouns || nouns.length === 0) return;
+
+  var noun = getRandomItem(nouns, state.currentQuiz && state.currentQuiz.noun ? state.currentQuiz.noun.id : null);
+  var cases = ['nom', 'gen', 'acc', 'abl'];
+  if (state.includeDative) cases.push('dat');
+  var numbers = ['sg', 'pl'];
+
+  var pickedNum = numbers[Math.floor(Math.random() * numbers.length)];
+  var pickedCas = cases[Math.floor(Math.random() * cases.length)];
+
+  var targetForms = noun.forms[pickedNum][pickedCas];
+  var targetForm = targetForms[0];
+
+  var matches = [];
+  numbers.forEach(function(n) {
+    cases.forEach(function(c) {
+      var forms = noun.forms[n][c];
+      var isMatch = false;
+      if (state.ignoreMacrons) {
+        isMatch = forms.some(function(f) {
+          return normalizeLatin(f) === normalizeLatin(targetForm);
+        });
+      } else {
+        isMatch = forms.includes(targetForm);
+      }
+      if (isMatch) {
+        matches.push({ cas: c, num: n });
+      }
+    });
+  });
+
+  state.currentQuiz = {
+    noun: noun,
+    form: targetForm,
+    matches: matches
+  };
+  state.currentWord = noun;
+  state.declensionIdentified = true;
+  state.isCompleted = false;
+  state.hasErrorsOnCurrentWord = false;
+
+  buildGrid();
+  render();
+}
+
 function handleCheck() {
+  if (state.mode === 'quiz') {
+    if (state.isCompleted) return;
+    var quizButtons = document.querySelectorAll('.quiz-choice-btn');
+    var matches = (state.currentQuiz && state.currentQuiz.matches) ? state.currentQuiz.matches : [];
+
+    var selectedCount = 0;
+    quizButtons.forEach(function(btn) {
+      if (btn.classList.contains('selected')) selectedCount++;
+    });
+    if (selectedCount === 0) return;
+
+    var anyMistake = false;
+    quizButtons.forEach(function(btn) {
+      var cas = btn.dataset.cas;
+      var num = btn.dataset.num;
+      if (!state.includeDative && cas === 'dat') return;
+
+      var isSelected = btn.classList.contains('selected');
+      var isMatch = matches.some(function(m) {
+        return m.cas === cas && m.num === num;
+      });
+
+      btn.classList.remove('correct', 'incorrect', 'missed');
+      var fb = btn.querySelector('.choice-feedback');
+      if (fb) fb.textContent = '';
+
+      if (isSelected && isMatch) {
+        btn.classList.add('correct');
+        if (fb) fb.textContent = '✓ Correct';
+      } else if (isSelected && !isMatch) {
+        btn.classList.add('incorrect');
+        if (fb) fb.textContent = '✗ Wrong';
+        anyMistake = true;
+      } else if (!isSelected && isMatch) {
+        btn.classList.add('missed');
+        if (fb) fb.textContent = '! Missed';
+        anyMistake = true;
+      }
+    });
+
+    if (!state.isCompleted) {
+      state.totalAttempts++;
+      if (!anyMistake) {
+        state.correctAttempts++;
+        state.streak++;
+        if (state.streak % 5 === 0 && state.streak > 0) {
+          playStreakSound(state.soundEnabled, state.streak);
+          confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#3b82f6', '#10b981', '#f59e0b'] });
+        } else {
+          playCorrectSound(state.soundEnabled);
+          confetti({ particleCount: 40, spread: 50, origin: { y: 0.7 } });
+        }
+      } else {
+        state.streak = 0;
+        playErrorSound(state.soundEnabled);
+      }
+    }
+
+    state.isCompleted = true;
+    render();
+    return;
+  }
+
   if (!state.declensionIdentified) return;
   var allCorrect = true;
   var anyMistake = false;
@@ -548,6 +739,11 @@ function handleCheck() {
 }
 
 function nextWord(resetGrid) {
+  if (state.mode === 'quiz') {
+    nextQuizQuestion();
+    return;
+  }
+
   if (state.mode === 'endings') {
     state.currentWord = { id: 'endings', declension: state.endingsDeclension };
     state.isCompleted = false;
@@ -657,14 +853,20 @@ function setupToggles() {
   macronToggle.addEventListener('change', function() {
     state.ignoreMacrons = this.checked;
     document.getElementById('macron-track').classList.toggle('checked', this.checked);
+    if (state.mode === 'quiz') {
+      nextQuizQuestion();
+    }
   });
 
   dativeToggle.addEventListener('change', function() {
     state.includeDative = this.checked;
     document.getElementById('dative-track').classList.toggle('checked', this.checked);
-    document.querySelectorAll('.input-grid, .adj-container, .decl-container').forEach(function(grid) {
+    document.querySelectorAll('.input-grid, .adj-container, .decl-container, .quiz-container').forEach(function(grid) {
       grid.classList.toggle('hide-dative', !state.includeDative);
     });
+    if (state.mode === 'quiz') {
+      nextQuizQuestion();
+    }
   });
 
   neuterToggle.addEventListener('change', function() {
@@ -673,6 +875,10 @@ function setupToggles() {
     if (state.mode === 'adjective') {
       buildGrid();
       render();
+    } else if (state.mode === 'quiz') {
+      if (!state.includeNeuter && state.currentQuiz && state.currentQuiz.noun && state.currentQuiz.noun.gender && state.currentQuiz.noun.gender.startsWith('n')) {
+        nextQuizQuestion();
+      }
     } else if (!state.includeNeuter) {
       if (state.mode === 'noun' && state.currentWord && state.currentWord.gender && state.currentWord.gender.startsWith('n')) {
         nextWord();
@@ -687,6 +893,10 @@ function setupToggles() {
     document.getElementById('istem-track').classList.toggle('checked', this.checked);
     if (state.mode === 'endings') {
       render();
+    } else if (state.mode === 'quiz') {
+      if (!state.includeIStems && state.currentQuiz && state.currentQuiz.noun && state.currentQuiz.noun.isIStem) {
+        nextQuizQuestion();
+      }
     } else if (!state.includeIStems) {
       // If turned off and current item is an i-stem, advance to next non-i-stem word
       if (state.mode === 'noun' && state.currentWord && state.currentWord.isIStem) {
@@ -710,14 +920,61 @@ function setupToggles() {
   document.getElementById('neuter-track').classList.toggle('checked', state.includeNeuter);
   document.getElementById('istem-track').classList.toggle('checked', state.includeIStems);
   document.getElementById('sound-track').classList.toggle('checked', state.soundEnabled);
-  document.querySelectorAll('.input-grid, .adj-container, .decl-container').forEach(function(grid) {
+  document.querySelectorAll('.input-grid, .adj-container, .decl-container, .quiz-container').forEach(function(grid) {
     grid.classList.toggle('hide-dative', !state.includeDative);
   });
 }
 
 // ===== Render =====
 function render() {
-  if (state.mode === 'endings') {
+  if (state.mode === 'quiz') {
+    if (els.endingsSelectors) els.endingsSelectors.classList.add('hidden');
+    if (els.declSelector) els.declSelector.classList.add('hidden');
+    if (els.tutorial) els.tutorial.classList.remove('visible');
+
+    els.wordDisplay.innerHTML = '';
+    if (state.currentQuiz) {
+      var promptWrap = document.createElement('div');
+      promptWrap.className = 'quiz-prompt-container';
+
+      var promptWord = document.createElement('div');
+      promptWord.className = 'quiz-prompt-word word-latin';
+      promptWord.textContent = state.currentQuiz.form;
+      promptWrap.appendChild(promptWord);
+
+      var lemmaDisplay = document.createElement('div');
+      lemmaDisplay.className = 'quiz-lemma-display';
+      var fromSpan = document.createElement('span');
+      fromSpan.className = 'quiz-from-label';
+      fromSpan.textContent = 'from';
+      lemmaDisplay.appendChild(fromSpan);
+
+      var lemmaWord = document.createElement('span');
+      lemmaWord.className = 'word-latin';
+      lemmaWord.textContent = state.currentQuiz.noun.displayEntry || state.currentQuiz.noun.entry;
+      lemmaDisplay.appendChild(lemmaWord);
+
+      if (state.currentQuiz.noun.translation) {
+        var divider = document.createElement('span');
+        divider.className = 'word-divider';
+        divider.textContent = '—';
+        lemmaDisplay.appendChild(divider);
+
+        var trans = document.createElement('span');
+        trans.className = 'word-translation';
+        trans.textContent = state.currentQuiz.noun.translation;
+        lemmaDisplay.appendChild(trans);
+      }
+      promptWrap.appendChild(lemmaDisplay);
+
+      var instruction = document.createElement('p');
+      instruction.className = 'quiz-instructions';
+      instruction.textContent = 'Select all possible case and number combinations:';
+      promptWrap.appendChild(instruction);
+
+      els.wordDisplay.appendChild(promptWrap);
+    }
+  } else if (state.mode === 'endings') {
     if (els.endingsSelectors) els.endingsSelectors.classList.remove('hidden');
     if (els.declSelector) els.declSelector.classList.add('hidden');
     if (els.tutorial) els.tutorial.classList.remove('visible');
@@ -802,11 +1059,18 @@ function render() {
     els.checkBtn.style.display = 'none';
     els.skipBtn.style.display = 'none';
     els.nextBtn.style.display = 'flex';
+    if (els.enterHint) els.enterHint.innerHTML = 'Press <kbd>Enter</kbd> for next';
   } else {
     els.checkBtn.style.display = 'flex';
-    els.checkBtn.disabled = !state.declensionIdentified;
+    if (state.mode === 'quiz') {
+      var anySelected = document.querySelectorAll('.quiz-choice-btn.selected').length > 0;
+      els.checkBtn.disabled = !anySelected;
+    } else {
+      els.checkBtn.disabled = !state.declensionIdentified;
+    }
     els.skipBtn.style.display = 'flex';
     els.nextBtn.style.display = 'none';
+    if (els.enterHint) els.enterHint.innerHTML = 'Press <kbd>Enter</kbd>';
   }
 
   // Stats
@@ -840,6 +1104,7 @@ async function init() {
   els.checkBtn = document.getElementById('check-btn');
   els.nextBtn = document.getElementById('next-btn');
   els.skipBtn = document.getElementById('skip-btn');
+  els.enterHint = document.getElementById('enter-hint');
   els.accuracyValue = document.getElementById('accuracy-value');
   els.streakValue = document.getElementById('streak-value');
   els.endingsSelectors = document.getElementById('endings-selectors');
