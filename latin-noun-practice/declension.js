@@ -1070,6 +1070,41 @@ var LatinDeclension = (function() {
     'fēlīx, fēlīx, fēlīx, gen. fēlīcis\thappy, fortunate'
   ].join('\n');
 
+  function stripMacrons(s) {
+    return (s || '').toLowerCase()
+      .replace(/[āáà]/g, 'a')
+      .replace(/[ēéè]/g, 'e')
+      .replace(/[īíì]/g, 'i')
+      .replace(/[ōóò]/g, 'o')
+      .replace(/[ūúù]/g, 'u')
+      .replace(/[ȳýỳ]/g, 'y');
+  }
+
+  function countMacrons(s) {
+    return ((s || '').match(/[āēīōūȳ]/gi) || []).length;
+  }
+
+  function getCanonicalForms(formsArray) {
+    if (!formsArray || formsArray.length === 0) return [];
+    var canonical = [formsArray[0]];
+    for (var i = 1; i < formsArray.length; i++) {
+      var candidate = formsArray[i];
+      var isFallback = false;
+      for (var j = 0; j < i; j++) {
+        if (stripMacrons(formsArray[j]) === stripMacrons(candidate)) {
+          if (countMacrons(candidate) <= countMacrons(formsArray[j])) {
+            isFallback = true;
+            break;
+          }
+        }
+      }
+      if (!isFallback && !canonical.includes(candidate)) {
+        canonical.push(candidate);
+      }
+    }
+    return canonical;
+  }
+
   return {
     parseLine: parseLine,
     parseNoun: parseNoun,
@@ -1080,6 +1115,8 @@ var LatinDeclension = (function() {
     generateAdjectives: generateAdjectives,
     generateAll: generateNouns,
     getNounEndings: getNounEndings,
+    getCanonicalForms: getCanonicalForms,
+    stripMacrons: stripMacrons,
     DEFAULT_VOCAB_TEXT: DEFAULT_VOCAB_TEXT
   };
 })();

@@ -619,32 +619,32 @@ function nextQuizQuestion() {
   if (state.includeDative) cases.push('dat');
   var numbers = ['sg', 'pl'];
 
-  // Gather unique surface forms of this noun across active cases and numbers
+  var getCanon = (typeof LatinDeclension !== 'undefined' && LatinDeclension.getCanonicalForms)
+    ? LatinDeclension.getCanonicalForms
+    : function(arr) { return arr && arr.length > 0 ? [arr[0]] : []; };
+
+  // Gather unique canonical surface forms of this noun across active cases and numbers
   var distinctForms = [];
   numbers.forEach(function(n) {
     cases.forEach(function(c) {
-      var pf = noun.forms[n][c][0];
-      if (!distinctForms.includes(pf)) {
-        distinctForms.push(pf);
-      }
+      var canons = getCanon(noun.forms[n][c]);
+      canons.forEach(function(f) {
+        if (!distinctForms.includes(f)) {
+          distinctForms.push(f);
+        }
+      });
     });
   });
 
   var targetForm = distinctForms[Math.floor(Math.random() * distinctForms.length)];
 
+  // In Quiz mode, a case/number slot matches if and only if targetForm is one of the valid canonical forms for that slot.
+  // Macrons are strictly respected so that, e.g., ablative -ā is not conflated with nominative -a.
   var matches = [];
   numbers.forEach(function(n) {
     cases.forEach(function(c) {
-      var forms = noun.forms[n][c];
-      var isMatch = false;
-      if (state.ignoreMacrons) {
-        isMatch = forms.some(function(f) {
-          return normalizeLatin(f) === normalizeLatin(targetForm);
-        });
-      } else {
-        isMatch = forms.includes(targetForm);
-      }
-      if (isMatch) {
+      var canons = getCanon(noun.forms[n][c]);
+      if (canons.includes(targetForm)) {
         matches.push({ cas: c, num: n });
       }
     });
@@ -918,9 +918,6 @@ function setupToggles() {
   macronToggle.addEventListener('change', function() {
     state.ignoreMacrons = this.checked;
     document.getElementById('macron-track').classList.toggle('checked', this.checked);
-    if (state.mode === 'quiz') {
-      nextQuizQuestion();
-    }
   });
 
   dativeToggle.addEventListener('change', function() {
