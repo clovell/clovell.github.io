@@ -132,9 +132,10 @@
                 <div>
                     <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Session</span>
                     <select id="modeSelect" aria-label="Session Length" class="bg-transparent font-semibold text-amber-300 focus:outline-none cursor-pointer">
-                        <option value="10" class="bg-stone-800 text-white">10-Verb Challenge</option>
+                        <option value="10" class="bg-stone-800 text-white">10-Verb Sprint</option>
                         <option value="20" class="bg-stone-800 text-white">20-Verb Challenge</option>
                         <option value="endless" class="bg-stone-800 text-white">Endless Practice</option>
+                        <option value="chart" class="bg-stone-800 text-amber-300 font-semibold">Chart Mode (Perfect Passive)</option>
                     </select>
                 </div>
                 <div class="h-6 w-px bg-stone-700"></div>
@@ -375,6 +376,153 @@
                 </div>
             </section>
         </div>
+
+        <!-- 2B. CHART MODE WORKSPACE (PERFECT PASSIVE PARADIGM) -->
+        <section id="chartModeWorkspace" class="hidden flex-1 bg-white border-2 border-stone-300 rounded-xl p-3.5 flex-col justify-between shadow-sm min-h-0 overflow-y-auto">
+            <div>
+                <!-- Chart Header & Format Guide -->
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-200 pb-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-imperial-600 text-white font-bold text-xs flex items-center justify-center">✎</span>
+                        <h2 class="font-bold text-sm md:text-base text-stone-800">Perfect Passive Indicative Paradigm Chart</h2>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-[11px] text-stone-600">
+                        <span class="bg-parchment-100 border border-stone-300 px-2 py-0.5 rounded font-mono">
+                            Sg: <strong class="text-imperial-700">factus, -a, -um sum</strong>
+                        </span>
+                        <span class="bg-parchment-100 border border-stone-300 px-2 py-0.5 rounded font-mono">
+                            Pl: <strong class="text-imperial-700">factī, -ae, -a sumus</strong>
+                        </span>
+                        <span class="text-stone-400 hidden sm:inline">(Flexible punctuation: <em>/</em>, spaces, or commas OK; all 3 genders required)</span>
+                    </div>
+                </div>
+
+                <!-- Side-by-Side Singular & Plural Columns (Tab order: 1s->2s->3s, then 1p->2p->3p) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    <!-- LEFT COLUMN: SINGULAR (tabindex 1, 2, 3) -->
+                    <div class="bg-parchment-50/80 border border-stone-300 rounded-xl p-3 flex flex-col gap-2.5">
+                        <div class="flex items-center justify-between border-b border-stone-200 pb-1.5">
+                            <span class="font-serif font-bold text-base text-imperial-700 tracking-wide">Singulāris (Singular)</span>
+                            <span id="chartSgHint" class="text-[11px] font-mono text-stone-500">Endings: -us, -a, -um</span>
+                        </div>
+
+                        <!-- 1st Person Singular -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <label for="chartInput_1s" class="font-semibold text-stone-700">
+                                    1st Person Sg. <span class="font-serif italic font-normal text-stone-500">(ego)</span>
+                                </label>
+                                <span id="chartAuxHint_1s" class="hidden text-[11px] font-serif italic text-amber-800">+ sum</span>
+                            </div>
+                            <input id="chartInput_1s" data-pn="1s" tabindex="1" type="text" autocomplete="off" spellcheck="false"
+                                placeholder="e.g. factus, -a, -um sum"
+                                class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
+                            <div id="chartDiag_1s" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
+                        </div>
+
+                        <!-- 2nd Person Singular -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <label for="chartInput_2s" class="font-semibold text-stone-700">
+                                    2nd Person Sg. <span class="font-serif italic font-normal text-stone-500">(tū)</span>
+                                </label>
+                                <span id="chartAuxHint_2s" class="hidden text-[11px] font-serif italic text-amber-800">+ es</span>
+                            </div>
+                            <input id="chartInput_2s" data-pn="2s" tabindex="2" type="text" autocomplete="off" spellcheck="false"
+                                placeholder="2nd person singular..."
+                                class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
+                            <div id="chartDiag_2s" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
+                        </div>
+
+                        <!-- 3rd Person Singular -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <label for="chartInput_3s" class="font-semibold text-stone-700">
+                                    3rd Person Sg. <span class="font-serif italic font-normal text-stone-500">(is, ea, id)</span>
+                                </label>
+                                <span id="chartAuxHint_3s" class="hidden text-[11px] font-serif italic text-amber-800">+ est</span>
+                            </div>
+                            <input id="chartInput_3s" data-pn="3s" tabindex="3" type="text" autocomplete="off" spellcheck="false"
+                                placeholder="3rd person singular..."
+                                class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
+                            <div id="chartDiag_3s" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: PLURAL (tabindex 4, 5, 6) -->
+                    <div class="bg-parchment-50/80 border border-stone-300 rounded-xl p-3 flex flex-col gap-2.5">
+                        <div class="flex items-center justify-between border-b border-stone-200 pb-1.5">
+                            <span class="font-serif font-bold text-base text-imperial-700 tracking-wide">Plūrālis (Plural)</span>
+                            <span id="chartPlHint" class="text-[11px] font-mono text-stone-500">Endings: -ī, -ae, -a</span>
+                        </div>
+
+                        <!-- 1st Person Plural -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <label for="chartInput_1p" class="font-semibold text-stone-700">
+                                    1st Person Pl. <span class="font-serif italic font-normal text-stone-500">(nōs)</span>
+                                </label>
+                                <span id="chartAuxHint_1p" class="hidden text-[11px] font-serif italic text-amber-800">+ sumus</span>
+                            </div>
+                            <input id="chartInput_1p" data-pn="1p" tabindex="4" type="text" autocomplete="off" spellcheck="false"
+                                placeholder="e.g. factī, -ae, -a sumus"
+                                class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
+                            <div id="chartDiag_1p" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
+                        </div>
+
+                        <!-- 2nd Person Plural -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <label for="chartInput_2p" class="font-semibold text-stone-700">
+                                    2nd Person Pl. <span class="font-serif italic font-normal text-stone-500">(vōs)</span>
+                                </label>
+                                <span id="chartAuxHint_2p" class="hidden text-[11px] font-serif italic text-amber-800">+ estis</span>
+                            </div>
+                            <input id="chartInput_2p" data-pn="2p" tabindex="5" type="text" autocomplete="off" spellcheck="false"
+                                placeholder="2nd person plural..."
+                                class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
+                            <div id="chartDiag_2p" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
+                        </div>
+
+                        <!-- 3rd Person Plural -->
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <label for="chartInput_3p" class="font-semibold text-stone-700">
+                                    3rd Person Pl. <span class="font-serif italic font-normal text-stone-500">(eī, eae, ea)</span>
+                                </label>
+                                <span id="chartAuxHint_3p" class="hidden text-[11px] font-serif italic text-amber-800">+ sunt</span>
+                            </div>
+                            <input id="chartInput_3p" data-pn="3p" tabindex="6" type="text" autocomplete="off" spellcheck="false"
+                                placeholder="3rd person plural..."
+                                class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
+                            <div id="chartDiag_3p" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Mode Action & Feedback Bar -->
+            <div class="mt-2.5 pt-2 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3 min-h-[48px]">
+                <div id="chartGlobalFeedback" class="text-xs text-stone-600 flex-1">
+                    <span>Use <kbd class="font-mono bg-stone-100 px-1 border rounded">Tab ⇥</kbd> to move down Singular (1st→2nd→3rd) then Plural (1st→2nd→3rd). Press <kbd class="font-mono bg-stone-100 px-1 border rounded">Enter ↵</kbd> to check.</span>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button id="btnCheckChart" type="button" tabindex="7"
+                        class="px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs shadow transition flex items-center gap-1.5">
+                        <span>✓ Check Chart</span>
+                        <kbd class="px-1.5 py-0.5 text-[10px] bg-emerald-900 rounded font-mono">Enter ↵</kbd>
+                    </button>
+                    <button id="btnRevealChart" type="button" tabindex="8"
+                        class="px-3 py-2 rounded-lg bg-stone-200 hover:bg-stone-300 text-stone-700 font-semibold text-xs border border-stone-300 transition">
+                        Reveal Answers
+                    </button>
+                    <button id="btnNextChartVerb" type="button" tabindex="9"
+                        class="px-4 py-2 rounded-lg bg-imperial-600 hover:bg-imperial-700 text-white font-semibold text-xs shadow transition flex items-center gap-1.5">
+                        <span>Next Verb →</span>
+                    </button>
+                </div>
+            </div>
+        </section>
 
         <!-- 3. FOOTER BAR (Paradigm translation hints shown only when Hints: ON) -->
         <footer class="bg-stone-200/80 border border-stone-300 rounded-lg px-3.5 py-1.5 flex flex-wrap items-center justify-between text-[11px] text-stone-600 shrink-0">
@@ -1073,8 +1221,170 @@
             step2Solved: false,
             missedOnCurrentItem: false,
             lastSignature: null,
-            lastVerbId: null
+            lastVerbId: null,
+
+            // Chart Mode state
+            chartVerb: null,
+            chartSolved: false,
+            chartHadMistake: false
         };
+
+        /**
+         * ============================================================================
+         * 4B. CHART MODE VALIDATION ENGINE (PERFECT PASSIVE PARADIGM)
+         * ============================================================================
+         * Validates user input for a single cell (1s, 2s, 3s, 1p, 2p, 3p) of the
+         * Perfect Passive Indicative chart.
+         * - Macron-insensitive (strips macrons from both stem and user input).
+         * - Accepts flexible separators: commas, slashes, hyphens, or spaces:
+         *   e.g. "factus, -a, -um sum", "factus/a/um sum", "factus a um sum",
+         *        "factus, a, um sum", or full forms "factus, facta, factum sum".
+         * - Requires all 3 genders in M, F, N order and exact plural endings (-i, -ae, -a).
+         */
+        function validateChartCellInput(rawInput, verb, pn) {
+            const isPlural = pn.endsWith('p');
+            const expectedAux = TENSE_META.perf.auxForms[pn]; // sum, es, est, sumus, estis, sunt
+            const stemPlain = formatMacrons(verb.pppStem, false).toLowerCase();
+
+            const canonicalMacron = isPlural
+                ? `${verb.pppStem}ī, -ae, -a ${expectedAux}`
+                : `${verb.pppStem}us, -a, -um ${expectedAux}`;
+
+            const trimmed = (rawInput || '').trim();
+            if (!trimmed) {
+                return {
+                    isValid: false,
+                    canonical: canonicalMacron,
+                    reason: 'Please enter all 3 genders and the auxiliary verb.'
+                };
+            }
+
+            // Strip macrons, lowercase, and replace commas, slashes, and semicolons with spaces
+            const normalized = formatMacrons(trimmed, false)
+                .toLowerCase()
+                .replace(/[,/;]+/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            const rawTokens = normalized.split(' ').filter(Boolean);
+            if (rawTokens.length < 2) {
+                return {
+                    isValid: false,
+                    canonical: canonicalMacron,
+                    reason: `Include the participle with all 3 genders plus "${expectedAux}".`
+                };
+            }
+
+            const userAux = rawTokens[rawTokens.length - 1];
+            // Strip leading/trailing hyphens from participle tokens ("-a" -> "a", "-um" -> "um")
+            const partTokens = rawTokens
+                .slice(0, -1)
+                .map(t => t.replace(/^-+|-+$/g, ''))
+                .filter(Boolean);
+
+            // Check if the student forgot the auxiliary verb altogether
+            const allPerfAux = ['sum', 'es', 'est', 'sumus', 'estis', 'sunt'];
+            const allPlupOrFutAux = ['eram', 'eras', 'erat', 'eramus', 'eratis', 'erant', 'ero', 'eris', 'erit', 'erimus', 'eritis', 'erunt'];
+
+            const expectedPartTokens = isPlural
+                ? [
+                    [`${stemPlain}i`, 'ae', 'a'],
+                    [`${stemPlain}i`, `${stemPlain}ae`, `${stemPlain}a`]
+                  ]
+                : [
+                    [`${stemPlain}us`, 'a', 'um'],
+                    [`${stemPlain}us`, `${stemPlain}a`, `${stemPlain}um`]
+                  ];
+
+            const wrongNumberPartTokens = isPlural
+                ? [
+                    [`${stemPlain}us`, 'a', 'um'],
+                    [`${stemPlain}us`, `${stemPlain}a`, `${stemPlain}um`]
+                  ]
+                : [
+                    [`${stemPlain}i`, 'ae', 'a'],
+                    [`${stemPlain}i`, `${stemPlain}ae`, `${stemPlain}a`]
+                  ];
+
+            const matchesExpectedParts = expectedPartTokens.some(
+                pattern => pattern.length === partTokens.length && pattern.every((val, i) => val === partTokens[i])
+            );
+
+            const matchesWrongNumberParts = wrongNumberPartTokens.some(
+                pattern => pattern.length === partTokens.length && pattern.every((val, i) => val === partTokens[i])
+            );
+
+            // Check Participle first for specific diagnostic feedback
+            if (!matchesExpectedParts) {
+                if (matchesWrongNumberParts) {
+                    return {
+                        isValid: false,
+                        canonical: canonicalMacron,
+                        reason: isPlural
+                            ? `Use plural participle endings (-ī, -ae, -a) in the Plural column.`
+                            : `Use singular participle endings (-us, -a, -um) in the Singular column.`
+                    };
+                }
+
+                // Did they only give 1 or 2 genders (e.g. "factus sum")?
+                if (partTokens.length < 3) {
+                    return {
+                        isValid: false,
+                        canonical: canonicalMacron,
+                        reason: isPlural
+                            ? `Include all 3 plural genders: "${formatMacrons(verb.pppStem + 'ī, -ae, -a', state.useMacrons)}".`
+                            : `Include all 3 singular genders: "${formatMacrons(verb.pppStem + 'us, -a, -um', state.useMacrons)}".`
+                    };
+                }
+
+                // Did they use the wrong stem?
+                const expectedMasc = isPlural ? `${stemPlain}i` : `${stemPlain}us`;
+                if (partTokens[0] !== expectedMasc) {
+                    return {
+                        isValid: false,
+                        canonical: canonicalMacron,
+                        reason: `Check the 4th PP stem: start with "${formatMacrons(verb.pppStem + (isPlural ? 'ī' : 'us'), state.useMacrons)}".`
+                    };
+                }
+
+                return {
+                    isValid: false,
+                    canonical: canonicalMacron,
+                    reason: isPlural
+                        ? `Check plural gender endings: ${formatMacrons(verb.pppStem + 'ī, -ae, -a', state.useMacrons)}.`
+                        : `Check singular gender endings: ${formatMacrons(verb.pppStem + 'us, -a, -um', state.useMacrons)}.`
+                };
+            }
+
+            // Now check Auxiliary verb
+            if (userAux !== expectedAux) {
+                if (allPerfAux.includes(userAux)) {
+                    return {
+                        isValid: false,
+                        canonical: canonicalMacron,
+                        reason: `Participle is right, but "${userAux}" is the wrong person/number (use "${expectedAux}").`
+                    };
+                }
+                if (allPlupOrFutAux.includes(userAux)) {
+                    return {
+                        isValid: false,
+                        canonical: canonicalMacron,
+                        reason: `"${userAux}" is Pluperfect/Future Perfect! Use "${expectedAux}" for Perfect Passive.`
+                    };
+                }
+                return {
+                    isValid: false,
+                    canonical: canonicalMacron,
+                    reason: `Check the auxiliary verb: expected "${expectedAux}" for ${PERSON_NUMBER_LABELS[pn]}.`
+                };
+            }
+
+            return {
+                isValid: true,
+                canonical: canonicalMacron,
+                reason: 'Optime!'
+            };
+        }
 
         /**
          * Build the 4 multiple-choice options for Step 2 based on `state.quizDifficulty` ('easy' vs. 'hard').
@@ -1351,6 +1661,14 @@
             step2Feedback: document.getElementById('step2Feedback'),
             btnNextQuestion: document.getElementById('btnNextQuestion'),
 
+            chartModeWorkspace: document.getElementById('chartModeWorkspace'),
+            chartSgHint: document.getElementById('chartSgHint'),
+            chartPlHint: document.getElementById('chartPlHint'),
+            chartGlobalFeedback: document.getElementById('chartGlobalFeedback'),
+            btnCheckChart: document.getElementById('btnCheckChart'),
+            btnRevealChart: document.getElementById('btnRevealChart'),
+            btnNextChartVerb: document.getElementById('btnNextChartVerb'),
+
             footerHintSummary: document.getElementById('footerHintSummary'),
 
             summaryModal: document.getElementById('summaryModal'),
@@ -1491,7 +1809,180 @@
                 els.footerHintSummary.innerHTML = `<span class="text-stone-500">💡 Need scaffolding? Press <strong class="text-stone-700 font-mono">H</strong> to toggle tense formulas &amp; principal parts hints.</span>`;
             }
 
+            // 5. Update Chart Mode auxiliary hints if in Chart Mode
+            PERSON_NUMBER_KEYS.forEach(pn => {
+                const auxHintEl = document.getElementById(`chartAuxHint_${pn}`);
+                if (auxHintEl) {
+                    if (on) auxHintEl.classList.remove('hidden');
+                    else auxHintEl.classList.add('hidden');
+                }
+            });
+            if (els.chartSgHint && els.chartPlHint && state.chartVerb) {
+                if (on) {
+                    els.chartSgHint.textContent = formatMacrons(`${state.chartVerb.pppStem}us, -a, -um + sum/es/est`, state.useMacrons);
+                    els.chartPlHint.textContent = formatMacrons(`${state.chartVerb.pppStem}ī, -ae, -a + sumus/estis/sunt`, state.useMacrons);
+                } else {
+                    els.chartSgHint.textContent = 'Endings: -us, -a, -um';
+                    els.chartPlHint.textContent = formatMacrons('Endings: -ī, -ae, -a', state.useMacrons);
+                }
+            }
+
             updateStep2PromptBanner();
+        }
+
+        /**
+         * ============================================================================
+         * 5B. CHART MODE RENDERING & INTERACTION HANDLERS
+         * ============================================================================
+         */
+        function loadNewChartVerb() {
+            let candidateVerbs = VERB_LIST.filter(v => v.id !== state.lastVerbId);
+            if (candidateVerbs.length === 0) candidateVerbs = VERB_LIST;
+            const verb = candidateVerbs[Math.floor(Math.random() * candidateVerbs.length)];
+            state.lastVerbId = verb.id;
+            state.chartVerb = verb;
+            state.chartSolved = false;
+            state.chartHadMistake = false;
+
+            renderChartMode();
+        }
+
+        function renderChartMode() {
+            const verb = state.chartVerb;
+            if (!verb) return;
+
+            updateHeaderStats();
+
+            // Update top prompt card to show Principal Parts & Definition prominently
+            els.badgeVerbNumber.textContent = `Chart #${state.questionIndex + 1}`;
+            els.badgeDifficultyMode.textContent = 'Chart Mode: Perfect Passive Paradigm';
+            els.badgeDifficultyMode.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300';
+            els.badgeStep1Locked.classList.add('hidden');
+            els.badgeStep1Locked.classList.remove('inline-flex');
+
+            els.latinVerbDisplay.textContent = formatMacrons(verb.pp, state.useMacrons);
+            els.morphologySubhint.innerHTML = `<span class="font-semibold text-imperial-700">${verb.meaning}</span> — Fill in all 6 Perfect Passive forms below (include all 3 genders: <em>${formatMacrons('-us, -a, -um', state.useMacrons)}</em> in Sg., <em>${formatMacrons('-ī, -ae, -a', state.useMacrons)}</em> in Pl.)`;
+
+            // Populate Hint Drawer details
+            els.hintPrincipalParts.textContent = formatMacrons(verb.pp, state.useMacrons);
+            els.hintMeaning.textContent = `— ${verb.meaning}`;
+            els.hintMorphBadge.textContent = formatMacrons(`4th PP Stem: ${verb.pppStem}-`, state.useMacrons);
+
+            // Reset all 6 inputs and diagnostics
+            PERSON_NUMBER_KEYS.forEach(pn => {
+                const input = document.getElementById(`chartInput_${pn}`);
+                const diag = document.getElementById(`chartDiag_${pn}`);
+                if (input) {
+                    input.value = '';
+                    input.disabled = false;
+                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition';
+                    if (pn === '1s') {
+                        input.placeholder = formatMacrons(`e.g. ${verb.pppStem}us, -a, -um sum`, state.useMacrons);
+                    } else if (pn === '1p') {
+                        input.placeholder = formatMacrons(`e.g. ${verb.pppStem}ī, -ae, -a sumus`, state.useMacrons);
+                    }
+                }
+                if (diag) {
+                    diag.className = 'text-[11px] min-h-[16px] text-stone-500 leading-tight';
+                    diag.textContent = '';
+                }
+            });
+
+            els.chartGlobalFeedback.className = 'text-xs text-stone-600 flex-1';
+            els.chartGlobalFeedback.innerHTML = `<span>Use <kbd class="font-mono bg-stone-100 px-1 border rounded">Tab ⇥</kbd> to move down Singular (1st→2nd→3rd) then Plural (1st→2nd→3rd). Press <kbd class="font-mono bg-stone-100 px-1 border rounded">Enter ↵</kbd> to check.</span>`;
+
+            applyHintsVisibility();
+
+            // Focus 1st Person Singular input automatically
+            setTimeout(() => {
+                const firstInput = document.getElementById('chartInput_1s');
+                if (firstInput) firstInput.focus();
+            }, 30);
+        }
+
+        function checkChartAnswers() {
+            if (!state.chartVerb) return;
+            if (state.chartSolved) {
+                nextChartVerb();
+                return;
+            }
+
+            let allCorrect = true;
+            let firstInvalidInput = null;
+            let correctCount = 0;
+
+            PERSON_NUMBER_KEYS.forEach(pn => {
+                const input = document.getElementById(`chartInput_${pn}`);
+                const diag = document.getElementById(`chartDiag_${pn}`);
+                const res = validateChartCellInput(input.value, state.chartVerb, pn);
+
+                if (res.isValid) {
+                    correctCount++;
+                    input.value = formatMacrons(res.canonical, state.useMacrons);
+                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-emerald-600 bg-emerald-50 font-serif text-base text-emerald-950 font-semibold focus:outline-none transition';
+                    diag.className = 'text-[11px] min-h-[16px] text-emerald-700 font-medium leading-tight';
+                    diag.textContent = `✓ Correct (${PERSON_NUMBER_LABELS[pn]})`;
+                } else {
+                    allCorrect = false;
+                    if (!firstInvalidInput) firstInvalidInput = input;
+                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-rose-500 bg-rose-50 font-serif text-base text-stone-900 focus:outline-none focus:border-rose-600 transition animate-shake';
+                    diag.className = 'text-[11px] min-h-[16px] text-rose-700 font-medium leading-tight';
+                    diag.textContent = `✗ ${res.reason}`;
+                }
+            });
+
+            if (allCorrect) {
+                state.chartSolved = true;
+                if (!state.chartHadMistake) {
+                    state.firstTryCorrectCount++;
+                    state.currentStreak++;
+                    if (state.currentStreak > state.bestStreak) {
+                        state.bestStreak = state.currentStreak;
+                    }
+                }
+                synth.playStep2Success(state.currentStreak);
+                els.chartGlobalFeedback.className = 'text-xs text-emerald-900 bg-emerald-50 border border-emerald-300 px-3 py-1.5 rounded-lg flex-1 font-medium';
+                els.chartGlobalFeedback.innerHTML = `🎉 <strong>Eugepae!</strong> Full Perfect Passive paradigm for <em>${formatMacrons(state.chartVerb.pp.split(',')[0], state.useMacrons)}</em> completed! Press <strong>Enter ↵</strong> or click <strong>Next Verb →</strong>.`;
+                updateHeaderStats();
+            } else {
+                state.chartHadMistake = true;
+                state.currentStreak = 0;
+                synth.playError();
+                els.chartGlobalFeedback.className = 'text-xs text-rose-900 bg-rose-50 border border-rose-300 px-3 py-1.5 rounded-lg flex-1';
+                els.chartGlobalFeedback.innerHTML = `<strong>${correctCount} / 6 cells correct.</strong> Fix the highlighted forms above and press <strong>Enter ↵</strong> to re-check.`;
+                updateHeaderStats();
+                if (firstInvalidInput) firstInvalidInput.focus();
+            }
+        }
+
+        function revealChartAnswers() {
+            if (!state.chartVerb) return;
+            state.chartHadMistake = true;
+            state.currentStreak = 0;
+            state.chartSolved = true;
+
+            PERSON_NUMBER_KEYS.forEach(pn => {
+                const input = document.getElementById(`chartInput_${pn}`);
+                const diag = document.getElementById(`chartDiag_${pn}`);
+                const res = validateChartCellInput('', state.chartVerb, pn);
+                if (input) {
+                    input.value = formatMacrons(res.canonical, state.useMacrons);
+                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-amber-500 bg-amber-50 font-serif text-base text-stone-900 font-semibold focus:outline-none transition';
+                }
+                if (diag) {
+                    diag.className = 'text-[11px] min-h-[16px] text-amber-800 leading-tight';
+                    diag.textContent = `Revealed: ${formatMacrons(res.canonical, state.useMacrons)}`;
+                }
+            });
+
+            els.chartGlobalFeedback.className = 'text-xs text-amber-900 bg-amber-50 border border-amber-300 px-3 py-1.5 rounded-lg flex-1';
+            els.chartGlobalFeedback.innerHTML = `Answers revealed for <em>${formatMacrons(state.chartVerb.pp.split(',')[0], state.useMacrons)}</em>. Study the paradigm, then click <strong>Next Verb →</strong>.`;
+            updateHeaderStats();
+        }
+
+        function nextChartVerb() {
+            state.questionIndex++;
+            loadNewChartVerb();
         }
 
         /**
@@ -1578,14 +2069,15 @@
          * Update header progress, accuracy, and streak counters
          */
         function updateHeaderStats() {
-            if (state.mode === 'endless') {
+            if (state.mode === 'endless' || state.mode === 'chart') {
                 els.statProgress.textContent = `#${state.questionIndex + 1} (∞)`;
             } else {
                 const total = parseInt(state.mode, 10);
                 els.statProgress.textContent = `${Math.min(state.questionIndex + 1, total)} / ${total}`;
             }
 
-            const completed = state.questionIndex + (state.step2Solved ? 1 : 0);
+            const isCurrentDone = state.mode === 'chart' ? state.chartSolved : state.step2Solved;
+            const completed = state.questionIndex + (isCurrentDone ? 1 : 0);
             const acc = completed === 0 ? 100 : Math.round((state.firstTryCorrectCount / completed) * 100);
             els.statAccuracy.textContent = `${acc}%`;
             els.statStreak.textContent = `${state.currentStreak} 🔥`;
@@ -1829,8 +2321,23 @@
             els.summaryModal.classList.add('hidden');
             els.summaryModal.classList.remove('flex');
 
-            state.currentItem = generateQuestion();
-            renderQuestion();
+            const twoStepGrid = els.step1Panel.parentElement;
+
+            if (state.mode === 'chart') {
+                // Hide Two-Step Multiple Choice Grid and Show Chart Mode Workspace
+                twoStepGrid.classList.add('hidden');
+                els.chartModeWorkspace.classList.remove('hidden');
+                els.chartModeWorkspace.classList.add('flex');
+                loadNewChartVerb();
+            } else {
+                // Show Two-Step Multiple Choice Grid and Hide Chart Mode Workspace
+                els.chartModeWorkspace.classList.add('hidden');
+                els.chartModeWorkspace.classList.remove('flex');
+                twoStepGrid.classList.remove('hidden');
+                els.morphologySubhint.textContent = 'Identify the tense first, then select the exact English translation(s).';
+                state.currentItem = generateQuestion();
+                renderQuestion();
+            }
         }
 
         /**
@@ -1930,7 +2437,13 @@
             els.btnMacrons.addEventListener('click', () => {
                 state.useMacrons = !state.useMacrons;
                 els.labelMacrons.textContent = `Macrons: ${state.useMacrons ? 'ON' : 'OFF'}`;
-                if (state.currentItem) {
+                if (state.mode === 'chart' && state.chartVerb) {
+                    els.latinVerbDisplay.textContent = formatMacrons(state.chartVerb.pp, state.useMacrons);
+                    els.hintPrincipalParts.textContent = formatMacrons(state.chartVerb.pp, state.useMacrons);
+                    els.hintMorphBadge.textContent = formatMacrons(`4th PP Stem: ${state.chartVerb.pppStem}-`, state.useMacrons);
+                    applyHintsVisibility();
+                    populateReferenceModal();
+                } else if (state.currentItem) {
                     const item = state.currentItem;
                     els.latinVerbDisplay.textContent = formatMacrons(item.fullLatinMacron, state.useMacrons);
                     els.hintPrincipalParts.textContent = formatMacrons(item.verb.pp, state.useMacrons);
@@ -1939,6 +2452,23 @@
                     els.hintMorphBadge.textContent = `${GENDER_LABELS[item.gender]} ${numLabel} (${endDisplay})`;
                     applyHintsVisibility();
                     populateReferenceModal();
+                }
+            });
+
+            // Chart Mode Buttons & Input Enter Key Handler
+            els.btnCheckChart.addEventListener('click', checkChartAnswers);
+            els.btnRevealChart.addEventListener('click', revealChartAnswers);
+            els.btnNextChartVerb.addEventListener('click', nextChartVerb);
+
+            PERSON_NUMBER_KEYS.forEach(pn => {
+                const input = document.getElementById(`chartInput_${pn}`);
+                if (input) {
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            checkChartAnswers();
+                        }
+                    });
                 }
             });
 
@@ -1997,12 +2527,27 @@
                     return;
                 }
 
+                // If user is typing inside a Chart Mode text input, do not trigger single-letter hotkeys
+                const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+                if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+                    return;
+                }
+
                 const key = e.key.toLowerCase();
 
                 // Hints Toggle ('h')
                 if (key === 'h') {
                     e.preventDefault();
                     toggleHints();
+                    return;
+                }
+
+                // In Chart Mode, Enter advances to the next verb if already solved
+                if (state.mode === 'chart') {
+                    if (e.key === 'Enter' && state.chartSolved) {
+                        e.preventDefault();
+                        nextChartVerb();
+                    }
                     return;
                 }
 
