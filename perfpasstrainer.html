@@ -76,11 +76,11 @@
             animation: shake 0.36s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
         }
         @keyframes popIn {
-            0% { opacity: 0; transform: translateY(8px) scale(0.98); }
+            0% { opacity: 0; transform: translateY(6px) scale(0.99); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .animate-pop {
-            animation: popIn 0.25s ease-out forwards;
+            animation: popIn 0.22s ease-out forwards;
         }
         /* Custom scrollbar only inside modals if needed */
         .modal-scroll::-webkit-scrollbar {
@@ -110,10 +110,10 @@
 <body class="text-stone-800 antialiased">
 
     <!-- ==================== TOP NAVIGATION & CONTROLS BAR ==================== -->
-    <header class="w-full bg-stone-900 text-parchment-100 border-b-2 border-amber-700/60 px-4 py-2 shrink-0 shadow-md z-10">
+    <header class="w-full bg-stone-900 text-parchment-100 border-b-2 border-amber-700/60 px-3 md:px-4 py-2 shrink-0 shadow-md z-10">
         <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
             <!-- Brand & Title -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2.5">
                 <div class="w-9 h-9 rounded-lg bg-imperial-600 border border-amber-400/50 flex items-center justify-center shadow-inner font-serif font-bold text-xl text-amber-200">
                     SPQR
                 </div>
@@ -122,63 +122,83 @@
                         Lūdus Periphrasticus
                     </h1>
                     <p class="text-[11px] text-stone-400 font-sans">
-                        Latin Perfect Passive System Trainer (14 Core Verbs)
+                        20-Verb Perfect Passive Trainer (60% Perf • 20% Plup • 20% Fut Perf)
                     </p>
                 </div>
             </div>
 
-            <!-- Live Score / Streak / Mode Bar -->
-            <div class="flex items-center gap-2 md:gap-4 bg-stone-800/90 border border-stone-700 px-3 py-1.5 rounded-lg text-xs">
+            <!-- Live Score / Streak / Session Length Bar -->
+            <div class="flex items-center gap-2 md:gap-3.5 bg-stone-800/90 border border-stone-700 px-3 py-1.5 rounded-lg text-xs">
                 <div>
-                    <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Mode</span>
-                    <select id="modeSelect" aria-label="Game Mode" class="bg-transparent font-semibold text-amber-300 focus:outline-none cursor-pointer">
+                    <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Session</span>
+                    <select id="modeSelect" aria-label="Session Length" class="bg-transparent font-semibold text-amber-300 focus:outline-none cursor-pointer">
                         <option value="10" class="bg-stone-800 text-white">10-Verb Challenge</option>
                         <option value="20" class="bg-stone-800 text-white">20-Verb Challenge</option>
                         <option value="endless" class="bg-stone-800 text-white">Endless Practice</option>
                     </select>
                 </div>
                 <div class="h-6 w-px bg-stone-700"></div>
-                <div class="text-center min-w-[48px]">
+                <div class="text-center min-w-[44px]">
                     <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Progress</span>
                     <span id="statProgress" class="font-mono font-semibold text-sm text-white">1 / 10</span>
                 </div>
                 <div class="h-6 w-px bg-stone-700"></div>
-                <div class="text-center min-w-[48px]">
+                <div class="text-center min-w-[44px]">
                     <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Accuracy</span>
                     <span id="statAccuracy" class="font-mono font-semibold text-sm text-emerald-400">100%</span>
                 </div>
                 <div class="h-6 w-px bg-stone-700"></div>
-                <div class="text-center min-w-[44px]">
+                <div class="text-center min-w-[40px]">
                     <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Streak</span>
                     <span id="statStreak" class="font-mono font-semibold text-sm text-amber-400">0 🔥</span>
                 </div>
             </div>
 
             <!-- Toggles & Reference Buttons -->
-            <div class="flex items-center gap-1.5 text-xs">
+            <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                <!-- Easy vs. Hard Translation Quiz Mode Selector -->
+                <div class="inline-flex items-center bg-stone-800 p-0.5 rounded-lg border border-stone-600" role="group" aria-label="Translation Quiz Difficulty">
+                    <button id="btnDiffEasy" type="button" title="Easy Mode: Passive tense translations only (choose BOTH 'was' and 'has/have been' for Perfect Passive)"
+                        class="px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 bg-emerald-700 text-white shadow-xs">
+                        <span>Quiz: Easy</span>
+                    </button>
+                    <button id="btnDiffHard" type="button" title="Hard Mode: Mixed active/passive voices, subject pronoun traps, and progressive tenses"
+                        class="px-2.5 py-1 rounded-md font-medium transition flex items-center gap-1 text-stone-300 hover:text-white">
+                        <span>Hard</span>
+                    </button>
+                </div>
+
+                <!-- Persistent Hints Toggle (Default: OFF) -->
+                <button id="btnHintsToggle" type="button" title="Toggle Tense Formulas & Principal Parts Hints (Shortcut: H)"
+                    class="px-2.5 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-300 font-medium transition flex items-center gap-1">
+                    <span>💡</span>
+                    <span id="labelHints">Hints: OFF</span>
+                    <kbd class="text-[10px] font-mono bg-stone-900 text-stone-400 px-1 rounded border border-stone-700">H</kbd>
+                </button>
+
                 <!-- Macron Toggle -->
                 <button id="btnMacrons" type="button" title="Toggle Macrons (Long Marks)"
-                    class="px-2.5 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-amber-200 font-medium transition flex items-center gap-1.5">
+                    class="px-2 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-amber-200 font-medium transition flex items-center gap-1">
                     <span class="font-serif text-sm">ā</span>
                     <span id="labelMacrons">Macrons: ON</span>
                 </button>
 
                 <!-- Gender Pool Toggle -->
                 <button id="btnGenderPool" type="button" title="Toggle Participle Gender Pool (All M/F/N vs. Masculine Only)"
-                    class="px-2.5 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-200 font-medium transition flex items-center gap-1">
-                    <span id="labelGenderPool">Genders: M/F/N</span>
+                    class="px-2 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-200 font-medium transition flex items-center gap-1">
+                    <span id="labelGenderPool">M/F/N</span>
                 </button>
 
                 <!-- Audio Synth Toggle -->
                 <button id="btnAudio" type="button" title="Toggle 80s Retro Synth Sound Effects"
-                    class="px-2.5 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-200 font-medium transition">
-                    <span id="labelAudio">🔊 Synth</span>
+                    class="px-2 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-200 font-medium transition">
+                    <span id="labelAudio">🔊</span>
                 </button>
 
                 <!-- Grammar & Verb Reference Modal Button -->
                 <button id="btnOpenRef" type="button"
                     class="px-2.5 py-1.5 rounded bg-amber-700 hover:bg-amber-600 text-white font-semibold transition shadow-sm">
-                    📖 Grammar &amp; Verbs
+                    📖 20 Verbs
                 </button>
             </div>
         </div>
@@ -188,45 +208,55 @@
     <main class="flex-1 w-full max-w-5xl mx-auto px-3 py-2.5 flex flex-col justify-between gap-2 overflow-hidden">
 
         <!-- 1. LATIN PROMPT DISPLAY CARD -->
-        <section class="bg-white border-2 border-stone-300/90 rounded-xl shadow-sm px-5 py-3.5 relative shrink-0">
-            <!-- Top Row: Question Badges & Principal Parts Hint Drawer Toggle -->
+        <section class="bg-white border-2 border-stone-300/90 rounded-xl shadow-sm px-5 py-3 relative shrink-0">
+            <!-- Top Row: Question Badges & Quick Hint Trigger -->
             <div class="flex items-center justify-between gap-2 mb-1">
-                <div class="flex items-center gap-2">
+                <div class="flex flex-wrap items-center gap-2">
                     <span id="badgeVerbNumber" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-stone-100 text-stone-700 border border-stone-300">
-                         Quaestiō #1
+                        Quaestiō #1
                     </span>
-                    <span id="badgeStep1Locked" class="hidden px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300 items-center gap-1">
+                    <span id="badgeDifficultyMode" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300">
+                        Easy Mode: Passive Tense Focus
+                    </span>
+                    <span id="badgeStep1Locked" class="hidden px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300 items-center gap-1">
                         ✓ Step 1: <span id="lockedTenseName">Perfect Passive</span>
                     </span>
                 </div>
 
-                <!-- Principal Parts Hint Toggle -->
-                <button id="btnHintToggle" type="button"
-                    class="text-xs font-medium text-imperial-700 hover:text-imperial-600 bg-parchment-100 hover:bg-parchment-200 border border-stone-300 px-2.5 py-1 rounded-md transition flex items-center gap-1">
-                    <span>💡 Principal Parts Hint</span>
+                <!-- Secondary inline button synced with global Hints toggle -->
+                <button id="btnInlineHint" type="button"
+                    class="text-xs font-medium text-stone-600 hover:text-imperial-700 bg-parchment-100 hover:bg-parchment-200 border border-stone-300 px-2.5 py-1 rounded-md transition flex items-center gap-1.5">
+                    <span id="inlineHintText">💡 Show Hints</span>
                     <kbd class="text-[10px] font-mono bg-white px-1 rounded border border-stone-300">H</kbd>
                 </button>
             </div>
 
             <!-- Main Latin Periphrastic Verb Display -->
-            <div class="text-center my-1.5">
+            <div class="text-center my-1">
                 <div id="latinVerbDisplay" class="latin-prompt font-serif font-semibold text-stone-900 tracking-wide select-text">
-                    habitus est
+                    iussus sum
                 </div>
                 <p id="morphologySubhint" class="text-xs text-stone-500 mt-0.5 font-sans">
-                    Identify the tense first, then select the exact English translation.
+                    Identify the tense first, then select the exact English translation(s).
                 </p>
             </div>
 
-            <!-- Collapsible Principal Parts Drawer -->
+            <!-- Collapsible Principal Parts & Morphology Hint Drawer (Hidden by default when Hints: OFF) -->
             <div id="hintDrawer" class="hidden mt-2 pt-2 border-t border-dashed border-stone-300 text-center animate-pop">
-                <span class="text-[11px] uppercase tracking-wider font-semibold text-stone-400 mr-2">Principal Parts:</span>
-                <span id="hintPrincipalParts" class="font-serif italic text-base text-stone-800 font-medium">
-                    habeō, habēre, habuī, habitus
-                </span>
-                <span id="hintMeaning" class="text-xs text-stone-600 ml-2 font-sans">
-                    — to have / hold
-                </span>
+                <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+                    <div>
+                        <span class="text-[11px] uppercase tracking-wider font-semibold text-stone-400 mr-1.5">Principal Parts:</span>
+                        <span id="hintPrincipalParts" class="font-serif italic text-base text-stone-800 font-medium">
+                            habeō, habēre, habuī, habitus
+                        </span>
+                        <span id="hintMeaning" class="text-xs text-stone-600 ml-1.5 font-sans">
+                            — to have / hold
+                        </span>
+                    </div>
+                    <span id="hintMorphBadge" class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-[11px] font-mono text-amber-900">
+                        Participle: Masc. Sg. (-us)
+                    </span>
+                </div>
             </div>
         </section>
 
@@ -244,17 +274,19 @@
                         <span class="text-[11px] font-mono text-stone-400">Keys: 1 - 3</span>
                     </div>
 
-                    <p class="text-xs text-stone-600 mb-2.5">
-                        Look at the auxiliary form of <span class="font-serif italic font-semibold">sum, esse</span> paired with the perfect passive participle:
+                    <p id="step1Instruction" class="text-xs text-stone-600 mb-2.5">
+                        Examine the verb form above and identify its tense in the Perfect Passive System:
                     </p>
 
-                    <!-- 3 Tense Buttons -->
-                    <div id="tenseButtonsContainer" class="flex flex-col gap-2">
+                    <!-- 3 Tense Buttons (Formulas hidden by default until Hints are toggled ON) -->
+                    <div id="tenseButtonsContainer" class="flex flex-col gap-2.5">
                         <button type="button" data-tense="perf"
                             class="tense-btn choice-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between group">
                             <div>
                                 <div class="font-bold text-sm text-stone-800 group-hover:text-imperial-700">Perfect Passive</div>
-                                <div class="text-[11px] text-stone-500 font-serif italic">4th PP + sum, es, est, sumus, estis, sunt</div>
+                                <div class="tense-formula-hint hidden text-[11px] text-stone-500 font-serif italic mt-0.5">
+                                    4th PP + sum, es, est, sumus, estis, sunt
+                                </div>
                             </div>
                             <kbd class="px-2 py-0.5 text-xs font-mono bg-white border border-stone-300 rounded text-stone-600">1</kbd>
                         </button>
@@ -263,7 +295,9 @@
                             class="tense-btn choice-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between group">
                             <div>
                                 <div class="font-bold text-sm text-stone-800 group-hover:text-imperial-700">Pluperfect Passive</div>
-                                <div class="text-[11px] text-stone-500 font-serif italic">4th PP + eram, erās, erat, erāmus, erātis, erant</div>
+                                <div class="tense-formula-hint hidden text-[11px] text-stone-500 font-serif italic mt-0.5">
+                                    4th PP + eram, erās, erat, erāmus, erātis, erant
+                                </div>
                             </div>
                             <kbd class="px-2 py-0.5 text-xs font-mono bg-white border border-stone-300 rounded text-stone-600">2</kbd>
                         </button>
@@ -272,7 +306,9 @@
                             class="tense-btn choice-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between group">
                             <div>
                                 <div class="font-bold text-sm text-stone-800 group-hover:text-imperial-700">Future Perfect Passive</div>
-                                <div class="text-[11px] text-stone-500 font-serif italic">4th PP + erō, eris, erit, erimus, eritis, erunt</div>
+                                <div class="tense-formula-hint hidden text-[11px] text-stone-500 font-serif italic mt-0.5">
+                                    4th PP + erō, eris, erit, erimus, eritis, erunt
+                                </div>
                             </div>
                             <kbd class="px-2 py-0.5 text-xs font-mono bg-white border border-stone-300 rounded text-stone-600">3</kbd>
                         </button>
@@ -293,23 +329,31 @@
                         🔒
                     </div>
                     <h3 class="font-serif font-bold text-lg text-stone-700">Complete Step 1 First</h3>
-                    <p class="text-xs text-stone-500 max-w-xs mt-1">
+                    <p id="step2LockSubtext" class="text-xs text-stone-500 max-w-sm mt-1">
                         Identify whether the verb is Perfect Passive, Pluperfect Passive, or Future Perfect Passive to unlock the 4 translation choices.
                     </p>
                 </div>
 
                 <div>
-                    <div class="flex items-center justify-between border-b border-stone-200 pb-2 mb-2.5">
+                    <div class="flex items-center justify-between border-b border-stone-200 pb-2 mb-2">
                         <div class="flex items-center gap-2">
                             <span id="step2Circle" class="w-6 h-6 rounded-full bg-stone-400 text-white font-bold text-xs flex items-center justify-center">2</span>
-                            <h2 class="font-bold text-sm md:text-base text-stone-800">Step 2: Choose the Correct Translation</h2>
+                            <h2 id="step2Title" class="font-bold text-sm md:text-base text-stone-800">Step 2: Choose the Correct Translation</h2>
                         </div>
-                        <span class="text-[11px] font-mono text-stone-400">Keys: 1 - 4 or A - D</span>
+                        <div class="flex items-center gap-2">
+                            <span id="step2MultiBadge" class="hidden px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-400">
+                                0 / 2 Selected
+                            </span>
+                            <span class="text-[11px] font-mono text-stone-400">Keys: 1 - 4 or A - D</span>
+                        </div>
                     </div>
 
-                    <p class="text-xs text-stone-600 mb-2.5">
-                        Watch the participle ending (<span class="font-serif italic">-us, -a, -um / -ī, -ae, -a</span>) and person/number carefully:
-                    </p>
+                    <!-- Dynamic Step 2 Instruction Banner (highlights dual-selection rule on Easy Perfect Passive) -->
+                    <div id="step2InstructionBanner" class="mb-2.5 px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-200 text-xs text-stone-700 flex items-center justify-between gap-2">
+                        <span id="step2Instruction">
+                            Select the English translation that matches the verb's tense, person, number, and gender:
+                        </span>
+                    </div>
 
                     <!-- 4 Translation Option Buttons -->
                     <div id="translationOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -332,27 +376,25 @@
             </section>
         </div>
 
-        <!-- 3. FOOTER QUICK PARADIGM REMINDER -->
+        <!-- 3. FOOTER BAR (Paradigm translation hints shown only when Hints: ON) -->
         <footer class="bg-stone-200/80 border border-stone-300 rounded-lg px-3.5 py-1.5 flex flex-wrap items-center justify-between text-[11px] text-stone-600 shrink-0">
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
-                <span><strong class="text-stone-800">Perfect:</strong> <em>has/have been / was/were [verb]ed</em></span>
-                <span><strong class="text-stone-800">Pluperfect:</strong> <em>had been [verb]ed</em></span>
-                <span><strong class="text-stone-800">Future Perfect:</strong> <em>will have been [verb]ed</em></span>
+            <div id="footerHintSummary" class="flex flex-wrap items-center gap-x-4 gap-y-1">
+                <span class="text-stone-500">💡 Need scaffolding? Press <strong class="text-stone-700 font-mono">H</strong> to toggle tense formulas &amp; principal parts hints.</span>
             </div>
             <div class="font-mono text-[10px] text-stone-500">
-                Shortcuts: [1-4] Select • [H] Hint • [Enter/Space] Next
+                Shortcuts: [1-4] Select • [M] Easy/Hard • [H] Hints • [Enter/Space] Next
             </div>
         </footer>
     </main>
 
-    <!-- ==================== MODAL 1: GRAMMAR & 14 VERBS REFERENCE ==================== -->
+    <!-- ==================== MODAL 1: GRAMMAR & 20 VERBS REFERENCE ==================== -->
     <div id="refModal" class="fixed inset-0 bg-stone-900/75 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
         <div class="bg-parchment-50 border-2 border-stone-400 rounded-2xl max-w-4xl w-full max-h-[88vh] flex flex-col shadow-2xl overflow-hidden animate-pop">
             <!-- Modal Header -->
             <div class="bg-stone-900 text-amber-100 px-5 py-3.5 flex items-center justify-between border-b border-amber-700">
                 <div>
-                    <h2 class="font-serif font-bold text-xl">Perfect Passive System &amp; 14 Target Verbs</h2>
-                    <p class="text-xs text-stone-400">Reference guide for forms, auxiliary verbs, and principal parts</p>
+                    <h2 class="font-serif font-bold text-xl">Perfect Passive System &amp; 20 Target Verbs</h2>
+                    <p class="text-xs text-stone-400">Reference guide for forms, Easy vs. Hard translation modes, and principal parts</p>
                 </div>
                 <button id="btnCloseRef" type="button" class="text-stone-400 hover:text-white text-sm font-mono px-2.5 py-1 rounded border border-stone-700">
                     ESC ✕
@@ -364,34 +406,66 @@
                 <!-- Formation Rules -->
                 <div class="bg-white p-4 rounded-xl border border-stone-300 shadow-xs">
                     <h3 class="font-serif font-bold text-base text-imperial-700 mb-2">
-                        1. How the Perfect Passive System Works
+                        1. How the Perfect Passive System Works (60% / 20% / 20% Distribution)
                     </h3>
                     <p class="text-xs text-stone-600 mb-3 leading-relaxed">
                         In Latin, all three tenses of the Perfect Passive System are <strong>two-word periphrastic forms</strong> built from the <strong>4th Principal Part</strong> (the Perfect Passive Participle) plus a form of <em>sum, esse</em>. The participle agrees with the subject in <strong>Gender</strong> and <strong>Number</strong> (Nominative: <em>-us, -a, -um</em> in the singular; <em>-ī, -ae, -a</em> in the plural).
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                         <div class="p-3 rounded-lg bg-parchment-100 border border-stone-300">
-                            <div class="font-bold text-stone-900 mb-1">Perfect Passive</div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-stone-900">Perfect Passive</span>
+                                <span class="text-[10px] font-mono bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded border border-amber-300">60% freq</span>
+                            </div>
                             <div class="font-serif italic text-imperial-700 mb-1">4th PP + sum, es, est, sumus, estis, sunt</div>
-                            <div class="text-stone-600">English: <strong>was / were [verb]ed</strong> or <strong>has / have been [verb]ed</strong></div>
+                            <div class="text-stone-600">English has <strong>two</strong> equivalents: <strong>was / were [verb]ed</strong> AND <strong>has / have been [verb]ed</strong></div>
                         </div>
                         <div class="p-3 rounded-lg bg-parchment-100 border border-stone-300">
-                            <div class="font-bold text-stone-900 mb-1">Pluperfect Passive</div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-stone-900">Pluperfect Passive</span>
+                                <span class="text-[10px] font-mono bg-stone-200 text-stone-700 px-1.5 py-0.5 rounded">20% freq</span>
+                            </div>
                             <div class="font-serif italic text-imperial-700 mb-1">4th PP + eram, erās, erat, erāmus, erātis, erant</div>
                             <div class="text-stone-600">English: <strong>had been [verb]ed</strong></div>
                         </div>
                         <div class="p-3 rounded-lg bg-parchment-100 border border-stone-300">
-                            <div class="font-bold text-stone-900 mb-1">Future Perfect Passive</div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-stone-900">Future Perfect Passive</span>
+                                <span class="text-[10px] font-mono bg-stone-200 text-stone-700 px-1.5 py-0.5 rounded">20% freq</span>
+                            </div>
                             <div class="font-serif italic text-imperial-700 mb-1">4th PP + erō, eris, erit, erimus, eritis, erunt</div>
                             <div class="text-stone-600">English: <strong>will have been [verb]ed</strong></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 14 Target Verbs Table -->
+                <!-- Easy vs Hard Mode Explanation -->
                 <div class="bg-white p-4 rounded-xl border border-stone-300 shadow-xs">
                     <h3 class="font-serif font-bold text-base text-imperial-700 mb-2">
-                        2. Target Vocabulary List (14 Verbs)
+                        2. Easy Mode vs. Hard Mode (Step 2 Translation Quiz)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 rounded-lg bg-emerald-50/70 border border-emerald-200">
+                            <div class="font-bold text-emerald-900 mb-1">Quiz: Easy Mode (Passive Tense Focus)</div>
+                            <p class="text-stone-700 leading-relaxed">
+                                All 4 choices are passive and use the correct subject pronoun and verb meaning:
+                                <em>"I was ordered"</em>, <em>"I have been ordered"</em>, <em>"I had been ordered"</em>, and <em>"I will have been ordered"</em>.
+                                When the verb is <strong>Perfect Passive</strong>, you must choose <strong>both</strong> correct English translations!
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-amber-50/70 border border-amber-200">
+                            <div class="font-bold text-amber-900 mb-1">Quiz: Hard Mode (Full Morphology &amp; Voice)</div>
+                            <p class="text-stone-700 leading-relaxed">
+                                Tests active vs. passive voice (e.g., <em>"I ordered"</em>, <em>"I had ordered"</em>), subject pronoun &amp; gender agreement (<em>he / she / it / they</em>), and present/imperfect/future passive distractors (<em>"I am being ordered"</em>, <em>"I will be ordered"</em>).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 20 Target Verbs Table -->
+                <div class="bg-white p-4 rounded-xl border border-stone-300 shadow-xs">
+                    <h3 class="font-serif font-bold text-base text-imperial-700 mb-2">
+                        3. Target Vocabulary List (20 Verbs)
                     </h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs">
@@ -399,7 +473,7 @@
                                 <tr class="border-b-2 border-stone-300 text-stone-500 uppercase text-[11px]">
                                     <th class="py-1.5 px-2">Principal Parts</th>
                                     <th class="py-1.5 px-2">4th PP (Participle)</th>
-                                    <th class="py-1.5 px-2">English Meaning (Passive Focus)</th>
+                                    <th class="py-1.5 px-2">English Meaning &amp; Passive Participle</th>
                                 </tr>
                             </thead>
                             <tbody id="refVerbTableBody" class="divide-y divide-stone-200 font-serif text-sm">
@@ -464,35 +538,44 @@
     <script>
         /**
          * ============================================================================
-         * 1. TARGET VOCABULARY DATA (14 REQUIRED LATIN VERBS)
+         * 1. TARGET VOCABULARY DATA (20 REQUIRED LATIN VERBS)
          * ============================================================================
+         * Original 14 verbs:
+         *   habeo, iubeo, video, ago, fero, pono, facio, minuo, accipio, addo, coquo,
+         *   aufero, effundo, everto
+         * Newly added 6 verbs:
+         *   audio, dico, capio, do, peto, mitto
+         *
          * Each verb entry contains:
-         * - id: unique slug
+         * - id: unique identifier
          * - pp: full 4 principal parts with macrons
          * - pppStem: stem of the 4th principal part (without -us/-a/-um) with macrons
          * - meaning: dictionary gloss for reference/hints
-         * - enPassPart: primary English passive participle ("held", "ordered", "seen", etc.)
-         * - enActPast: English simple past active ("held", "ordered", "saw", etc.)
-         * - enActPart: English past participle for active perfect/pluperfect ("held", "ordered", "seen")
+         * - enPassPart: primary English passive participle ("held", "ordered", "heard", etc.)
+         * - enActPast: English simple past active ("held", "ordered", "heard", "spoke/said", etc.)
+         * - enActPart: English past participle for active perfect/pluperfect ("held", "ordered", "heard")
+         * - enActPresPart: English present participle for progressive active distractors ("holding", "ordering")
          */
         const VERB_LIST = [
             {
                 id: 'habeo',
                 pp: 'habeō, habēre, habuī, habitus',
                 pppStem: 'habit',
-                meaning: 'to have / hold',
+                meaning: 'to have, hold, consider',
                 enPassPart: 'held',
                 enActPast: 'held',
-                enActPart: 'held'
+                enActPart: 'held',
+                enActPresPart: 'holding'
             },
             {
                 id: 'iubeo',
                 pp: 'iubeō, iubēre, iussī, iussus',
                 pppStem: 'iuss',
-                meaning: 'to order / command',
+                meaning: 'to order, command',
                 enPassPart: 'ordered',
                 enActPast: 'ordered',
-                enActPart: 'ordered'
+                enActPart: 'ordered',
+                enActPresPart: 'ordering'
             },
             {
                 id: 'video',
@@ -501,61 +584,68 @@
                 meaning: 'to see (passive: to be seen)',
                 enPassPart: 'seen',
                 enActPast: 'saw',
-                enActPart: 'seen'
+                enActPart: 'seen',
+                enActPresPart: 'seeing'
             },
             {
                 id: 'ago',
                 pp: 'agō, agere, ēgī, āctus',
                 pppStem: 'āct',
-                meaning: 'to drive / do / lead',
+                meaning: 'to drive, do, lead',
                 enPassPart: 'driven',
                 enActPast: 'drove',
-                enActPart: 'driven'
+                enActPart: 'driven',
+                enActPresPart: 'driving'
             },
             {
                 id: 'fero',
                 pp: 'ferō, ferre, tulī, lātus',
                 pppStem: 'lāt',
-                meaning: 'to bear / carry / bring',
+                meaning: 'to bear, carry, bring',
                 enPassPart: 'carried',
                 enActPast: 'carried',
-                enActPart: 'carried'
+                enActPart: 'carried',
+                enActPresPart: 'carrying'
             },
             {
                 id: 'pono',
                 pp: 'pōnō, pōnere, posuī, positus',
                 pppStem: 'posit',
-                meaning: 'to put / place',
+                meaning: 'to put, place',
                 enPassPart: 'placed',
                 enActPast: 'placed',
-                enActPart: 'placed'
+                enActPart: 'placed',
+                enActPresPart: 'placing'
             },
             {
                 id: 'facio',
                 pp: 'faciō, facere, fēcī, factus',
                 pppStem: 'fact',
-                meaning: 'to make / do',
+                meaning: 'to make, do',
                 enPassPart: 'made',
                 enActPast: 'made',
-                enActPart: 'made'
+                enActPart: 'made',
+                enActPresPart: 'making'
             },
             {
                 id: 'minuo',
                 pp: 'minuō, minuere, minuī, minūtus',
                 pppStem: 'minūt',
-                meaning: 'to lessen / diminish',
+                meaning: 'to lessen, diminish',
                 enPassPart: 'lessened',
                 enActPast: 'lessened',
-                enActPart: 'lessened'
+                enActPart: 'lessened',
+                enActPresPart: 'lessening'
             },
             {
                 id: 'accipio',
                 pp: 'accipiō, accipere, accēpī, acceptus',
                 pppStem: 'accept',
-                meaning: 'to receive / accept',
+                meaning: 'to receive, accept',
                 enPassPart: 'received',
                 enActPast: 'received',
-                enActPart: 'received'
+                enActPart: 'received',
+                enActPresPart: 'receiving'
             },
             {
                 id: 'addo',
@@ -564,7 +654,8 @@
                 meaning: 'to add',
                 enPassPart: 'added',
                 enActPast: 'added',
-                enActPart: 'added'
+                enActPart: 'added',
+                enActPresPart: 'adding'
             },
             {
                 id: 'coquo',
@@ -573,16 +664,18 @@
                 meaning: 'to cook',
                 enPassPart: 'cooked',
                 enActPast: 'cooked',
-                enActPart: 'cooked'
+                enActPart: 'cooked',
+                enActPresPart: 'cooking'
             },
             {
                 id: 'aufero',
                 pp: 'auferō, auferre, abstulī, ablātus',
                 pppStem: 'ablāt',
-                meaning: 'to carry away / steal',
+                meaning: 'to carry away, steal',
                 enPassPart: 'carried away',
                 enActPast: 'carried away',
-                enActPart: 'carried away'
+                enActPart: 'carried away',
+                enActPresPart: 'carrying away'
             },
             {
                 id: 'effundo',
@@ -591,17 +684,79 @@
                 meaning: 'to pour out',
                 enPassPart: 'poured out',
                 enActPast: 'poured out',
-                enActPart: 'poured out'
+                enActPart: 'poured out',
+                enActPresPart: 'pouring out'
             },
             {
                 id: 'everto',
                 pp: 'ēvertō, ēvertere, ēvertī, ēversus',
                 pppStem: 'ēvers',
-                meaning: 'to overturn / destroy',
-                pppMeaning: 'overturned',
+                meaning: 'to overturn, destroy',
                 enPassPart: 'overturned',
                 enActPast: 'overturned',
-                enActPart: 'overturned'
+                enActPart: 'overturned',
+                enActPresPart: 'overturning'
+            },
+            // --- 6 NEWLY ADDED VERBS ---
+            {
+                id: 'audio',
+                pp: 'audiō, audīre, audīvī, audītus',
+                pppStem: 'audīt',
+                meaning: 'to hear, listen to',
+                enPassPart: 'heard',
+                enActPast: 'heard',
+                enActPart: 'heard',
+                enActPresPart: 'hearing'
+            },
+            {
+                id: 'dico',
+                pp: 'dīcō, dīcere, dīxī, dictus',
+                pppStem: 'dict',
+                meaning: 'to say, speak, tell',
+                enPassPart: 'said',
+                enActPast: 'said',
+                enActPart: 'said',
+                enActPresPart: 'saying'
+            },
+            {
+                id: 'capio',
+                pp: 'capiō, capere, cēpī, captus',
+                pppStem: 'capt',
+                meaning: 'to take, capture, seize',
+                enPassPart: 'captured',
+                enActPast: 'captured',
+                enActPart: 'captured',
+                enActPresPart: 'capturing'
+            },
+            {
+                id: 'do',
+                pp: 'dō, dare, dedī, datus',
+                pppStem: 'dat',
+                meaning: 'to give, grant',
+                enPassPart: 'given',
+                enActPast: 'gave',
+                enActPart: 'given',
+                enActPresPart: 'giving'
+            },
+            {
+                id: 'peto',
+                pp: 'petō, petere, petīvī, petītus',
+                pppStem: 'petīt',
+                meaning: 'to seek, ask for, attack',
+                enPassPart: 'sought',
+                enActPast: 'sought',
+                enActPart: 'sought',
+                enActPresPart: 'seeking'
+            },
+            {
+                id: 'mitto',
+                pp: 'mittō, mittere, mīsī, missus',
+                pppStem: 'miss',
+                meaning: 'to send, let go',
+                enPassPart: 'sent',
+                enActPast: 'sent',
+                enActPart: 'sent',
+                enActPresPart: 'sending'
             }
         ];
 
@@ -678,36 +833,70 @@
         }
 
         /**
-         * Build exact English translation given verb, tense, person/number, gender, and voice.
-         * Supports:
-         * - 'perf', 'plup', 'futp' (Passive)
-         * - 'pres_pass', 'impf_pass', 'fut_pass' (Present System Passive distractors)
-         * - 'perf_act', 'plup_act', 'futp_act' (Perfect System Active distractors)
+         * Select tense with weighted probability distribution:
+         * - 60% Perfect Passive (r < 0.60)
+         * - 20% Pluperfect Passive (0.60 <= r < 0.80)
+         * - 20% Future Perfect Passive (r >= 0.80)
+         */
+        function pickWeightedTense() {
+            const r = Math.random();
+            if (r < 0.60) {
+                return 'perf';
+            } else if (r < 0.80) {
+                return 'plup';
+            } else {
+                return 'futp';
+            }
+        }
+
+        /**
+         * Return the English subject pronoun for a given person/number and gender.
+         */
+        function getSubjectPronoun(pn, gender) {
+            if (pn === '1s') return 'I';
+            if (pn === '2s') return 'you (sg.)';
+            if (pn === '3s') {
+                if (gender === 'm') return 'he';
+                if (gender === 'f') return 'she';
+                return 'it';
+            }
+            if (pn === '1p') return 'we';
+            if (pn === '2p') return 'you (pl.)';
+            return 'they';
+        }
+
+        /**
+         * Build exact English translation given verb, tense/voice code, person/number, and gender.
+         * Supports both Perfect Passive renderings:
+         * - 'perf_was': "I was ordered" / "they were ordered"
+         * - 'perf_have_been': "I have been ordered" / "he has been ordered"
+         * - 'plup': "I had been ordered"
+         * - 'futp': "I will have been ordered"
+         * Plus Hard Mode distractors:
+         * - 'pres_pass': "I am being ordered"
+         * - 'impf_pass': "I was being ordered"
+         * - 'fut_pass': "I will be ordered"
+         * - 'past_act': "I ordered" / "I saw" / "I gave"
+         * - 'perf_act': "I have ordered" / "he has ordered"
+         * - 'plup_act': "I had ordered"
+         * - 'futp_act': "I will have ordered"
+         * - 'pres_act': "I am ordering"
          */
         function buildEnglishTranslation(verb, tenseCode, pn, gender) {
-            // Determine clear English subject pronoun
-            let subj = '';
-            const isSingular = pn === '1s' || pn === '2s' || pn === '3s';
-            const isThirdSing = pn === '3s';
-
-            if (pn === '1s') subj = 'I';
-            else if (pn === '2s') subj = 'you (sg.)';
-            else if (pn === '3s') {
-                if (gender === 'm') subj = 'he';
-                else if (gender === 'f') subj = 'she';
-                else subj = 'it';
-            }
-            else if (pn === '1p') subj = 'we';
-            else if (pn === '2p') subj = 'you (pl.)';
-            else if (pn === '3p') subj = 'they';
-
+            const subj = getSubjectPronoun(pn, gender);
+            const is1sOr3s = (pn === '1s' || pn === '3s');
+            const is3s = (pn === '3s');
             const pp = verb.enPassPart;
 
             switch (tenseCode) {
-                case 'perf': {
-                    // Standard idiomatic Perfect Passive: "was/were [verb]ed"
-                    const aux = (pn === '1s' || pn === '3s') ? 'was' : 'were';
+                case 'perf':
+                case 'perf_was': {
+                    const aux = is1sOr3s ? 'was' : 'were';
                     return `${subj} ${aux} ${pp}`;
+                }
+                case 'perf_have_been': {
+                    const haveAux = is3s ? 'has been' : 'have been';
+                    return `${subj} ${haveAux} ${pp}`;
                 }
                 case 'plup': {
                     return `${subj} had been ${pp}`;
@@ -715,19 +904,24 @@
                 case 'futp': {
                     return `${subj} will have been ${pp}`;
                 }
-                // Extra tenses for pedagogical tense distractors
                 case 'pres_pass': {
                     let aux = 'are';
                     if (pn === '1s') aux = 'am';
                     else if (pn === '3s') aux = 'is';
                     return `${subj} ${aux} being ${pp}`;
                 }
+                case 'impf_pass': {
+                    const aux = is1sOr3s ? 'was' : 'were';
+                    return `${subj} ${aux} being ${pp}`;
+                }
                 case 'fut_pass': {
                     return `${subj} will be ${pp}`;
                 }
-                // Active voice distractors in matching tense
+                case 'past_act': {
+                    return `${subj} ${verb.enActPast}`;
+                }
                 case 'perf_act': {
-                    const haveAux = isThirdSing ? 'has' : 'have';
+                    const haveAux = is3s ? 'has' : 'have';
                     return `${subj} ${haveAux} ${verb.enActPart}`;
                 }
                 case 'plup_act': {
@@ -736,8 +930,16 @@
                 case 'futp_act': {
                     return `${subj} will have ${verb.enActPart}`;
                 }
-                default:
-                    return `${subj} was ${pp}`;
+                case 'pres_act': {
+                    let aux = 'are';
+                    if (pn === '1s') aux = 'am';
+                    else if (pn === '3s') aux = 'is';
+                    return `${subj} ${aux} ${verb.enActPresPart}`;
+                }
+                default: {
+                    const aux = is1sOr3s ? 'was' : 'were';
+                    return `${subj} ${aux} ${pp}`;
+                }
             }
         }
 
@@ -745,8 +947,6 @@
          * ============================================================================
          * 3. RETRO 80s SYNTH AUDIO ENGINE (WEB AUDIO API)
          * ============================================================================
-         * Generates warm analog-inspired polyphonic synth chords, filter sweeps,
-         * and gentle error tones with zero external audio files.
          */
         class RetroSynthAudio {
             constructor() {
@@ -778,7 +978,6 @@
                 osc.type = type;
                 osc.frequency.setValueAtTime(freq, startTime);
 
-                // Warm 80s lowpass filter envelope
                 filter.type = 'lowpass';
                 filter.frequency.setValueAtTime(400, startTime);
                 filter.frequency.exponentialRampToValueAtTime(2400, startTime + 0.04);
@@ -801,9 +1000,18 @@
                 this.initContext();
                 if (!this.ctx) return;
                 const now = this.ctx.currentTime;
-                // Crisp rising two-note fifth (C5 -> G5)
                 this.playNote(523.25, now, 0.14, 'triangle', 0.09);
                 this.playNote(783.99, now + 0.08, 0.22, 'sawtooth', 0.07);
+            }
+
+            playPartialCorrect() {
+                if (!this.enabled) return;
+                this.initContext();
+                if (!this.ctx) return;
+                const now = this.ctx.currentTime;
+                // Bright two-note chime indicating 1 of 2 correct translations found
+                this.playNote(587.33, now, 0.13, 'triangle', 0.085);
+                this.playNote(880.00, now + 0.07, 0.18, 'triangle', 0.08);
             }
 
             playStep2Success(streak = 1) {
@@ -811,13 +1019,11 @@
                 this.initContext();
                 if (!this.ctx) return;
                 const now = this.ctx.currentTime;
-                // Bright arpeggio chord (C5 - E5 - G5 - C6)
                 const notes = [523.25, 659.25, 783.99, 1046.50];
                 notes.forEach((f, idx) => {
                     this.playNote(f, now + idx * 0.055, 0.28, 'sawtooth', 0.065);
                 });
                 if (streak >= 5) {
-                    // Bonus high shimmer note on 5+ streak
                     this.playNote(1318.51, now + 0.24, 0.35, 'triangle', 0.07);
                 }
             }
@@ -827,7 +1033,6 @@
                 this.initContext();
                 if (!this.ctx) return;
                 const now = this.ctx.currentTime;
-                // Low detuned synth buzz (Eb3 -> D3)
                 this.playNote(155.56, now, 0.16, 'sawtooth', 0.08);
                 this.playNote(146.83, now + 0.10, 0.24, 'sawtooth', 0.08);
             }
@@ -837,13 +1042,15 @@
 
         /**
          * ============================================================================
-         * 4. APPLICATION STATE & QUESTION GENERATOR
+         * 4. APPLICATION STATE & QUESTION / OPTION GENERATORS
          * ============================================================================
          */
         const state = {
+            quizDifficulty: 'easy', // 'easy' (4 passive tenses, pick both for perf) vs 'hard' (mixed voice/person/tense)
+            hintsEnabled: false,    // Minimized/hidden by default!
             useMacrons: true,
-            allGenders: true, // true = M/F/N, false = Masculine only
-            mode: '10',       // '10', '20', or 'endless'
+            allGenders: true,       // true = M/F/N, false = Masculine only
+            mode: '10',             // '10', '20', or 'endless'
             questionIndex: 0,
             firstTryCorrectCount: 0,
             currentStreak: 0,
@@ -855,92 +1062,149 @@
             step1Solved: false,
             step2Solved: false,
             missedOnCurrentItem: false,
+            lastSignature: null,
             lastVerbId: null
         };
 
         /**
-         * Generate a random morphological question from the 14-verb list
-         * with 4 smart pedagogical translation choices.
+         * Build the 4 multiple-choice options for Step 2 based on `state.quizDifficulty` ('easy' vs. 'hard').
+         * Separating this from `generateQuestion()` allows the student to toggle between Easy and Hard Mode
+         * mid-question without losing their current Latin verb!
          */
-        function generateQuestion() {
-            // Avoid repeating the exact same verb back-to-back
-            let candidateVerbs = VERB_LIST.filter(v => v.id !== state.lastVerbId);
-            if (candidateVerbs.length === 0) candidateVerbs = VERB_LIST;
-            const verb = candidateVerbs[Math.floor(Math.random() * candidateVerbs.length)];
-            state.lastVerbId = verb.id;
+        function buildOptionsForItem(item, difficulty) {
+            const { verb, tense, pn, gender, participleMacron, auxMacron, fullLatinMacron } = item;
+            let rawOptions = [];
+            let requiredCorrectCount = 1;
 
-            // Pick random tense: 'perf', 'plup', 'futp'
-            const tenseKeys = ['perf', 'plup', 'futp'];
-            const tense = tenseKeys[Math.floor(Math.random() * tenseKeys.length)];
+            if (difficulty === 'easy') {
+                // ====================================================================
+                // EASY MODE:
+                // All 4 options are strictly passive, share the exact subject pronoun
+                // and verb meaning, and represent the 4 English passive tense renderings:
+                //   1. Simple past passive ("I was ordered") -> Correct for Perfect Passive
+                //   2. Present-perfect passive ("I have been ordered") -> Correct for Perfect Passive
+                //   3. Pluperfect passive ("I had been ordered") -> Correct for Pluperfect Passive
+                //   4. Future perfect passive ("I will have been ordered") -> Correct for Future Perfect Passive
+                // When the verb is Perfect Passive, BOTH #1 and #2 are correct and both must be selected!
+                // ====================================================================
+                const optWas = buildEnglishTranslation(verb, 'perf_was', pn, gender);
+                const optHaveBeen = buildEnglishTranslation(verb, 'perf_have_been', pn, gender);
+                const optHadBeen = buildEnglishTranslation(verb, 'plup', pn, gender);
+                const optWillHaveBeen = buildEnglishTranslation(verb, 'futp', pn, gender);
 
-            // Pick random person/number: '1s', '2s', '3s', '1p', '2p', '3p'
-            const pn = PERSON_NUMBER_KEYS[Math.floor(Math.random() * PERSON_NUMBER_KEYS.length)];
-            const isPlural = pn.endsWith('p');
+                requiredCorrectCount = (tense === 'perf') ? 2 : 1;
 
-            // Pick gender ('m', 'f', 'n' or 'm' if masculine-only mode)
-            const genderPool = state.allGenders ? ['m', 'f', 'n'] : ['m'];
-            const gender = genderPool[Math.floor(Math.random() * genderPool.length)];
-
-            // Build Latin two-word periphrastic verb form (with macrons stored canonically)
-            const ending = isPlural ? PARTICIPLE_ENDINGS.pl[gender] : PARTICIPLE_ENDINGS.sg[gender];
-            const participleMacron = `${verb.pppStem}${ending}`;
-            const auxMacron = TENSE_META[tense].auxForms[pn];
-            const fullLatinMacron = `${participleMacron} ${auxMacron}`;
-
-            // Build the 4 Multiple Choice English Translations
-            const correctText = buildEnglishTranslation(verb, tense, pn, gender);
-
-            // 1. Tense Distractor: Same verb, person/number, passive voice, different tense
-            const otherPassiveTenses = ['perf', 'plup', 'futp', 'pres_pass', 'fut_pass'].filter(t => t !== tense);
-            const distractorTense = otherPassiveTenses[Math.floor(Math.random() * otherPassiveTenses.length)];
-            const tenseDistractorText = buildEnglishTranslation(verb, distractorTense, pn, gender);
-
-            // 2. Person/Number (or 3rd-Sing Gender) Distractor: Same verb, same tense, passive voice, different subject
-            let altPn = pn;
-            let altGender = gender;
-            const otherPns = PERSON_NUMBER_KEYS.filter(k => k !== pn);
-            altPn = otherPns[Math.floor(Math.random() * otherPns.length)];
-            const pnDistractorText = buildEnglishTranslation(verb, tense, altPn, altGender);
-
-            // 3. Voice Distractor (Active equivalent) OR Lexical Distractor
-            const useActiveDistractor = Math.random() < 0.65;
-            let fourthDistractorText = '';
-            let fourthReason = '';
-
-            if (useActiveDistractor) {
-                const activeTenseMap = { perf: 'perf_act', plup: 'plup_act', futp: 'futp_act' };
-                fourthDistractorText = buildEnglishTranslation(verb, activeTenseMap[tense], pn, gender);
-                fourthReason = `Active voice instead of Passive (${fullLatinMacron} is passive).`;
+                rawOptions = [
+                    {
+                        text: optWas,
+                        isCorrect: tense === 'perf',
+                        selected: false,
+                        feedback: tense === 'perf'
+                            ? `Correct! "${optWas}" (simple past passive) is one of the two standard English translations of the Perfect Passive.`
+                            : `Watch the tense! "${optWas}" translates the Perfect Passive, whereas ${auxMacron} is ${TENSE_META[tense].name}.`
+                    },
+                    {
+                        text: optHaveBeen,
+                        isCorrect: tense === 'perf',
+                        selected: false,
+                        feedback: tense === 'perf'
+                            ? `Correct! "${optHaveBeen}" (present-perfect passive) is one of the two standard English translations of the Perfect Passive.`
+                            : `Watch the tense! "${optHaveBeen}" translates the Perfect Passive, whereas ${auxMacron} is ${TENSE_META[tense].name}.`
+                    },
+                    {
+                        text: optHadBeen,
+                        isCorrect: tense === 'plup',
+                        selected: false,
+                        feedback: tense === 'plup'
+                            ? `Optime! "${optHadBeen}" is the exact ${PERSON_NUMBER_LABELS[pn]} (${GENDER_LABELS[gender]}) Pluperfect Passive translation.`
+                            : `Watch the tense! "had been ${verb.enPassPart}" is Pluperfect Passive (eram, erās, erat...), not ${TENSE_META[tense].name}.`
+                    },
+                    {
+                        text: optWillHaveBeen,
+                        isCorrect: tense === 'futp',
+                        selected: false,
+                        feedback: tense === 'futp'
+                            ? `Optime! "${optWillHaveBeen}" is the exact ${PERSON_NUMBER_LABELS[pn]} (${GENDER_LABELS[gender]}) Future Perfect Passive translation.`
+                            : `Watch the tense! "will have been ${verb.enPassPart}" is Future Perfect Passive (erō, eris, erit...), not ${TENSE_META[tense].name}.`
+                    }
+                ];
             } else {
-                const otherVerbs = VERB_LIST.filter(v => v.id !== verb.id);
-                const wrongVerb = otherVerbs[Math.floor(Math.random() * otherVerbs.length)];
-                fourthDistractorText = buildEnglishTranslation(wrongVerb, tense, pn, gender);
-                fourthReason = `Wrong vocabulary verb ("${wrongVerb.enPassPart}" belongs to ${wrongVerb.pp.split(',')[0]}).`;
-            }
+                // ====================================================================
+                // HARD MODE:
+                // Challenging distractors testing Voice (active vs. passive),
+                // Person/Number/Gender agreement, Progressive/Future passives, and Tense.
+                // Single canonical correct translation (for Perfect Passive, randomly
+                // uses either "was/were [verb]ed" or "has/have been [verb]ed" so only 1 is correct).
+                // ====================================================================
+                requiredCorrectCount = 1;
+                const perfVariant = Math.random() < 0.65 ? 'perf_was' : 'perf_have_been';
+                const targetTenseCode = (tense === 'perf') ? perfVariant : tense;
+                const correctText = buildEnglishTranslation(verb, targetTenseCode, pn, gender);
 
-            // Assemble and deduplicate options
-            const rawOptions = [
-                {
-                    text: correctText,
-                    isCorrect: true,
-                    feedback: `Optime! "${participleMacron} ${auxMacron}" is ${PERSON_NUMBER_LABELS[pn]} (${GENDER_LABELS[gender]}) ${TENSE_META[tense].name}.`
-                },
-                {
-                    text: tenseDistractorText,
-                    isCorrect: false,
-                    feedback: `Watch the tense! You already identified ${auxMacron} as ${TENSE_META[tense].name}.`
-                },
-                {
-                    text: pnDistractorText,
-                    isCorrect: false,
-                    feedback: `Watch the subject! The auxiliary "${auxMacron}" is ${PERSON_NUMBER_LABELS[pn]}, not ${PERSON_NUMBER_LABELS[altPn]}.`
-                },
-                {
-                    text: fourthDistractorText,
-                    isCorrect: false,
-                    feedback: fourthReason
+                // Distractor 1: Active Voice trap in a matching or closely related tense
+                const activeChoices = (tense === 'perf')
+                    ? ['past_act', 'perf_act', 'pres_act']
+                    : (tense === 'plup' ? ['plup_act', 'past_act'] : ['futp_act', 'perf_act']);
+                const pickedActiveCode = activeChoices[Math.floor(Math.random() * activeChoices.length)];
+                const activeDistractorText = buildEnglishTranslation(verb, pickedActiveCode, pn, gender);
+
+                // Distractor 2: Passive Tense trap (including Present/Imperfect/Future passive or other Perfect system passive)
+                const otherPassiveTenses = ['perf_was', 'plup', 'futp', 'pres_pass', 'impf_pass', 'fut_pass']
+                    .filter(t => t !== targetTenseCode && !(tense === 'perf' && (t === 'perf_was' || t === 'perf_have_been')));
+                const distractorTense = otherPassiveTenses[Math.floor(Math.random() * otherPassiveTenses.length)];
+                const tenseDistractorText = buildEnglishTranslation(verb, distractorTense, pn, gender);
+
+                // Distractor 3: Subject Pronoun / Gender trap OR Vocabulary trap
+                let thirdDistractorText = '';
+                let thirdFeedback = '';
+
+                if (pn === '3s' && Math.random() < 0.65) {
+                    // Gender trap in 3rd singular (he vs. she vs. it)
+                    const otherGenders = ['m', 'f', 'n'].filter(g => g !== gender);
+                    const wrongGender = otherGenders[Math.floor(Math.random() * otherGenders.length)];
+                    thirdDistractorText = buildEnglishTranslation(verb, targetTenseCode, pn, wrongGender);
+                    thirdFeedback = `Watch the participle gender! "${participleMacron}" ends in -${item.ending} (${GENDER_LABELS[gender]}), not ${GENDER_LABELS[wrongGender]}.`;
+                } else if (Math.random() < 0.75) {
+                    // Person/Number trap
+                    const otherPns = PERSON_NUMBER_KEYS.filter(k => k !== pn);
+                    const altPn = otherPns[Math.floor(Math.random() * otherPns.length)];
+                    thirdDistractorText = buildEnglishTranslation(verb, targetTenseCode, altPn, gender);
+                    thirdFeedback = `Watch the subject pronoun! The auxiliary "${auxMacron}" is ${PERSON_NUMBER_LABELS[pn]}, not ${PERSON_NUMBER_LABELS[altPn]}.`;
+                } else {
+                    // Lexical verb trap
+                    const otherVerbs = VERB_LIST.filter(v => v.id !== verb.id);
+                    const wrongVerb = otherVerbs[Math.floor(Math.random() * otherVerbs.length)];
+                    thirdDistractorText = buildEnglishTranslation(wrongVerb, targetTenseCode, pn, gender);
+                    thirdFeedback = `Wrong vocabulary verb! "${wrongVerb.enPassPart}" belongs to ${wrongVerb.pp.split(',')[0]}.`;
                 }
-            ];
+
+                rawOptions = [
+                    {
+                        text: correctText,
+                        isCorrect: true,
+                        selected: false,
+                        feedback: `Optime! "${fullLatinMacron}" is ${PERSON_NUMBER_LABELS[pn]} (${GENDER_LABELS[gender]}) ${TENSE_META[tense].name}.`
+                    },
+                    {
+                        text: activeDistractorText,
+                        isCorrect: false,
+                        selected: false,
+                        feedback: `Watch the voice! "${activeDistractorText}" is ACTIVE, whereas "${fullLatinMacron}" is PASSIVE.`
+                    },
+                    {
+                        text: tenseDistractorText,
+                        isCorrect: false,
+                        selected: false,
+                        feedback: `Watch the tense! "${tenseDistractorText}" does not match the ${TENSE_META[tense].name} (${auxMacron}).`
+                    },
+                    {
+                        text: thirdDistractorText,
+                        isCorrect: false,
+                        selected: false,
+                        feedback: thirdFeedback
+                    }
+                ];
+            }
 
             // Shuffle the 4 options using Fisher-Yates
             for (let i = rawOptions.length - 1; i > 0; i--) {
@@ -948,17 +1212,74 @@
                 [rawOptions[i], rawOptions[j]] = [rawOptions[j], rawOptions[i]];
             }
 
-            return {
+            item.options = rawOptions;
+            item.requiredCorrectCount = requiredCorrectCount;
+            item.selectedCorrectCount = 0;
+
+            // Store summary string for the end-of-round review modal
+            if (tense === 'perf') {
+                const w = buildEnglishTranslation(verb, 'perf_was', pn, gender);
+                const h = buildEnglishTranslation(verb, 'perf_have_been', pn, gender);
+                item.summaryEnglish = `${w} / ${h}`;
+            } else {
+                item.summaryEnglish = buildEnglishTranslation(verb, tense, pn, gender);
+            }
+        }
+
+        /**
+         * Generate a random morphological question from the 20-verb list
+         * using the 60% Perfect / 20% Pluperfect / 20% Future Perfect weighting.
+         */
+        function generateQuestion() {
+            let verb, tense, pn, gender, signature;
+            let attempts = 0;
+
+            do {
+                let candidateVerbs = VERB_LIST.filter(v => v.id !== state.lastVerbId);
+                if (candidateVerbs.length === 0) candidateVerbs = VERB_LIST;
+                verb = candidateVerbs[Math.floor(Math.random() * candidateVerbs.length)];
+
+                // Weighted tense selection: 60% perf, 20% plup, 20% futp
+                tense = pickWeightedTense();
+
+                // Pick random person/number: '1s', '2s', '3s', '1p', '2p', '3p'
+                pn = PERSON_NUMBER_KEYS[Math.floor(Math.random() * PERSON_NUMBER_KEYS.length)];
+
+                // Pick gender ('m', 'f', 'n' or 'm' if masculine-only mode)
+                const genderPool = state.allGenders ? ['m', 'f', 'n'] : ['m'];
+                gender = genderPool[Math.floor(Math.random() * genderPool.length)];
+
+                signature = `${verb.id}_${tense}_${pn}_${gender}`;
+                attempts++;
+            } while (signature === state.lastSignature && attempts < 10);
+
+            state.lastSignature = signature;
+            state.lastVerbId = verb.id;
+
+            const isPlural = pn.endsWith('p');
+            const ending = isPlural ? PARTICIPLE_ENDINGS.pl[gender] : PARTICIPLE_ENDINGS.sg[gender];
+            const participleMacron = `${verb.pppStem}${ending}`;
+            const auxMacron = TENSE_META[tense].auxForms[pn];
+            const fullLatinMacron = `${participleMacron} ${auxMacron}`;
+
+            const item = {
                 verb,
                 tense,
                 pn,
                 gender,
+                ending,
+                isPlural,
                 participleMacron,
                 auxMacron,
                 fullLatinMacron,
-                correctText,
-                options: rawOptions
+                options: [],
+                requiredCorrectCount: 1,
+                selectedCorrectCount: 0,
+                summaryEnglish: ''
             };
+
+            buildOptionsForItem(item, state.quizDifficulty);
+            return item;
         }
 
         /**
@@ -971,6 +1292,16 @@
             statProgress: document.getElementById('statProgress'),
             statAccuracy: document.getElementById('statAccuracy'),
             statStreak: document.getElementById('statStreak'),
+
+            btnDiffEasy: document.getElementById('btnDiffEasy'),
+            btnDiffHard: document.getElementById('btnDiffHard'),
+            badgeDifficultyMode: document.getElementById('badgeDifficultyMode'),
+
+            btnHintsToggle: document.getElementById('btnHintsToggle'),
+            labelHints: document.getElementById('labelHints'),
+            btnInlineHint: document.getElementById('btnInlineHint'),
+            inlineHintText: document.getElementById('inlineHintText'),
+
             btnMacrons: document.getElementById('btnMacrons'),
             labelMacrons: document.getElementById('labelMacrons'),
             btnGenderPool: document.getElementById('btnGenderPool'),
@@ -985,24 +1316,32 @@
             badgeVerbNumber: document.getElementById('badgeVerbNumber'),
             badgeStep1Locked: document.getElementById('badgeStep1Locked'),
             lockedTenseName: document.getElementById('lockedTenseName'),
-            btnHintToggle: document.getElementById('btnHintToggle'),
             hintDrawer: document.getElementById('hintDrawer'),
             hintPrincipalParts: document.getElementById('hintPrincipalParts'),
             hintMeaning: document.getElementById('hintMeaning'),
+            hintMorphBadge: document.getElementById('hintMorphBadge'),
             latinVerbDisplay: document.getElementById('latinVerbDisplay'),
             morphologySubhint: document.getElementById('morphologySubhint'),
 
             step1Panel: document.getElementById('step1Panel'),
             step1Circle: document.getElementById('step1Circle'),
+            step1Instruction: document.getElementById('step1Instruction'),
             tenseButtonsContainer: document.getElementById('tenseButtonsContainer'),
             step1Feedback: document.getElementById('step1Feedback'),
 
             step2Panel: document.getElementById('step2Panel'),
             step2Circle: document.getElementById('step2Circle'),
+            step2Title: document.getElementById('step2Title'),
+            step2MultiBadge: document.getElementById('step2MultiBadge'),
+            step2InstructionBanner: document.getElementById('step2InstructionBanner'),
+            step2Instruction: document.getElementById('step2Instruction'),
             step2LockOverlay: document.getElementById('step2LockOverlay'),
+            step2LockSubtext: document.getElementById('step2LockSubtext'),
             translationOptionsContainer: document.getElementById('translationOptionsContainer'),
             step2Feedback: document.getElementById('step2Feedback'),
             btnNextQuestion: document.getElementById('btnNextQuestion'),
+
+            footerHintSummary: document.getElementById('footerHintSummary'),
 
             summaryModal: document.getElementById('summaryModal'),
             summaryRankBadge: document.getElementById('summaryRankBadge'),
@@ -1014,14 +1353,176 @@
         };
 
         /**
+         * Update the Easy / Hard Mode toggle buttons, prompt badge, and Step 2 instructions.
+         */
+        function updateDifficultyUI() {
+            const isEasy = state.quizDifficulty === 'easy';
+
+            if (isEasy) {
+                els.btnDiffEasy.className = 'px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 bg-emerald-700 text-white shadow-xs';
+                els.btnDiffHard.className = 'px-2.5 py-1 rounded-md font-medium transition flex items-center gap-1 text-stone-300 hover:text-white';
+                els.badgeDifficultyMode.textContent = 'Easy Mode: Passive Tense Focus';
+                els.badgeDifficultyMode.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300';
+                els.step2LockSubtext.textContent = 'Identify the tense in Step 1 to unlock the 4 passive translations (choose BOTH correct translations if the verb is Perfect Passive).';
+            } else {
+                els.btnDiffHard.className = 'px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 bg-imperial-600 text-white shadow-xs';
+                els.btnDiffEasy.className = 'px-2.5 py-1 rounded-md font-medium transition flex items-center gap-1 text-stone-300 hover:text-white';
+                els.badgeDifficultyMode.textContent = 'Hard Mode: Voice, Person & Tense';
+                els.badgeDifficultyMode.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-imperial-700 border border-rose-300';
+                els.step2LockSubtext.textContent = 'Identify the tense in Step 1 to unlock the 4 translation choices (watch out for active voice and pronoun distractors!).';
+            }
+
+            updateStep2PromptBanner();
+        }
+
+        /**
+         * Update Step 2's title, instruction banner, and `0 / 2 Selected` counter badge
+         * depending on Easy vs. Hard mode and whether Step 1 has been solved.
+         */
+        function updateStep2PromptBanner() {
+            const item = state.currentItem;
+            if (!item) return;
+
+            const isEasy = state.quizDifficulty === 'easy';
+            const isDualPerf = isEasy && item.tense === 'perf';
+
+            if (!state.step1Solved) {
+                // Before Step 1 is solved, give a general mode-appropriate instruction
+                els.step2Title.textContent = 'Step 2: Choose the Correct Translation(s)';
+                els.step2MultiBadge.classList.add('hidden');
+                els.step2InstructionBanner.className = 'mb-2.5 px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-200 text-xs text-stone-700 flex items-center justify-between gap-2';
+                if (isEasy) {
+                    els.step2Instruction.innerHTML = `<strong>Easy Mode:</strong> All choices are passive. Choose the matching tense (if Perfect Passive, choose <strong>both</strong> <em>"was/were"</em> and <em>"has/have been"</em>).`;
+                } else {
+                    els.step2Instruction.innerHTML = `<strong>Hard Mode:</strong> Select the translation that matches the verb's passive voice, tense, person, number, and gender.`;
+                }
+                return;
+            }
+
+            // Once Step 1 is solved:
+            if (isDualPerf) {
+                els.step2Title.textContent = 'Step 2: Choose BOTH Correct Translations';
+                els.step2MultiBadge.classList.remove('hidden');
+                els.step2MultiBadge.textContent = `${item.selectedCorrectCount} / 2 Selected`;
+                els.step2InstructionBanner.className = 'mb-2.5 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center justify-between gap-2';
+                els.step2Instruction.innerHTML = `<strong>Perfect Passive requires 2 translations:</strong> Select <strong>BOTH</strong> the simple past passive (<em>was/were</em>) <strong>AND</strong> the present-perfect passive (<em>has/have been</em>)!`;
+            } else if (isEasy) {
+                els.step2Title.textContent = 'Step 2: Choose the Correct Translation';
+                els.step2MultiBadge.classList.add('hidden');
+                els.step2InstructionBanner.className = 'mb-2.5 px-3 py-1.5 rounded-lg bg-emerald-50/70 border border-emerald-200 text-xs text-stone-700 flex items-center justify-between gap-2';
+                els.step2Instruction.innerHTML = `Select the single passive translation that matches the <strong>${TENSE_META[item.tense].name}</strong>:`;
+            } else {
+                els.step2Title.textContent = 'Step 2: Choose the Correct Translation';
+                els.step2MultiBadge.classList.add('hidden');
+                els.step2InstructionBanner.className = 'mb-2.5 px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-200 text-xs text-stone-700 flex items-center justify-between gap-2';
+                if (state.hintsEnabled) {
+                    els.step2Instruction.innerHTML = `Watch the participle ending (<span class="font-serif italic">${formatMacrons('-us, -a, -um / -ī, -ae, -a', state.useMacrons)}</span>), passive voice, and person/number carefully:`;
+                } else {
+                    els.step2Instruction.textContent = "Select the English translation that matches the verb's passive voice, tense, person, number, and gender:";
+                }
+            }
+        }
+
+        /**
+         * Synchronize all UI elements that depend on `state.hintsEnabled`:
+         * - Top bar "Hints: OFF / ON" button & inline button
+         * - Step 1 Tense Formula subtexts ("4th PP + sum, es, est...")
+         * - Principal Parts & Morphology Drawer
+         * - Step 1 & Step 2 instruction scaffolding
+         * - Footer paradigm reminder
+         */
+        function applyHintsVisibility() {
+            const on = state.hintsEnabled;
+
+            // 1. Update Top Bar & Inline Hint Buttons
+            els.labelHints.textContent = `Hints: ${on ? 'ON' : 'OFF'}`;
+            if (on) {
+                els.btnHintsToggle.className = 'px-2.5 py-1.5 rounded bg-amber-600/30 hover:bg-amber-600/40 border border-amber-400 text-amber-200 font-semibold transition flex items-center gap-1';
+                els.inlineHintText.textContent = '💡 Hide Hints';
+                els.btnInlineHint.className = 'text-xs font-semibold text-imperial-700 bg-amber-100/80 hover:bg-amber-200/70 border border-amber-400 px-2.5 py-1 rounded-md transition flex items-center gap-1.5';
+            } else {
+                els.btnHintsToggle.className = 'px-2.5 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-300 font-medium transition flex items-center gap-1';
+                els.inlineHintText.textContent = '💡 Show Hints';
+                els.btnInlineHint.className = 'text-xs font-medium text-stone-600 hover:text-imperial-700 bg-parchment-100 hover:bg-parchment-200 border border-stone-300 px-2.5 py-1 rounded-md transition flex items-center gap-1.5';
+            }
+
+            // 2. Show/Hide Principal Parts & Morphology Drawer
+            if (on) {
+                els.hintDrawer.classList.remove('hidden');
+            } else {
+                els.hintDrawer.classList.add('hidden');
+            }
+
+            // 3. Show/Hide Formula Subtext under each Step 1 Tense Button ("4th PP + sum, es, est...")
+            const tenseBtns = els.tenseButtonsContainer.querySelectorAll('.tense-btn');
+            tenseBtns.forEach(btn => {
+                const tKey = btn.getAttribute('data-tense');
+                const formulaEl = btn.querySelector('.tense-formula-hint');
+                if (formulaEl && TENSE_META[tKey]) {
+                    formulaEl.textContent = formatMacrons(`4th PP + ${TENSE_META[tKey].auxFormula}`, state.useMacrons);
+                    if (on) {
+                        formulaEl.classList.remove('hidden');
+                    } else {
+                        formulaEl.classList.add('hidden');
+                    }
+                }
+            });
+
+            // 4. Update Step 1, Step 2, and Footer scaffolding text
+            if (on) {
+                els.step1Instruction.innerHTML = `Look at the auxiliary form of <span class="font-serif italic font-semibold">sum, esse</span> paired with the 4th principal part:`;
+                els.footerHintSummary.innerHTML = `
+                    <span><strong class="text-stone-800">Perfect:</strong> <em>was/were</em> OR <em>has/have been [verb]ed</em></span>
+                    <span><strong class="text-stone-800">Pluperfect:</strong> <em>had been [verb]ed</em></span>
+                    <span><strong class="text-stone-800">Future Perfect:</strong> <em>will have been [verb]ed</em></span>
+                `;
+            } else {
+                els.step1Instruction.textContent = 'Examine the verb form above and identify its tense in the Perfect Passive System:';
+                els.footerHintSummary.innerHTML = `<span class="text-stone-500">💡 Need scaffolding? Press <strong class="text-stone-700 font-mono">H</strong> to toggle tense formulas &amp; principal parts hints.</span>`;
+            }
+
+            updateStep2PromptBanner();
+        }
+
+        /**
+         * Render the Step 2 translation option buttons
+         */
+        function renderStep2Options() {
+            const item = state.currentItem;
+            if (!item) return;
+
+            els.translationOptionsContainer.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            item.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.dataset.index = idx;
+                btn.disabled = !state.step1Solved || state.step2Solved;
+                btn.className = 'trans-btn choice-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between gap-2 group';
+                btn.innerHTML = `
+                    <div class="flex items-center gap-2.5">
+                        <span class="letter-badge w-6 h-6 rounded bg-stone-200 group-hover:bg-imperial-600 group-hover:text-white text-stone-700 font-mono font-bold text-xs flex items-center justify-center transition shrink-0">
+                            ${letters[idx]}
+                        </span>
+                        <span class="font-medium text-sm text-stone-800">${opt.text}</span>
+                    </div>
+                    <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-white border border-stone-300 rounded text-stone-400 shrink-0">${idx + 1}</kbd>
+                `;
+                btn.addEventListener('click', () => handleStep2Selection(idx));
+                els.translationOptionsContainer.appendChild(btn);
+            });
+        }
+
+        /**
          * Render the current question onto the screen
          */
         function renderQuestion() {
             const item = state.currentItem;
             if (!item) return;
 
-            // Update Top Stats
+            // Update Top Stats & Difficulty UI
             updateHeaderStats();
+            updateDifficultyUI();
 
             // Update Question Number Badge
             els.badgeVerbNumber.textContent = `Quaestiō #${state.questionIndex + 1}`;
@@ -1030,6 +1531,10 @@
             els.latinVerbDisplay.textContent = formatMacrons(item.fullLatinMacron, state.useMacrons);
             els.hintPrincipalParts.textContent = formatMacrons(item.verb.pp, state.useMacrons);
             els.hintMeaning.textContent = `— ${item.verb.meaning}`;
+
+            const numLabel = item.isPlural ? 'Plural' : 'Singular';
+            const endDisplay = formatMacrons(`-${item.ending}`, state.useMacrons);
+            els.hintMorphBadge.textContent = `${GENDER_LABELS[item.gender]} ${numLabel} (${endDisplay})`;
 
             // Reset Step 1 UI
             els.badgeStep1Locked.classList.add('hidden');
@@ -1041,13 +1546,10 @@
             tenseBtns.forEach(btn => {
                 btn.disabled = false;
                 btn.className = 'tense-btn choice-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between group';
-                // Update auxiliary formula macrons inside Step 1 buttons
-                const tKey = btn.getAttribute('data-tense');
-                const subTextEl = btn.querySelector('.font-serif');
-                if (subTextEl && TENSE_META[tKey]) {
-                    subTextEl.textContent = formatMacrons(`4th PP + ${TENSE_META[tKey].auxFormula}`, state.useMacrons);
-                }
             });
+
+            // Apply current Hints visibility state (OFF by default)
+            applyHintsVisibility();
 
             els.step1Feedback.className = 'mt-2.5 p-2.5 rounded-lg bg-stone-100 border border-stone-200 text-xs text-stone-600 min-h-[54px] flex items-center';
             els.step1Feedback.innerHTML = `<span>Select a tense above or press <kbd class="font-mono bg-white px-1 border rounded">1</kbd>, <kbd class="font-mono bg-white px-1 border rounded">2</kbd>, or <kbd class="font-mono bg-white px-1 border rounded">3</kbd>.</span>`;
@@ -1059,27 +1561,7 @@
             els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
             els.step2Feedback.textContent = 'Waiting for Step 1 tense identification...';
 
-            // Build Step 2 Translation Option Buttons
-            els.translationOptionsContainer.innerHTML = '';
-            const letters = ['A', 'B', 'C', 'D'];
-            item.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.dataset.index = idx;
-                btn.disabled = true;
-                btn.className = 'trans-btn choice-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between gap-2 group';
-                btn.innerHTML = `
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-6 h-6 rounded bg-stone-200 group-hover:bg-imperial-600 group-hover:text-white text-stone-700 font-mono font-bold text-xs flex items-center justify-center transition">
-                            ${letters[idx]}
-                        </span>
-                        <span class="font-medium text-sm text-stone-800">${opt.text}</span>
-                    </div>
-                    <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-white border border-stone-300 rounded text-stone-400">${idx + 1}</kbd>
-                `;
-                btn.addEventListener('click', () => handleStep2Selection(idx));
-                els.translationOptionsContainer.appendChild(btn);
-            });
+            renderStep2Options();
         }
 
         /**
@@ -1134,12 +1616,26 @@
 
                 els.step1Circle.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
                 els.step1Feedback.className = 'mt-2.5 p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs text-emerald-900 min-h-[54px] flex items-center';
-                els.step1Feedback.innerHTML = `<span><strong>Euge!</strong> The auxiliary <em>${auxDisplay}</em> marks the <strong>${TENSE_META[item.tense].name}</strong>. Now choose the exact translation in Step 2!</span>`;
 
-                // Unlock Step 2 Panel
+                const isDualPerf = state.quizDifficulty === 'easy' && item.tense === 'perf';
+                if (isDualPerf) {
+                    els.step1Feedback.innerHTML = `<span><strong>Euge!</strong> <em>${auxDisplay}</em> marks the <strong>Perfect Passive</strong>. In Easy Mode, choose <strong>BOTH</strong> correct English translations in Step 2!</span>`;
+                } else {
+                    els.step1Feedback.innerHTML = `<span><strong>Euge!</strong> The auxiliary <em>${auxDisplay}</em> marks the <strong>${TENSE_META[item.tense].name}</strong>. Now choose the exact translation in Step 2!</span>`;
+                }
+
+                // Unlock Step 2 Panel & update Step 2 instruction banner
                 els.step2LockOverlay.classList.add('hidden');
                 els.step2Circle.className = 'w-6 h-6 rounded-full bg-imperial-600 text-white font-bold text-xs flex items-center justify-center';
-                els.step2Feedback.innerHTML = `<span>Select one of the 4 translations above or press <kbd class="font-mono bg-stone-100 px-1 border rounded">1</kbd>–<kbd class="font-mono bg-stone-100 px-1 border rounded">4</kbd>.</span>`;
+                updateStep2PromptBanner();
+
+                if (isDualPerf) {
+                    els.step2Feedback.className = 'text-xs text-amber-900 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg flex-1';
+                    els.step2Feedback.innerHTML = `<span>Choose <strong>both</strong> valid Perfect Passive translations above (<strong>0 / 2</strong> selected).</span>`;
+                } else {
+                    els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
+                    els.step2Feedback.innerHTML = `<span>Select one of the 4 translations above or press <kbd class="font-mono bg-stone-100 px-1 border rounded">1</kbd>–<kbd class="font-mono bg-stone-100 px-1 border rounded">4</kbd>.</span>`;
+                }
 
                 els.translationOptionsContainer.querySelectorAll('.trans-btn').forEach(btn => {
                     btn.disabled = false;
@@ -1166,11 +1662,34 @@
             const opt = item.options[optionIndex];
             const transBtns = els.translationOptionsContainer.querySelectorAll('.trans-btn');
             const clickedBtn = transBtns[optionIndex];
-            if (!clickedBtn || clickedBtn.disabled) return;
+            if (!clickedBtn || clickedBtn.disabled || opt.selected) return;
 
             if (opt.isCorrect) {
-                // Correct Translation!
+                opt.selected = true;
+                item.selectedCorrectCount++;
+
+                // Style this button as selected & verified correct
+                clickedBtn.disabled = true;
+                clickedBtn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-emerald-600 bg-emerald-50 flex items-center justify-between gap-2';
+                const badge = clickedBtn.querySelector('.letter-badge');
+                if (badge) {
+                    badge.className = 'letter-badge w-6 h-6 rounded bg-emerald-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0';
+                    badge.textContent = '✓';
+                }
+
+                // Check if more correct options are required (Easy Mode Perfect Passive requires 2!)
+                if (item.selectedCorrectCount < item.requiredCorrectCount) {
+                    synth.playPartialCorrect();
+                    updateStep2PromptBanner();
+
+                    els.step2Feedback.className = 'text-xs text-emerald-900 bg-emerald-50 border border-emerald-300 px-3 py-2 rounded-lg flex-1';
+                    els.step2Feedback.innerHTML = `<strong>✓ 1 of 2 found!</strong> "${opt.text}" is correct. Now select the <strong>other</strong> valid Perfect Passive translation!`;
+                    return;
+                }
+
+                // All required correct translations have been selected!
                 state.step2Solved = true;
+                updateStep2PromptBanner();
 
                 if (!state.missedOnCurrentItem) {
                     state.firstTryCorrectCount++;
@@ -1181,18 +1700,23 @@
                 }
                 synth.playStep2Success(state.currentStreak);
 
+                // Disable remaining unselected buttons
                 transBtns.forEach((btn, idx) => {
                     btn.disabled = true;
-                    if (idx === optionIndex) {
-                        btn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-emerald-600 bg-emerald-50 flex items-center justify-between gap-2';
-                    } else {
+                    if (!item.options[idx].selected) {
                         btn.classList.add('opacity-45');
                     }
                 });
 
                 els.step2Circle.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
                 els.step2Feedback.className = 'text-xs text-emerald-900 bg-emerald-50 border border-emerald-300 px-3 py-2 rounded-lg flex-1';
-                els.step2Feedback.innerHTML = `<strong>✓ ${ formatMacrons(opt.feedback, state.useMacrons) }</strong>`;
+
+                if (item.requiredCorrectCount === 2) {
+                    const bothTexts = item.options.filter(o => o.isCorrect).map(o => `"${o.text}"`).join(' and ');
+                    els.step2Feedback.innerHTML = `<strong>✓ Optime! Both selected:</strong> ${bothTexts} accurately translate <em>${formatMacrons(item.fullLatinMacron, state.useMacrons)}</em>.`;
+                } else {
+                    els.step2Feedback.innerHTML = `<strong>✓ ${formatMacrons(opt.feedback, state.useMacrons)}</strong>`;
+                }
 
                 // Show Next Button
                 els.btnNextQuestion.classList.remove('hidden');
@@ -1220,10 +1744,38 @@
                 state.missedItems.push({
                     latin: state.currentItem.fullLatinMacron,
                     tenseName: TENSE_META[state.currentItem.tense].name,
-                    english: state.currentItem.correctText,
+                    english: state.currentItem.summaryEnglish,
                     pp: state.currentItem.verb.pp
                 });
             }
+        }
+
+        /**
+         * Switch between Easy and Hard translation quiz modes.
+         * If the current question's Step 2 isn't finished yet, rebuilds Step 2 options
+         * for the current Latin verb so the student can immediately experience the new mode.
+         */
+        function setQuizDifficulty(newDiff) {
+            if (state.quizDifficulty === newDiff) return;
+            state.quizDifficulty = newDiff;
+
+            if (state.currentItem && !state.step2Solved) {
+                buildOptionsForItem(state.currentItem, state.quizDifficulty);
+                renderStep2Options();
+
+                if (state.step1Solved) {
+                    const isDualPerf = state.quizDifficulty === 'easy' && state.currentItem.tense === 'perf';
+                    if (isDualPerf) {
+                        els.step2Feedback.className = 'text-xs text-amber-900 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg flex-1';
+                        els.step2Feedback.innerHTML = `<span>Switched to Easy Mode: Choose <strong>both</strong> valid Perfect Passive translations above (<strong>0 / 2</strong> selected).</span>`;
+                    } else {
+                        els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
+                        els.step2Feedback.innerHTML = `<span>Select one of the 4 translations above or press <kbd class="font-mono bg-stone-100 px-1 border rounded">1</kbd>–<kbd class="font-mono bg-stone-100 px-1 border rounded">4</kbd>.</span>`;
+                    }
+                }
+            }
+
+            updateDifficultyUI();
         }
 
         /**
@@ -1243,11 +1795,10 @@
                 }
             }
 
-            // Otherwise load next verb
+            // Otherwise load next verb (preserving `state.hintsEnabled` and `state.quizDifficulty`)
             state.step1Solved = false;
             state.step2Solved = false;
             state.missedOnCurrentItem = false;
-            els.hintDrawer.classList.add('hidden');
             state.currentItem = generateQuestion();
             renderQuestion();
         }
@@ -1267,10 +1818,17 @@
 
             els.summaryModal.classList.add('hidden');
             els.summaryModal.classList.remove('flex');
-            els.hintDrawer.classList.add('hidden');
 
             state.currentItem = generateQuestion();
             renderQuestion();
+        }
+
+        /**
+         * Toggle Hints ON/OFF globally
+         */
+        function toggleHints() {
+            state.hintsEnabled = !state.hintsEnabled;
+            applyHintsVisibility();
         }
 
         /**
@@ -1318,7 +1876,7 @@
         }
 
         /**
-         * Populate the 14 Target Verbs table inside the Reference Modal
+         * Populate the 20 Target Verbs table inside the Reference Modal
          */
         function populateReferenceModal() {
             els.refVerbTableBody.innerHTML = '';
@@ -1328,7 +1886,7 @@
                 tr.innerHTML = `
                     <td class="py-1.5 px-2 font-medium text-stone-900">${formatMacrons(v.pp, state.useMacrons)}</td>
                     <td class="py-1.5 px-2 italic text-imperial-700">${formatMacrons(v.pppStem + 'us, -a, -um', state.useMacrons)}</td>
-                    <td class="py-1.5 px-2 font-sans text-xs text-stone-700">${v.meaning} → <em>"${v.enPassPart}"</em></td>
+                    <td class="py-1.5 px-2 font-sans text-xs text-stone-700">${v.meaning} → <em>"was/were ${v.enPassPart}"</em></td>
                 `;
                 els.refVerbTableBody.appendChild(tr);
             });
@@ -1347,29 +1905,29 @@
                 });
             });
 
+            // Easy / Hard Quiz Difficulty Toggle Buttons
+            els.btnDiffEasy.addEventListener('click', () => setQuizDifficulty('easy'));
+            els.btnDiffHard.addEventListener('click', () => setQuizDifficulty('hard'));
+
             // Next Question Button
             els.btnNextQuestion.addEventListener('click', nextQuestion);
 
-            // Hint Drawer Toggle
-            els.btnHintToggle.addEventListener('click', () => {
-                els.hintDrawer.classList.toggle('hidden');
-            });
+            // Global & Inline Hints Toggle Buttons
+            els.btnHintsToggle.addEventListener('click', toggleHints);
+            els.btnInlineHint.addEventListener('click', toggleHints);
 
             // Macron Toggle
             els.btnMacrons.addEventListener('click', () => {
                 state.useMacrons = !state.useMacrons;
                 els.labelMacrons.textContent = `Macrons: ${state.useMacrons ? 'ON' : 'OFF'}`;
-                // Re-render current text without losing progress
                 if (state.currentItem) {
-                    els.latinVerbDisplay.textContent = formatMacrons(state.currentItem.fullLatinMacron, state.useMacrons);
-                    els.hintPrincipalParts.textContent = formatMacrons(state.currentItem.verb.pp, state.useMacrons);
-                    els.tenseButtonsContainer.querySelectorAll('.tense-btn').forEach(btn => {
-                        const tKey = btn.getAttribute('data-tense');
-                        const subTextEl = btn.querySelector('.font-serif');
-                        if (subTextEl && TENSE_META[tKey]) {
-                            subTextEl.textContent = formatMacrons(`4th PP + ${TENSE_META[tKey].auxFormula}`, state.useMacrons);
-                        }
-                    });
+                    const item = state.currentItem;
+                    els.latinVerbDisplay.textContent = formatMacrons(item.fullLatinMacron, state.useMacrons);
+                    els.hintPrincipalParts.textContent = formatMacrons(item.verb.pp, state.useMacrons);
+                    const numLabel = item.isPlural ? 'Plural' : 'Singular';
+                    const endDisplay = formatMacrons(`-${item.ending}`, state.useMacrons);
+                    els.hintMorphBadge.textContent = `${GENDER_LABELS[item.gender]} ${numLabel} (${endDisplay})`;
+                    applyHintsVisibility();
                     populateReferenceModal();
                 }
             });
@@ -1377,16 +1935,16 @@
             // Gender Pool Toggle
             els.btnGenderPool.addEventListener('click', () => {
                 state.allGenders = !state.allGenders;
-                els.labelGenderPool.textContent = state.allGenders ? 'Genders: M/F/N' : 'Genders: Masc Only';
+                els.labelGenderPool.textContent = state.allGenders ? 'M/F/N' : 'Masc Only';
             });
 
             // Audio Synth Toggle
             els.btnAudio.addEventListener('click', () => {
                 synth.enabled = !synth.enabled;
-                els.labelAudio.textContent = synth.enabled ? '🔊 Synth' : '🔇 Muted';
+                els.labelAudio.textContent = synth.enabled ? '🔊' : '🔇';
             });
 
-            // Mode Select Change
+            // Session Length Mode Select Change
             els.modeSelect.addEventListener('change', (e) => {
                 state.mode = e.target.value;
                 startNewSession();
@@ -1431,10 +1989,17 @@
 
                 const key = e.key.toLowerCase();
 
-                // Hint Toggle ('h')
+                // Hints Toggle ('h')
                 if (key === 'h') {
                     e.preventDefault();
-                    els.hintDrawer.classList.toggle('hidden');
+                    toggleHints();
+                    return;
+                }
+
+                // Easy / Hard Mode Toggle ('m')
+                if (key === 'm') {
+                    e.preventDefault();
+                    setQuizDifficulty(state.quizDifficulty === 'easy' ? 'hard' : 'easy');
                     return;
                 }
 
