@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lūdus Periphrasticus — Latin Perfect Passive System Trainer</title>
-    <!-- Google Fonts: EB Garamond for classical Latin forms, Inter & JetBrains Mono for UI -->
+    <title>Perfect Passive Trainer</title>
+    <!-- Google Fonts: Gentium Plus & EB Garamond with explicit latin-ext subset (so U+012B / U+0131 never trigger system fallback) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&subset=latin,latin-ext&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -15,9 +15,9 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        serif: ['"EB Garamond"', 'Georgia', 'serif'],
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
+                        serif: ['"Gentium Plus"', '"EB Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                        mono: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
                     },
                     colors: {
                         parchment: {
@@ -61,10 +61,46 @@
             flex-direction: column;
         }
         /* Responsive Latin display typography */
+        .latin-prompt,
+        .verb-latin,
+        .pp-forms,
+        .chart-pp-forms,
+        .ref-table .latin,
+        .ref-table .stem {
+            font-family: 'Gentium Plus', 'EB Garamond', Georgia, serif;
+            font-variant-ligatures: common-ligatures;
+            font-feature-settings: "cv79" 1, "ccmp" 1, "mark" 1, "mkmk" 1;
+        }
         .latin-prompt {
             font-size: clamp(2.1rem, 4.2vw, 3.3rem);
             line-height: 1.15;
             letter-spacing: 0.01em;
+        }
+        /* Classical Gentium Plus styling for Chart Mode answer boxes (guaranteed dotless ı̄) */
+        .chart-input {
+            font-family: 'Gentium Plus', 'EB Garamond', Georgia, serif !important;
+            font-size: 1.2rem !important;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            line-height: 1.35;
+            font-feature-settings: "ccmp" 1, "mark" 1, "mkmk" 1;
+        }
+        .chart-input::placeholder {
+            font-family: 'Gentium Plus', 'EB Garamond', Georgia, serif;
+            font-style: italic;
+            font-weight: 400;
+            color: #a8a29e;
+        }
+        /* Secondary action buttons for Skip Verb & Reveal Answers */
+        .btn-secondary {
+            background-color: #e7e5e4;
+            color: #44403c;
+            border: 1px solid #d6d3d1;
+            transition: all 0.15s ease;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #d6d3d1;
+            color: #1c1917;
         }
         /* Subtle animations for state transitions */
         @keyframes shake {
@@ -112,36 +148,33 @@
     <!-- ==================== TOP NAVIGATION & CONTROLS BAR ==================== -->
     <header class="w-full bg-stone-900 text-parchment-100 border-b-2 border-amber-700/60 px-3 md:px-4 py-2 shrink-0 shadow-md z-10">
         <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
-            <!-- Brand & Title -->
+            <!-- Brand & Title (Toga Praetexta icon: white field with purple stripe) -->
             <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-lg bg-imperial-600 border border-amber-400/50 flex items-center justify-center shadow-inner font-serif font-bold text-xl text-amber-200">
-                    SPQR
+                <div class="w-9 h-9 rounded-lg bg-white border border-stone-400 flex items-center justify-center shadow-inner overflow-hidden relative" title="Toga Praetexta">
+                    <div class="absolute inset-y-0 w-3 bg-imperial-600 left-2.5"></div>
                 </div>
                 <div>
                     <h1 class="font-serif font-bold text-lg md:text-xl tracking-wide text-amber-100 leading-none">
-                        Lūdus Periphrasticus
+                        Perfect Passive Trainer
                     </h1>
-                    <p class="text-[11px] text-stone-400 font-sans">
-                        21-Verb Perfect Passive Trainer (60% Perf • 20% Plup • 20% Fut Perf)
-                    </p>
                 </div>
             </div>
 
-            <!-- Live Score / Streak / Session Length Bar -->
+            <!-- Live Score / Streak / Mode Bar -->
             <div class="flex items-center gap-2 md:gap-3.5 bg-stone-800/90 border border-stone-700 px-3 py-1.5 rounded-lg text-xs">
                 <div>
-                    <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Session</span>
-                    <select id="modeSelect" aria-label="Session Length" class="bg-transparent font-semibold text-amber-300 focus:outline-none cursor-pointer">
+                    <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Mode</span>
+                    <select id="modeSelect" aria-label="Trainer Mode" class="bg-transparent font-semibold text-amber-300 focus:outline-none cursor-pointer">
+                        <option value="chart" class="bg-stone-800 text-amber-300 font-semibold" selected>Chart Mode</option>
                         <option value="10" class="bg-stone-800 text-white">10-Verb Sprint</option>
                         <option value="20" class="bg-stone-800 text-white">20-Verb Challenge</option>
                         <option value="endless" class="bg-stone-800 text-white">Endless Practice</option>
-                        <option value="chart" class="bg-stone-800 text-amber-300 font-semibold">Chart Mode (Perfect Passive)</option>
                     </select>
                 </div>
                 <div class="h-6 w-px bg-stone-700"></div>
                 <div class="text-center min-w-[44px]">
                     <span class="text-stone-400 uppercase tracking-wider text-[10px] block">Progress</span>
-                    <span id="statProgress" class="font-mono font-semibold text-sm text-white">1 / 10</span>
+                    <span id="statProgress" class="font-mono font-semibold text-sm text-white">1 / ∞</span>
                 </div>
                 <div class="h-6 w-px bg-stone-700"></div>
                 <div class="text-center min-w-[44px]">
@@ -157,9 +190,9 @@
 
             <!-- Toggles & Reference Buttons -->
             <div class="flex flex-wrap items-center gap-1.5 text-xs">
-                <!-- Easy vs. Hard Translation Quiz Mode Selector -->
+                <!-- Translation Quiz Difficulty Selector -->
                 <div class="inline-flex items-center bg-stone-800 p-0.5 rounded-lg border border-stone-600" role="group" aria-label="Translation Quiz Difficulty">
-                    <button id="btnDiffEasy" type="button" title="Easy Mode: Passive tense translations only (choose BOTH 'was' and 'has/have been' for Perfect Passive)"
+                    <button id="btnDiffEasy" type="button" title="Easy Mode: Passive translations only (choose BOTH 'was' and 'has been' for Perfect Passive)"
                         class="px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 bg-emerald-700 text-white shadow-xs">
                         <span>Quiz: Easy</span>
                     </button>
@@ -199,7 +232,7 @@
                 <!-- Grammar & Verb Reference Modal Button -->
                 <button id="btnOpenRef" type="button"
                     class="px-2.5 py-1.5 rounded bg-amber-700 hover:bg-amber-600 text-white font-semibold transition shadow-sm">
-                    📖 21 Verbs
+                    📖 22 Verbs
                 </button>
             </div>
         </div>
@@ -214,13 +247,10 @@
             <div class="flex items-center justify-between gap-2 mb-1">
                 <div class="flex flex-wrap items-center gap-2">
                     <span id="badgeVerbNumber" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-stone-100 text-stone-700 border border-stone-300">
-                        Quaestiō #1
-                    </span>
-                    <span id="badgeDifficultyMode" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300">
-                        Easy Mode: Passive Tense Focus
+                        Chart #1
                     </span>
                     <span id="badgeStep1Locked" class="hidden px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300 items-center gap-1">
-                        ✓ Step 1: <span id="lockedTenseName">Perfect Passive</span>
+                        ✓ Step 1: <span id="lockedTenseName">Perfect</span>
                     </span>
                 </div>
 
@@ -234,11 +264,11 @@
 
             <!-- Main Latin Periphrastic Verb Display -->
             <div class="text-center my-1">
-                <div id="latinVerbDisplay" class="latin-prompt font-serif font-semibold text-stone-900 tracking-wide select-text">
-                    iussus sum
+                <div id="latinVerbDisplay" class="latin-prompt verb-latin chart-pp-forms font-serif font-semibold text-stone-900 tracking-wide select-text">
+                    habeō, habēre, habuī, habitus
                 </div>
                 <p id="morphologySubhint" class="text-xs text-stone-500 mt-0.5 font-sans">
-                    Identify the tense first, then select the exact English translation(s).
+                    <span class="font-semibold text-imperial-700">to have, hold, consider</span> — Fill in all 6 Perfect Passive forms below
                 </p>
             </div>
 
@@ -247,14 +277,14 @@
                 <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
                     <div>
                         <span class="text-[11px] uppercase tracking-wider font-semibold text-stone-400 mr-1.5">Principal Parts:</span>
-                        <span id="hintPrincipalParts" class="font-serif italic text-base text-stone-800 font-medium">
+                        <span id="hintPrincipalParts" class="pp-forms font-serif italic text-lg text-stone-800 font-medium">
                             habeō, habēre, habuī, habitus
                         </span>
                         <span id="hintMeaning" class="text-xs text-stone-600 ml-1.5 font-sans">
                             — to have / hold
                         </span>
                     </div>
-                    <span id="hintMorphBadge" class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-[11px] font-mono text-amber-900">
+                    <span id="hintMorphBadge" class="px-2.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-sm font-serif text-amber-900">
                         Participle: Masc. Sg. (-us)
                     </span>
                 </div>
@@ -340,12 +370,16 @@
                         <div class="flex items-center gap-2">
                             <span id="step2Circle" class="w-6 h-6 rounded-full bg-stone-400 text-white font-bold text-xs flex items-center justify-center">2</span>
                             <h2 id="step2Title" class="font-bold text-sm md:text-base text-stone-800">Step 2: Choose the Correct Translation</h2>
+                            <span id="step2DiffBadge" title="Easy Mode: All choices are in the passive voice; choose the matching tense."
+                                class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-help">
+                                Easy
+                            </span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span id="step2MultiBadge" class="hidden px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-400">
                                 0 / 2 Selected
                             </span>
-                            <span class="text-[11px] font-mono text-stone-400">Keys: 1 - 4 or A - D</span>
+                            <span class="text-[11px] font-mono text-stone-400">Keys: A - D</span>
                         </div>
                     </div>
 
@@ -380,20 +414,17 @@
         <!-- 2B. CHART MODE WORKSPACE (PERFECT PASSIVE PARADIGM) -->
         <section id="chartModeWorkspace" class="hidden flex-1 bg-white border-2 border-stone-300 rounded-xl p-3.5 flex-col justify-between shadow-sm min-h-0 overflow-y-auto">
             <div>
-                <!-- Chart Header & Format Guide -->
+                <!-- Chart Header & Format Guide (Format examples hidden unless Hints are ON) -->
                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-200 pb-2 mb-2.5">
                     <div class="flex items-center gap-2">
                         <span class="w-6 h-6 rounded-full bg-imperial-600 text-white font-bold text-xs flex items-center justify-center">✎</span>
-                        <h2 class="font-bold text-sm md:text-base text-stone-800">Perfect Passive Indicative Paradigm Chart</h2>
+                        <h2 class="font-bold text-sm md:text-base text-stone-800">Perfect Passive Chart</h2>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2 text-[11px] text-stone-600">
-                        <span class="bg-parchment-100 border border-stone-300 px-2 py-0.5 rounded font-mono">
-                            Sg: <strong class="text-imperial-700">factus, -a, -um sum</strong>
+                    <div class="flex flex-wrap items-center gap-2 text-xs text-stone-600">
+                        <span id="chartFormatGuide" class="hidden bg-parchment-100 border border-stone-300 px-2.5 py-0.5 rounded font-serif text-sm">
+                            Sg: <strong class="text-imperial-700 font-semibold">factus, -a, -um sum</strong> | Pl: <strong class="text-imperial-700 font-semibold">factī, -ae, -a sumus</strong>
                         </span>
-                        <span class="bg-parchment-100 border border-stone-300 px-2 py-0.5 rounded font-mono">
-                            Pl: <strong class="text-imperial-700">factī, -ae, -a sumus</strong>
-                        </span>
-                        <span class="text-stone-400 hidden sm:inline">(Flexible punctuation: <em>/</em>, spaces, or commas OK; all 3 genders required)</span>
+                        <span class="text-stone-400 text-[11px] hidden sm:inline">(Flexible punctuation: <em>/</em>, spaces, or commas OK; all 3 genders required)</span>
                     </div>
                 </div>
 
@@ -402,20 +433,20 @@
                     <!-- LEFT COLUMN: SINGULAR (tabindex 1, 2, 3) -->
                     <div class="bg-parchment-50/80 border border-stone-300 rounded-xl p-3 flex flex-col gap-2.5">
                         <div class="flex items-center justify-between border-b border-stone-200 pb-1.5">
-                            <span class="font-serif font-bold text-base text-imperial-700 tracking-wide">Singulāris (Singular)</span>
-                            <span id="chartSgHint" class="text-[11px] font-mono text-stone-500">Endings: -us, -a, -um</span>
+                            <span class="font-serif font-bold text-base text-imperial-700 tracking-wide">Singular</span>
+                            <span id="chartSgHint" class="hidden text-sm font-serif italic text-stone-600">Endings: -us, -a, -um</span>
                         </div>
 
                         <!-- 1st Person Singular -->
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center justify-between text-xs">
                                 <label for="chartInput_1s" class="font-semibold text-stone-700">
-                                    1st Person Sg. <span class="font-serif italic font-normal text-stone-500">(ego)</span>
+                                    1st Person Sg.
                                 </label>
                                 <span id="chartAuxHint_1s" class="hidden text-[11px] font-serif italic text-amber-800">+ sum</span>
                             </div>
                             <input id="chartInput_1s" data-pn="1s" tabindex="1" type="text" autocomplete="off" spellcheck="false"
-                                placeholder="e.g. factus, -a, -um sum"
+                                placeholder="..."
                                 class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
                             <div id="chartDiag_1s" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
                         </div>
@@ -424,12 +455,12 @@
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center justify-between text-xs">
                                 <label for="chartInput_2s" class="font-semibold text-stone-700">
-                                    2nd Person Sg. <span class="font-serif italic font-normal text-stone-500">(tū)</span>
+                                    2nd Person Sg.
                                 </label>
                                 <span id="chartAuxHint_2s" class="hidden text-[11px] font-serif italic text-amber-800">+ es</span>
                             </div>
                             <input id="chartInput_2s" data-pn="2s" tabindex="2" type="text" autocomplete="off" spellcheck="false"
-                                placeholder="2nd person singular..."
+                                placeholder="..."
                                 class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
                             <div id="chartDiag_2s" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
                         </div>
@@ -438,12 +469,12 @@
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center justify-between text-xs">
                                 <label for="chartInput_3s" class="font-semibold text-stone-700">
-                                    3rd Person Sg. <span class="font-serif italic font-normal text-stone-500">(is, ea, id)</span>
+                                    3rd Person Sg.
                                 </label>
                                 <span id="chartAuxHint_3s" class="hidden text-[11px] font-serif italic text-amber-800">+ est</span>
                             </div>
                             <input id="chartInput_3s" data-pn="3s" tabindex="3" type="text" autocomplete="off" spellcheck="false"
-                                placeholder="3rd person singular..."
+                                placeholder="..."
                                 class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
                             <div id="chartDiag_3s" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
                         </div>
@@ -452,20 +483,20 @@
                     <!-- RIGHT COLUMN: PLURAL (tabindex 4, 5, 6) -->
                     <div class="bg-parchment-50/80 border border-stone-300 rounded-xl p-3 flex flex-col gap-2.5">
                         <div class="flex items-center justify-between border-b border-stone-200 pb-1.5">
-                            <span class="font-serif font-bold text-base text-imperial-700 tracking-wide">Plūrālis (Plural)</span>
-                            <span id="chartPlHint" class="text-[11px] font-mono text-stone-500">Endings: -ī, -ae, -a</span>
+                            <span class="font-serif font-bold text-base text-imperial-700 tracking-wide">Plural</span>
+                            <span id="chartPlHint" class="hidden text-sm font-serif italic text-stone-600">Endings: -ī, -ae, -a</span>
                         </div>
 
                         <!-- 1st Person Plural -->
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center justify-between text-xs">
                                 <label for="chartInput_1p" class="font-semibold text-stone-700">
-                                    1st Person Pl. <span class="font-serif italic font-normal text-stone-500">(nōs)</span>
+                                    1st Person Pl.
                                 </label>
                                 <span id="chartAuxHint_1p" class="hidden text-[11px] font-serif italic text-amber-800">+ sumus</span>
                             </div>
                             <input id="chartInput_1p" data-pn="1p" tabindex="4" type="text" autocomplete="off" spellcheck="false"
-                                placeholder="e.g. factī, -ae, -a sumus"
+                                placeholder="..."
                                 class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
                             <div id="chartDiag_1p" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
                         </div>
@@ -474,12 +505,12 @@
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center justify-between text-xs">
                                 <label for="chartInput_2p" class="font-semibold text-stone-700">
-                                    2nd Person Pl. <span class="font-serif italic font-normal text-stone-500">(vōs)</span>
+                                    2nd Person Pl.
                                 </label>
                                 <span id="chartAuxHint_2p" class="hidden text-[11px] font-serif italic text-amber-800">+ estis</span>
                             </div>
                             <input id="chartInput_2p" data-pn="2p" tabindex="5" type="text" autocomplete="off" spellcheck="false"
-                                placeholder="2nd person plural..."
+                                placeholder="..."
                                 class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
                             <div id="chartDiag_2p" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
                         </div>
@@ -488,12 +519,12 @@
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center justify-between text-xs">
                                 <label for="chartInput_3p" class="font-semibold text-stone-700">
-                                    3rd Person Pl. <span class="font-serif italic font-normal text-stone-500">(eī, eae, ea)</span>
+                                    3rd Person Pl.
                                 </label>
                                 <span id="chartAuxHint_3p" class="hidden text-[11px] font-serif italic text-amber-800">+ sunt</span>
                             </div>
                             <input id="chartInput_3p" data-pn="3p" tabindex="6" type="text" autocomplete="off" spellcheck="false"
-                                placeholder="3rd person plural..."
+                                placeholder="..."
                                 class="chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition" />
                             <div id="chartDiag_3p" class="text-[11px] min-h-[16px] text-stone-500 leading-tight"></div>
                         </div>
@@ -503,46 +534,53 @@
 
             <!-- Chart Mode Action & Feedback Bar -->
             <div class="mt-2.5 pt-2 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3 min-h-[48px]">
-                <div id="chartGlobalFeedback" class="text-xs text-stone-600 flex-1">
-                    <span>Use <kbd class="font-mono bg-stone-100 px-1 border rounded">Tab ⇥</kbd> to move down Singular (1st→2nd→3rd) then Plural (1st→2nd→3rd). Press <kbd class="font-mono bg-stone-100 px-1 border rounded">Enter ↵</kbd> to check.</span>
-                </div>
+                <!-- Leftmost Secondary Controls: Skip Verb & Reveal Answers -->
                 <div class="flex items-center gap-2 shrink-0">
-                    <button id="btnCheckChart" type="button" tabindex="7"
-                        class="px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs shadow transition flex items-center gap-1.5">
-                        <span>✓ Check Chart</span>
-                        <kbd class="px-1.5 py-0.5 text-[10px] bg-emerald-900 rounded font-mono">Enter ↵</kbd>
+                    <button id="btnSkipChartVerb" type="button" tabindex="8"
+                        class="btn-secondary px-3 py-2 rounded-lg font-semibold text-xs transition">
+                        Skip Verb
                     </button>
-                    <button id="btnRevealChart" type="button" tabindex="8"
-                        class="px-3 py-2 rounded-lg bg-stone-200 hover:bg-stone-300 text-stone-700 font-semibold text-xs border border-stone-300 transition">
+                    <button id="btnRevealChart" type="button" tabindex="9"
+                        class="btn-secondary px-3 py-2 rounded-lg font-semibold text-xs transition">
                         Reveal Answers
                     </button>
-                    <button id="btnNextChartVerb" type="button" tabindex="9"
-                        class="px-4 py-2 rounded-lg bg-imperial-600 hover:bg-imperial-700 text-white font-semibold text-xs shadow transition flex items-center gap-1.5">
-                        <span>Next Verb →</span>
+                </div>
+
+                <!-- Center Diagnostic / Status Feedback -->
+                <div id="chartGlobalFeedback" class="text-xs text-stone-600 flex-1 text-center md:text-left">
+                    <span>Use <kbd class="font-mono bg-stone-100 px-1 border rounded">Tab ⇥</kbd> to move down Singular then Plural. Fill in the chart to enable <strong>Check Chart</strong>.</span>
+                </div>
+
+                <!-- Lower-Right Stateful Primary Action Button -->
+                <div class="flex items-center shrink-0">
+                    <button id="btnChartPrimaryAction" type="button" tabindex="7" disabled
+                        class="px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 disabled:bg-stone-300 disabled:text-stone-500 disabled:cursor-not-allowed text-white font-semibold text-xs shadow transition flex items-center gap-1.5">
+                        <span id="chartPrimaryBtnLabel">✓ Check Chart</span>
+                        <kbd id="chartPrimaryBtnKbd" class="px-1.5 py-0.5 text-[10px] bg-emerald-900/80 text-emerald-100 rounded font-mono">Enter ↵</kbd>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- 3. FOOTER BAR (Paradigm translation hints shown only when Hints: ON) -->
+        <!-- 3. FOOTER BAR -->
         <footer class="bg-stone-200/80 border border-stone-300 rounded-lg px-3.5 py-1.5 flex flex-wrap items-center justify-between text-[11px] text-stone-600 shrink-0">
             <div id="footerHintSummary" class="flex flex-wrap items-center gap-x-4 gap-y-1">
-                <span class="text-stone-500">💡 Need scaffolding? Press <strong class="text-stone-700 font-mono">H</strong> to toggle tense formulas &amp; principal parts hints.</span>
+                <span class="text-stone-500">💡 Need scaffolding? Press <strong class="text-stone-700 font-mono">H</strong> to toggle hints.</span>
             </div>
             <div class="font-mono text-[10px] text-stone-500">
-                Shortcuts: [1-4] Select • [M] Easy/Hard • [H] Hints • [Enter/Space] Next
+                Shortcuts: [M] Mode • [H] Hints • [Enter/Space] Next
             </div>
         </footer>
     </main>
 
-    <!-- ==================== MODAL 1: GRAMMAR & 21 VERBS REFERENCE ==================== -->
+    <!-- ==================== MODAL 1: GRAMMAR & 22 VERBS REFERENCE ==================== -->
     <div id="refModal" class="fixed inset-0 bg-stone-900/75 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
         <div class="bg-parchment-50 border-2 border-stone-400 rounded-2xl max-w-4xl w-full max-h-[88vh] flex flex-col shadow-2xl overflow-hidden animate-pop">
             <!-- Modal Header -->
             <div class="bg-stone-900 text-amber-100 px-5 py-3.5 flex items-center justify-between border-b border-amber-700">
                 <div>
-                    <h2 class="font-serif font-bold text-xl">Perfect Passive System &amp; 21 Target Verbs</h2>
-                    <p class="text-xs text-stone-400">Reference guide for forms, Easy vs. Hard translation modes, and principal parts</p>
+                    <h2 class="font-serif font-bold text-xl">Perfect Passive System &amp; 22 Target Verbs</h2>
+                    <p class="text-xs text-stone-400">Reference guide for forms and target vocabulary</p>
                 </div>
                 <button id="btnCloseRef" type="button" class="text-stone-400 hover:text-white text-sm font-mono px-2.5 py-1 rounded border border-stone-700">
                     ESC ✕
@@ -551,84 +589,49 @@
 
             <!-- Modal Body -->
             <div class="p-5 overflow-y-auto modal-scroll space-y-5 text-xs md:text-sm text-stone-800">
-                <!-- Formation Rules -->
                 <div class="bg-white p-4 rounded-xl border border-stone-300 shadow-xs">
                     <h3 class="font-serif font-bold text-base text-imperial-700 mb-2">
-                        1. How the Perfect Passive System Works (60% / 20% / 20% Distribution)
-                    </h3>
-                    <p class="text-xs text-stone-600 mb-3 leading-relaxed">
-                        In Latin, all three tenses of the Perfect Passive System are <strong>two-word periphrastic forms</strong> built from the <strong>4th Principal Part</strong> (the Perfect Passive Participle) plus a form of <em>sum, esse</em>. The participle agrees with the subject in <strong>Gender</strong> and <strong>Number</strong> (Nominative: <em>-us, -a, -um</em> in the singular; <em>-ī, -ae, -a</em> in the plural).
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                        <div class="p-3 rounded-lg bg-parchment-100 border border-stone-300">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-bold text-stone-900">Perfect Passive</span>
-                                <span class="text-[10px] font-mono bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded border border-amber-300">60% freq</span>
-                            </div>
-                            <div class="font-serif italic text-imperial-700 mb-1">4th PP + sum, es, est, sumus, estis, sunt</div>
-                            <div class="text-stone-600">English has <strong>two</strong> equivalents: <strong>was / were [verb]ed</strong> AND <strong>has / have been [verb]ed</strong></div>
-                        </div>
-                        <div class="p-3 rounded-lg bg-parchment-100 border border-stone-300">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-bold text-stone-900">Pluperfect Passive</span>
-                                <span class="text-[10px] font-mono bg-stone-200 text-stone-700 px-1.5 py-0.5 rounded">20% freq</span>
-                            </div>
-                            <div class="font-serif italic text-imperial-700 mb-1">4th PP + eram, erās, erat, erāmus, erātis, erant</div>
-                            <div class="text-stone-600">English: <strong>had been [verb]ed</strong></div>
-                        </div>
-                        <div class="p-3 rounded-lg bg-parchment-100 border border-stone-300">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-bold text-stone-900">Future Perfect Passive</span>
-                                <span class="text-[10px] font-mono bg-stone-200 text-stone-700 px-1.5 py-0.5 rounded">20% freq</span>
-                            </div>
-                            <div class="font-serif italic text-imperial-700 mb-1">4th PP + erō, eris, erit, erimus, eritis, erunt</div>
-                            <div class="text-stone-600">English: <strong>will have been [verb]ed</strong></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Easy vs Hard Mode Explanation -->
-                <div class="bg-white p-4 rounded-xl border border-stone-300 shadow-xs">
-                    <h3 class="font-serif font-bold text-base text-imperial-700 mb-2">
-                        2. Easy Mode vs. Hard Mode (Step 2 Translation Quiz)
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div class="p-3 rounded-lg bg-emerald-50/70 border border-emerald-200">
-                            <div class="font-bold text-emerald-900 mb-1">Quiz: Easy Mode (Passive Tense Focus)</div>
-                            <p class="text-stone-700 leading-relaxed">
-                                All 4 choices are passive and use the correct subject pronoun and verb meaning:
-                                <em>"I was ordered"</em>, <em>"I have been ordered"</em>, <em>"I had been ordered"</em>, and <em>"I will have been ordered"</em>.
-                                When the verb is <strong>Perfect Passive</strong>, you must choose <strong>both</strong> correct English translations!
-                            </p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-amber-50/70 border border-amber-200">
-                            <div class="font-bold text-amber-900 mb-1">Quiz: Hard Mode (Full Morphology &amp; Voice)</div>
-                            <p class="text-stone-700 leading-relaxed">
-                                Tests active vs. passive voice (e.g., <em>"I ordered"</em>, <em>"I had ordered"</em>), subject pronoun &amp; gender agreement (<em>he / she / it / they</em>), and present/imperfect/future passive distractors (<em>"I am being ordered"</em>, <em>"I will be ordered"</em>).
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 21 Target Verbs Table -->
-                <div class="bg-white p-4 rounded-xl border border-stone-300 shadow-xs">
-                    <h3 class="font-serif font-bold text-base text-imperial-700 mb-2">
-                        3. Target Vocabulary List (21 Verbs)
+                        Target Vocabulary List (22 Verbs)
                     </h3>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
+                        <table class="ref-table w-full text-left border-collapse text-xs">
                             <thead>
                                 <tr class="border-b-2 border-stone-300 text-stone-500 uppercase text-[11px]">
                                     <th class="py-1.5 px-2">Principal Parts</th>
                                     <th class="py-1.5 px-2">4th PP (Participle)</th>
-                                    <th class="py-1.5 px-2">English Meaning &amp; Passive Participle</th>
+                                    <th class="py-1.5 px-2">Definition and Past Participle</th>
                                 </tr>
                             </thead>
-                            <tbody id="refVerbTableBody" class="divide-y divide-stone-200 font-serif text-sm">
+                            <tbody id="refVerbTableBody" class="divide-y divide-stone-200 font-serif text-base">
                                 <!-- Populated dynamically -->
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 3: CHART MILESTONE CELEBRATION POPUP ==================== -->
+    <div id="milestoneModal" class="fixed inset-0 bg-stone-900/80 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-parchment-50 border-2 border-amber-600 rounded-2xl max-w-md w-full flex flex-col shadow-2xl overflow-hidden animate-pop">
+            <div class="bg-stone-900 text-amber-100 px-5 py-4 flex items-center justify-between border-b border-amber-700">
+                <div>
+                    <span class="text-[11px] uppercase tracking-widest text-amber-400 font-mono">Eugepae!</span>
+                    <h2 class="font-serif font-bold text-xl">5 Charts Completed!</h2>
+                </div>
+            </div>
+            <div class="p-5 space-y-3 text-xs md:text-sm text-stone-800">
+                <p class="leading-relaxed">
+                    Splendid work! You have successfully filled out 5 Perfect Passive charts. Would you like to continue practicing in Chart Mode, or switch to a translation sprint?
+                </p>
+                <div class="grid grid-cols-1 gap-2 pt-2">
+                    <button id="btnSwitchToSprint" type="button" class="w-full px-4 py-2.5 rounded-lg bg-imperial-600 hover:bg-imperial-700 text-white font-semibold text-xs shadow transition">
+                        Switch to 10-Verb Sprint 🚀
+                    </button>
+                    <button id="btnContinueChart" type="button" class="w-full px-4 py-2.5 rounded-lg bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold text-xs transition">
+                        Keep Practicing Chart Mode ✍️
+                    </button>
                 </div>
             </div>
         </div>
@@ -686,105 +689,10 @@
     <script>
         /**
          * ============================================================================
-         * 1. TARGET VOCABULARY DATA (21 REQUIRED LATIN VERBS)
+         * 1. TARGET VOCABULARY DATA (22 ALPHABETIZED LATIN VERBS)
          * ============================================================================
-         * Original 14 verbs:
-         *   habeo, iubeo, video, ago, fero, pono, facio, minuo, accipio, addo, coquo,
-         *   aufero, effundo, everto
-         * Additional 7 verbs:
-         *   audio, dico, capio, do, peto, mitto, duco
-         *
-         * Each verb entry contains:
-         * - id: unique identifier
-         * - pp: full 4 principal parts with macrons
-         * - pppStem: stem of the 4th principal part (without -us/-a/-um) with macrons
-         * - meaning: dictionary gloss for reference/hints
-         * - enPassPart: primary English passive participle ("held", "ordered", "heard", etc.)
-         * - enActPast: English simple past active ("held", "ordered", "heard", "spoke/said", etc.)
-         * - enActPart: English past participle for active perfect/pluperfect ("held", "ordered", "heard")
-         * - enActPresPart: English present participle for progressive active distractors ("holding", "ordering")
          */
         const VERB_LIST = [
-            {
-                id: 'habeo',
-                pp: 'habeō, habēre, habuī, habitus',
-                pppStem: 'habit',
-                meaning: 'to have, hold, consider',
-                enPassPart: 'held',
-                enActPast: 'held',
-                enActPart: 'held',
-                enActPresPart: 'holding'
-            },
-            {
-                id: 'iubeo',
-                pp: 'iubeō, iubēre, iussī, iussus',
-                pppStem: 'iuss',
-                meaning: 'to order, command',
-                enPassPart: 'ordered',
-                enActPast: 'ordered',
-                enActPart: 'ordered',
-                enActPresPart: 'ordering'
-            },
-            {
-                id: 'video',
-                pp: 'videō, vidēre, vīdī, vīsus',
-                pppStem: 'vīs',
-                meaning: 'to see (passive: to be seen)',
-                enPassPart: 'seen',
-                enActPast: 'saw',
-                enActPart: 'seen',
-                enActPresPart: 'seeing'
-            },
-            {
-                id: 'ago',
-                pp: 'agō, agere, ēgī, āctus',
-                pppStem: 'āct',
-                meaning: 'to drive, do, lead',
-                enPassPart: 'driven',
-                enActPast: 'drove',
-                enActPart: 'driven',
-                enActPresPart: 'driving'
-            },
-            {
-                id: 'fero',
-                pp: 'ferō, ferre, tulī, lātus',
-                pppStem: 'lāt',
-                meaning: 'to bear, carry, bring',
-                enPassPart: 'carried',
-                enActPast: 'carried',
-                enActPart: 'carried',
-                enActPresPart: 'carrying'
-            },
-            {
-                id: 'pono',
-                pp: 'pōnō, pōnere, posuī, positus',
-                pppStem: 'posit',
-                meaning: 'to put, place',
-                enPassPart: 'placed',
-                enActPast: 'placed',
-                enActPart: 'placed',
-                enActPresPart: 'placing'
-            },
-            {
-                id: 'facio',
-                pp: 'faciō, facere, fēcī, factus',
-                pppStem: 'fact',
-                meaning: 'to make, do',
-                enPassPart: 'made',
-                enActPast: 'made',
-                enActPart: 'made',
-                enActPresPart: 'making'
-            },
-            {
-                id: 'minuo',
-                pp: 'minuō, minuere, minuī, minūtus',
-                pppStem: 'minūt',
-                meaning: 'to lessen, diminish',
-                enPassPart: 'lessened',
-                enActPast: 'lessened',
-                enActPart: 'lessened',
-                enActPresPart: 'lessening'
-            },
             {
                 id: 'accipio',
                 pp: 'accipiō, accipere, accēpī, acceptus',
@@ -806,14 +714,24 @@
                 enActPresPart: 'adding'
             },
             {
-                id: 'coquo',
-                pp: 'coquō, coquere, coxī, coctus',
-                pppStem: 'coct',
-                meaning: 'to cook',
-                enPassPart: 'cooked',
-                enActPast: 'cooked',
-                enActPart: 'cooked',
-                enActPresPart: 'cooking'
+                id: 'ago',
+                pp: 'agō, agere, ēgī, āctus',
+                pppStem: 'āct',
+                meaning: 'to drive, do, lead',
+                enPassPart: 'driven',
+                enActPast: 'drove',
+                enActPart: 'driven',
+                enActPresPart: 'driving'
+            },
+            {
+                id: 'audio',
+                pp: 'audiō, audīre, audīvī, audītus',
+                pppStem: 'audīt',
+                meaning: 'to hear, listen to',
+                enPassPart: 'heard',
+                enActPast: 'heard',
+                enActPart: 'heard',
+                enActPresPart: 'hearing'
             },
             {
                 id: 'aufero',
@@ -824,6 +742,66 @@
                 enActPast: 'carried away',
                 enActPart: 'carried away',
                 enActPresPart: 'carrying away'
+            },
+            {
+                id: 'capio',
+                pp: 'capiō, capere, cēpī, captus',
+                pppStem: 'capt',
+                meaning: 'to take, capture, seize',
+                enPassPart: 'captured',
+                enActPast: 'captured',
+                enActPart: 'captured',
+                enActPresPart: 'capturing'
+            },
+            {
+                id: 'comparo',
+                pp: 'comparō, comparāre, comparāvī, comparātus',
+                pppStem: 'comparāt',
+                meaning: 'to prepare, compare, obtain',
+                enPassPart: 'prepared',
+                enActPast: 'prepared',
+                enActPart: 'prepared',
+                enActPresPart: 'preparing'
+            },
+            {
+                id: 'coquo',
+                pp: 'coquō, coquere, coxī, coctus',
+                pppStem: 'coct',
+                meaning: 'to cook',
+                enPassPart: 'cooked',
+                enActPast: 'cooked',
+                enActPart: 'cooked',
+                enActPresPart: 'cooking'
+            },
+            {
+                id: 'dico',
+                pp: 'dīcō, dīcere, dīxī, dictus',
+                pppStem: 'dict',
+                meaning: 'to say, speak, tell',
+                enPassPart: 'said',
+                enActPast: 'said',
+                enActPart: 'said',
+                enActPresPart: 'saying'
+            },
+            {
+                id: 'do',
+                pp: 'dō, dare, dedī, datus',
+                pppStem: 'dat',
+                meaning: 'to give, grant',
+                enPassPart: 'given',
+                enActPast: 'gave',
+                enActPart: 'given',
+                enActPresPart: 'giving'
+            },
+            {
+                id: 'duco',
+                pp: 'dūcō, dūcere, dūxī, ductus',
+                pppStem: 'duct',
+                meaning: 'to lead, guide',
+                enPassPart: 'led',
+                enActPast: 'led',
+                enActPart: 'led',
+                enActPresPart: 'leading'
             },
             {
                 id: 'effundo',
@@ -845,56 +823,55 @@
                 enActPart: 'overturned',
                 enActPresPart: 'overturning'
             },
-            // --- 6 NEWLY ADDED VERBS ---
             {
-                id: 'audio',
-                pp: 'audiō, audīre, audīvī, audītus',
-                pppStem: 'audīt',
-                meaning: 'to hear, listen to',
-                enPassPart: 'heard',
-                enActPast: 'heard',
-                enActPart: 'heard',
-                enActPresPart: 'hearing'
+                id: 'facio',
+                pp: 'faciō, facere, fēcī, factus',
+                pppStem: 'fact',
+                meaning: 'to make, do',
+                enPassPart: 'made',
+                enActPast: 'made',
+                enActPart: 'made',
+                enActPresPart: 'making'
             },
             {
-                id: 'dico',
-                pp: 'dīcō, dīcere, dīxī, dictus',
-                pppStem: 'dict',
-                meaning: 'to say, speak, tell',
-                enPassPart: 'said',
-                enActPast: 'said',
-                enActPart: 'said',
-                enActPresPart: 'saying'
+                id: 'fero',
+                pp: 'ferō, ferre, tulī, lātus',
+                pppStem: 'lāt',
+                meaning: 'to bear, carry, bring',
+                enPassPart: 'carried',
+                enActPast: 'carried',
+                enActPart: 'carried',
+                enActPresPart: 'carrying'
             },
             {
-                id: 'capio',
-                pp: 'capiō, capere, cēpī, captus',
-                pppStem: 'capt',
-                meaning: 'to take, capture, seize',
-                enPassPart: 'captured',
-                enActPast: 'captured',
-                enActPart: 'captured',
-                enActPresPart: 'capturing'
+                id: 'habeo',
+                pp: 'habeō, habēre, habuī, habitus',
+                pppStem: 'habit',
+                meaning: 'to have, hold, consider',
+                enPassPart: 'held',
+                enActPast: 'held',
+                enActPart: 'held',
+                enActPresPart: 'holding'
             },
             {
-                id: 'do',
-                pp: 'dō, dare, dedī, datus',
-                pppStem: 'dat',
-                meaning: 'to give, grant',
-                enPassPart: 'given',
-                enActPast: 'gave',
-                enActPart: 'given',
-                enActPresPart: 'giving'
+                id: 'iubeo',
+                pp: 'iubeō, iubēre, iussī, iussus',
+                pppStem: 'iuss',
+                meaning: 'to order, command',
+                enPassPart: 'ordered',
+                enActPast: 'ordered',
+                enActPart: 'ordered',
+                enActPresPart: 'ordering'
             },
             {
-                id: 'peto',
-                pp: 'petō, petere, petīvī, petītus',
-                pppStem: 'petīt',
-                meaning: 'to seek, ask for, attack',
-                enPassPart: 'sought',
-                enActPast: 'sought',
-                enActPart: 'sought',
-                enActPresPart: 'seeking'
+                id: 'minuo',
+                pp: 'minuō, minuere, minuī, minūtus',
+                pppStem: 'minūt',
+                meaning: 'to lessen, diminish',
+                enPassPart: 'lessened',
+                enActPast: 'lessened',
+                enActPart: 'lessened',
+                enActPresPart: 'lessening'
             },
             {
                 id: 'mitto',
@@ -907,14 +884,34 @@
                 enActPresPart: 'sending'
             },
             {
-                id: 'duco',
-                pp: 'dūcō, dūcere, dūxī, ductus',
-                pppStem: 'duct',
-                meaning: 'to lead, guide',
-                enPassPart: 'led',
-                enActPast: 'led',
-                enActPart: 'led',
-                enActPresPart: 'leading'
+                id: 'peto',
+                pp: 'petō, petere, petīvī, petītus',
+                pppStem: 'petīt',
+                meaning: 'to seek, ask for, attack',
+                enPassPart: 'sought',
+                enActPast: 'sought',
+                enActPart: 'sought',
+                enActPresPart: 'seeking'
+            },
+            {
+                id: 'pono',
+                pp: 'pōnō, pōnere, posuī, positus',
+                pppStem: 'posit',
+                meaning: 'to put, place',
+                enPassPart: 'placed',
+                enActPast: 'placed',
+                enActPart: 'placed',
+                enActPresPart: 'placing'
+            },
+            {
+                id: 'video',
+                pp: 'videō, vidēre, vīdī, vīsus',
+                pppStem: 'vīs',
+                meaning: 'to see',
+                enPassPart: 'seen',
+                enActPast: 'saw',
+                enActPart: 'seen',
+                enActPresPart: 'seeing'
             }
         ];
 
@@ -979,15 +976,38 @@
         };
 
         /**
-         * Helper to strip macrons when user toggles Macrons OFF
+         * Guarantees that lowercase long i with macron NEVER displays a dot underneath:
+         * Converts precomposed 'ī' (U+012B) or 'i' + combining macron ('i\u0304') into
+         * Unicode dotless 'ı' (U+0131) + combining macron (U+0304). Because U+0131 has
+         * no tittle (dot) in any font on earth, it is physically impossible for a dot
+         * and macron to collide.
+         */
+        function enforceDotlessLongI(str) {
+            if (!str) return str;
+            return str
+                .replace(/i\u0304/g, '\u0131\u0304')
+                .replace(/\u012B/g, '\u0131\u0304');
+        }
+
+        /**
+         * Helper to format or strip macrons when user toggles Macrons ON/OFF
          */
         function formatMacrons(str, useMacrons) {
-            if (useMacrons) return str;
+            if (!str) return str;
+            // First normalize any dotless ı + combining macron back to precomposed ī for clean processing
+            const canonical = str
+                .replace(/\u0131\u0304/g, 'ī')
+                .replace(/i\u0304/g, 'ī')
+                .replace(/\u0131/g, 'i');
+
+            if (useMacrons) {
+                return enforceDotlessLongI(canonical);
+            }
             const map = {
                 'ā': 'a', 'ē': 'e', 'ī': 'i', 'ō': 'o', 'ū': 'u', 'ȳ': 'y',
                 'Ā': 'A', 'Ē': 'E', 'Ī': 'I', 'Ō': 'O', 'Ū': 'U', 'Ȳ': 'Y'
             };
-            return str.replace(/[āēīōūȳĀĒĪŌŪȲ]/g, ch => map[ch] || ch);
+            return canonical.replace(/[āēīōūȳĀĒĪŌŪȲ]/g, ch => map[ch] || ch);
         }
 
         /**
@@ -1204,18 +1224,19 @@
          * ============================================================================
          */
         const state = {
-            quizDifficulty: 'easy', // 'easy' (4 passive tenses, pick both for perf) vs 'hard' (mixed voice/person/tense)
-            hintsEnabled: false,    // Minimized/hidden by default!
+            quizDifficulty: 'easy',
+            hintsEnabled: false,
             useMacrons: true,
-            allGenders: true,       // true = M/F/N, false = Masculine only
-            mode: '10',             // '10', '20', or 'endless'
+            allGenders: true,
+            mode: 'chart', // Default to chart mode!
             questionIndex: 0,
+            completedCount: 0,
             firstTryCorrectCount: 0,
             currentStreak: 0,
             bestStreak: 0,
             missedItems: [],
+            chartCompletedCount: 0, // Track completed charts for milestone popup
 
-            // Current item state
             currentItem: null,
             step1Solved: false,
             step2Solved: false,
@@ -1223,11 +1244,42 @@
             lastSignature: null,
             lastVerbId: null,
 
-            // Chart Mode state
             chartVerb: null,
             chartSolved: false,
+            chartChecked: false,
             chartHadMistake: false
         };
+
+        /**
+         * ============================================================================
+         * 3B. HEADER STATS HELPER
+         * ============================================================================
+         */
+        function updateHeaderStats() {
+            if (els.statProgress) {
+                if (state.mode === 'chart') {
+                    els.statProgress.textContent = `${state.chartCompletedCount + 1} / ∞`;
+                } else if (state.mode === 'endless') {
+                    els.statProgress.textContent = `${state.questionIndex + 1} / ∞`;
+                } else {
+                    els.statProgress.textContent = `${state.questionIndex + 1} / ${state.mode}`;
+                }
+            }
+
+            if (els.statAccuracy) {
+                const totalAttempts = state.mode === 'chart' ? state.chartCompletedCount : state.completedCount;
+                if (totalAttempts === 0) {
+                    els.statAccuracy.textContent = '100%';
+                } else {
+                    const acc = Math.round((state.firstTryCorrectCount / totalAttempts) * 100);
+                    els.statAccuracy.textContent = `${acc}%`;
+                }
+            }
+
+            if (els.statStreak) {
+                els.statStreak.textContent = `${state.currentStreak} 🔥`;
+            }
+        }
 
         /**
          * ============================================================================
@@ -1615,7 +1667,6 @@
 
             btnDiffEasy: document.getElementById('btnDiffEasy'),
             btnDiffHard: document.getElementById('btnDiffHard'),
-            badgeDifficultyMode: document.getElementById('badgeDifficultyMode'),
 
             btnHintsToggle: document.getElementById('btnHintsToggle'),
             labelHints: document.getElementById('labelHints'),
@@ -1652,6 +1703,7 @@
             step2Panel: document.getElementById('step2Panel'),
             step2Circle: document.getElementById('step2Circle'),
             step2Title: document.getElementById('step2Title'),
+            step2DiffBadge: document.getElementById('step2DiffBadge'),
             step2MultiBadge: document.getElementById('step2MultiBadge'),
             step2InstructionBanner: document.getElementById('step2InstructionBanner'),
             step2Instruction: document.getElementById('step2Instruction'),
@@ -1662,14 +1714,21 @@
             btnNextQuestion: document.getElementById('btnNextQuestion'),
 
             chartModeWorkspace: document.getElementById('chartModeWorkspace'),
+            chartFormatGuide: document.getElementById('chartFormatGuide'),
             chartSgHint: document.getElementById('chartSgHint'),
             chartPlHint: document.getElementById('chartPlHint'),
             chartGlobalFeedback: document.getElementById('chartGlobalFeedback'),
-            btnCheckChart: document.getElementById('btnCheckChart'),
+            btnSkipChartVerb: document.getElementById('btnSkipChartVerb'),
             btnRevealChart: document.getElementById('btnRevealChart'),
-            btnNextChartVerb: document.getElementById('btnNextChartVerb'),
+            btnChartPrimaryAction: document.getElementById('btnChartPrimaryAction'),
+            chartPrimaryBtnLabel: document.getElementById('chartPrimaryBtnLabel'),
+            chartPrimaryBtnKbd: document.getElementById('chartPrimaryBtnKbd'),
 
             footerHintSummary: document.getElementById('footerHintSummary'),
+
+            milestoneModal: document.getElementById('milestoneModal'),
+            btnSwitchToSprint: document.getElementById('btnSwitchToSprint'),
+            btnContinueChart: document.getElementById('btnContinueChart'),
 
             summaryModal: document.getElementById('summaryModal'),
             summaryRankBadge: document.getElementById('summaryRankBadge'),
@@ -1681,7 +1740,7 @@
         };
 
         /**
-         * Update the Easy / Hard Mode toggle buttons, prompt badge, and Step 2 instructions.
+         * Update the Easy / Hard Mode toggle buttons, Step 2 badge, and Step 2 instructions.
          */
         function updateDifficultyUI() {
             const isEasy = state.quizDifficulty === 'easy';
@@ -1689,14 +1748,20 @@
             if (isEasy) {
                 els.btnDiffEasy.className = 'px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 bg-emerald-700 text-white shadow-xs';
                 els.btnDiffHard.className = 'px-2.5 py-1 rounded-md font-medium transition flex items-center gap-1 text-stone-300 hover:text-white';
-                els.badgeDifficultyMode.textContent = 'Easy Mode: Passive Tense Focus';
-                els.badgeDifficultyMode.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300';
+                if (els.step2DiffBadge) {
+                    els.step2DiffBadge.textContent = 'Easy';
+                    els.step2DiffBadge.title = 'Easy Mode: All choices are in the passive voice; choose the matching tense.';
+                    els.step2DiffBadge.className = 'px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-help';
+                }
                 els.step2LockSubtext.textContent = 'Identify the tense in Step 1 to unlock the 4 passive translations (choose BOTH correct translations if the verb is Perfect Passive).';
             } else {
                 els.btnDiffHard.className = 'px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 bg-imperial-600 text-white shadow-xs';
                 els.btnDiffEasy.className = 'px-2.5 py-1 rounded-md font-medium transition flex items-center gap-1 text-stone-300 hover:text-white';
-                els.badgeDifficultyMode.textContent = 'Hard Mode: Voice, Person & Tense';
-                els.badgeDifficultyMode.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-imperial-700 border border-rose-300';
+                if (els.step2DiffBadge) {
+                    els.step2DiffBadge.textContent = 'Hard';
+                    els.step2DiffBadge.title = 'Hard Mode: Choices include active voice traps, pronoun/gender traps, and other tenses.';
+                    els.step2DiffBadge.className = 'px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 text-imperial-700 border border-rose-300 cursor-help';
+                }
                 els.step2LockSubtext.textContent = 'Identify the tense in Step 1 to unlock the 4 translation choices (watch out for active voice and pronoun distractors!).';
             }
 
@@ -1720,7 +1785,7 @@
                 els.step2MultiBadge.classList.add('hidden');
                 els.step2InstructionBanner.className = 'mb-2.5 px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-200 text-xs text-stone-700 flex items-center justify-between gap-2';
                 if (isEasy) {
-                    els.step2Instruction.innerHTML = `<strong>Easy Mode:</strong> All choices are passive. Choose the matching tense (if Perfect Passive, choose <strong>both</strong> <em>"was/were"</em> and <em>"has/have been"</em>).`;
+                    els.step2Instruction.innerHTML = `<strong>Easy Mode:</strong> All choices are in the passive voice. Choose the matching tense (if Perfect Passive, choose <strong>both</strong> <em>"was/were"</em> and <em>"has/have been"</em>).`;
                 } else {
                     els.step2Instruction.innerHTML = `<strong>Hard Mode:</strong> Select the translation that matches the verb's passive voice, tense, person, number, and gender.`;
                 }
@@ -1733,12 +1798,12 @@
                 els.step2MultiBadge.classList.remove('hidden');
                 els.step2MultiBadge.textContent = `${item.selectedCorrectCount} / 2 Selected`;
                 els.step2InstructionBanner.className = 'mb-2.5 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center justify-between gap-2';
-                els.step2Instruction.innerHTML = `<strong>Perfect Passive requires 2 translations:</strong> Select <strong>BOTH</strong> the simple past passive (<em>was/were</em>) <strong>AND</strong> the present-perfect passive (<em>has/have been</em>)!`;
+                els.step2Instruction.innerHTML = `<strong>Perfect Passive has 2 translations:</strong> Select <strong>BOTH</strong> <em>was/were</em> <strong>AND</strong> <em>has/have been</em>!`;
             } else if (isEasy) {
                 els.step2Title.textContent = 'Step 2: Choose the Correct Translation';
                 els.step2MultiBadge.classList.add('hidden');
                 els.step2InstructionBanner.className = 'mb-2.5 px-3 py-1.5 rounded-lg bg-emerald-50/70 border border-emerald-200 text-xs text-stone-700 flex items-center justify-between gap-2';
-                els.step2Instruction.innerHTML = `Select the single passive translation that matches the <strong>${TENSE_META[item.tense].name}</strong>:`;
+                els.step2Instruction.innerHTML = `Select the passive translation that matches the <strong>${TENSE_META[item.tense].name}</strong>:`;
             } else {
                 els.step2Title.textContent = 'Step 2: Choose the Correct Translation';
                 els.step2MultiBadge.classList.add('hidden');
@@ -1752,64 +1817,134 @@
         }
 
         /**
+         * Render the 4 multiple-choice translation buttons in Step 2.
+         */
+        function renderStep2Options() {
+            if (!els.translationOptionsContainer) return;
+            els.translationOptionsContainer.innerHTML = '';
+
+            const item = state.currentItem;
+            if (!item || !item.options) return;
+
+            const keyLabels = ['A', 'B', 'C', 'D'];
+
+            item.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+
+                if (state.step2Solved) {
+                    btn.disabled = true;
+                    if (opt.isCorrect) {
+                        btn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-emerald-600 bg-emerald-50 text-emerald-950 flex items-center justify-between gap-2';
+                    } else {
+                        btn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border border-stone-200 bg-stone-50 opacity-50 flex items-center justify-between gap-2';
+                    }
+                } else if (opt.selected) {
+                    btn.disabled = true;
+                    if (opt.isCorrect) {
+                        btn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-emerald-600 bg-emerald-50 text-emerald-950 flex items-center justify-between gap-2';
+                    } else {
+                        btn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-900 flex items-center justify-between gap-2';
+                    }
+                } else {
+                    btn.disabled = !state.step1Solved;
+                    btn.className = 'trans-btn choice-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 text-stone-800 flex items-center justify-between gap-2 group';
+                }
+
+                btn.innerHTML = `
+                    <span class="font-semibold text-xs md:text-sm group-hover:text-imperial-700">${opt.text}</span>
+                    <kbd class="shrink-0 px-2 py-0.5 text-xs font-mono bg-white border border-stone-300 rounded text-stone-600">${keyLabels[idx]}</kbd>
+                `;
+
+                btn.addEventListener('click', () => handleStep2Selection(idx));
+                els.translationOptionsContainer.appendChild(btn);
+            });
+        }
+
+        /**
+         * Toggle scaffolding hints ON/OFF.
+         */
+        function toggleHints() {
+            state.hintsEnabled = !state.hintsEnabled;
+            applyHintsVisibility();
+        }
+
+        /**
+         * Set quiz difficulty for translation practice.
+         */
+        function setQuizDifficulty(diff) {
+            if (state.quizDifficulty === diff) return;
+            state.quizDifficulty = diff;
+            if (state.currentItem && !state.step2Solved) {
+                buildOptionsForItem(state.currentItem, state.quizDifficulty);
+                renderStep2Options();
+                if (state.step1Solved) {
+                    els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
+                    if (state.quizDifficulty === 'easy' && state.currentItem.tense === 'perf') {
+                        els.step2Feedback.innerHTML = '<span>Select <strong>both</strong> valid English translations of the Perfect Passive above.</span>';
+                    } else {
+                        els.step2Feedback.innerHTML = '<span>Now choose the matching English translation above (keys <kbd class="font-mono bg-stone-100 px-1 border rounded">A-D</kbd>).</span>';
+                    }
+                }
+            }
+            updateDifficultyUI();
+        }
+
+        /**
          * Synchronize all UI elements that depend on `state.hintsEnabled`:
          * - Top bar "Hints: OFF / ON" button & inline button
          * - Step 1 Tense Formula subtexts ("4th PP + sum, es, est...")
          * - Principal Parts & Morphology Drawer
          * - Step 1 & Step 2 instruction scaffolding
-         * - Footer paradigm reminder
+         * - Chart Mode format examples, endings, and auxiliary hints
+         * - Footer reminder
          */
         function applyHintsVisibility() {
             const on = state.hintsEnabled;
 
-            // 1. Update Top Bar & Inline Hint Buttons
             els.labelHints.textContent = `Hints: ${on ? 'ON' : 'OFF'}`;
             if (on) {
                 els.btnHintsToggle.className = 'px-2.5 py-1.5 rounded bg-amber-600/30 hover:bg-amber-600/40 border border-amber-400 text-amber-200 font-semibold transition flex items-center gap-1';
                 els.inlineHintText.textContent = '💡 Hide Hints';
                 els.btnInlineHint.className = 'text-xs font-semibold text-imperial-700 bg-amber-100/80 hover:bg-amber-200/70 border border-amber-400 px-2.5 py-1 rounded-md transition flex items-center gap-1.5';
+                if (els.chartFormatGuide) {
+                    els.chartFormatGuide.innerHTML = `Sg: <strong class="text-imperial-700 font-semibold">${formatMacrons('factus, -a, -um sum', state.useMacrons)}</strong> | Pl: <strong class="text-imperial-700 font-semibold">${formatMacrons('factī, -ae, -a sumus', state.useMacrons)}</strong>`;
+                    els.chartFormatGuide.classList.remove('hidden');
+                }
+                if (els.chartSgHint) {
+                    els.chartSgHint.textContent = formatMacrons('Endings: -us, -a, -um', state.useMacrons);
+                    els.chartSgHint.classList.remove('hidden');
+                }
+                if (els.chartPlHint) {
+                    els.chartPlHint.textContent = formatMacrons('Endings: -ī, -ae, -a', state.useMacrons);
+                    els.chartPlHint.classList.remove('hidden');
+                }
             } else {
                 els.btnHintsToggle.className = 'px-2.5 py-1.5 rounded bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-300 font-medium transition flex items-center gap-1';
                 els.inlineHintText.textContent = '💡 Show Hints';
                 els.btnInlineHint.className = 'text-xs font-medium text-stone-600 hover:text-imperial-700 bg-parchment-100 hover:bg-parchment-200 border border-stone-300 px-2.5 py-1 rounded-md transition flex items-center gap-1.5';
+                if (els.chartFormatGuide) els.chartFormatGuide.classList.add('hidden');
+                if (els.chartSgHint) els.chartSgHint.classList.add('hidden');
+                if (els.chartPlHint) els.chartPlHint.classList.add('hidden');
             }
 
-            // 2. Show/Hide Principal Parts & Morphology Drawer
             if (on) {
                 els.hintDrawer.classList.remove('hidden');
             } else {
                 els.hintDrawer.classList.add('hidden');
             }
 
-            // 3. Show/Hide Formula Subtext under each Step 1 Tense Button ("4th PP + sum, es, est...")
             const tenseBtns = els.tenseButtonsContainer.querySelectorAll('.tense-btn');
             tenseBtns.forEach(btn => {
                 const tKey = btn.getAttribute('data-tense');
                 const formulaEl = btn.querySelector('.tense-formula-hint');
                 if (formulaEl && TENSE_META[tKey]) {
                     formulaEl.textContent = formatMacrons(`4th PP + ${TENSE_META[tKey].auxFormula}`, state.useMacrons);
-                    if (on) {
-                        formulaEl.classList.remove('hidden');
-                    } else {
-                        formulaEl.classList.add('hidden');
-                    }
+                    if (on) formulaEl.classList.remove('hidden');
+                    else formulaEl.classList.add('hidden');
                 }
             });
 
-            // 4. Update Step 1, Step 2, and Footer scaffolding text
-            if (on) {
-                els.step1Instruction.innerHTML = `Look at the auxiliary form of <span class="font-serif italic font-semibold">sum, esse</span> paired with the 4th principal part:`;
-                els.footerHintSummary.innerHTML = `
-                    <span><strong class="text-stone-800">Perfect:</strong> <em>was/were</em> OR <em>has/have been [verb]ed</em></span>
-                    <span><strong class="text-stone-800">Pluperfect:</strong> <em>had been [verb]ed</em></span>
-                    <span><strong class="text-stone-800">Future Perfect:</strong> <em>will have been [verb]ed</em></span>
-                `;
-            } else {
-                els.step1Instruction.textContent = 'Examine the verb form above and identify its tense in the Perfect Passive System:';
-                els.footerHintSummary.innerHTML = `<span class="text-stone-500">💡 Need scaffolding? Press <strong class="text-stone-700 font-mono">H</strong> to toggle tense formulas &amp; principal parts hints.</span>`;
-            }
-
-            // 5. Update Chart Mode auxiliary hints if in Chart Mode
             PERSON_NUMBER_KEYS.forEach(pn => {
                 const auxHintEl = document.getElementById(`chartAuxHint_${pn}`);
                 if (auxHintEl) {
@@ -1817,13 +1952,13 @@
                     else auxHintEl.classList.add('hidden');
                 }
             });
-            if (els.chartSgHint && els.chartPlHint && state.chartVerb) {
-                if (on) {
-                    els.chartSgHint.textContent = formatMacrons(`${state.chartVerb.pppStem}us, -a, -um + sum/es/est`, state.useMacrons);
-                    els.chartPlHint.textContent = formatMacrons(`${state.chartVerb.pppStem}ī, -ae, -a + sumus/estis/sunt`, state.useMacrons);
-                } else {
-                    els.chartSgHint.textContent = 'Endings: -us, -a, -um';
-                    els.chartPlHint.textContent = formatMacrons('Endings: -ī, -ae, -a', state.useMacrons);
+
+            if (state.mode === 'chart' && state.chartVerb) {
+                const firstInput = document.getElementById('chartInput_1s');
+                if (firstInput) {
+                    firstInput.placeholder = on
+                        ? formatMacrons(`${state.chartVerb.pppStem}us, -a, -um sum`, state.useMacrons)
+                        : '...';
                 }
             }
 
@@ -1835,6 +1970,34 @@
          * 5B. CHART MODE RENDERING & INTERACTION HANDLERS
          * ============================================================================
          */
+        function hasAnyChartInput() {
+            return PERSON_NUMBER_KEYS.some(pn => {
+                const el = document.getElementById(`chartInput_${pn}`);
+                return el && el.value.trim().length > 0;
+            });
+        }
+
+        function updateChartPrimaryButtonState() {
+            if (!els.btnChartPrimaryAction) return;
+
+            if (state.chartChecked) {
+                // After checking or revealing answers, primary button becomes "Next Verb →"
+                els.btnChartPrimaryAction.disabled = false;
+                els.btnChartPrimaryAction.className = 'px-4 py-2 rounded-lg bg-imperial-600 hover:bg-imperial-700 text-white font-semibold text-xs shadow transition flex items-center gap-1.5';
+                els.chartPrimaryBtnLabel.textContent = 'Next Verb →';
+                els.chartPrimaryBtnKbd.className = 'px-1.5 py-0.5 text-[10px] bg-imperial-800 text-amber-100 rounded font-mono';
+            } else {
+                // Before checking (or when editing after a check), button is "✓ Check Chart" and requires input
+                const hasInput = hasAnyChartInput();
+                els.btnChartPrimaryAction.disabled = !hasInput;
+                els.btnChartPrimaryAction.className = 'px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 disabled:bg-stone-300 disabled:text-stone-500 disabled:shadow-none disabled:cursor-not-allowed text-white font-semibold text-xs shadow transition flex items-center gap-1.5';
+                els.chartPrimaryBtnLabel.textContent = '✓ Check Chart';
+                els.chartPrimaryBtnKbd.className = hasInput
+                    ? 'px-1.5 py-0.5 text-[10px] bg-emerald-900 text-emerald-100 rounded font-mono'
+                    : 'px-1.5 py-0.5 text-[10px] bg-stone-400/50 text-stone-600 rounded font-mono';
+            }
+        }
+
         function loadNewChartVerb() {
             let candidateVerbs = VERB_LIST.filter(v => v.id !== state.lastVerbId);
             if (candidateVerbs.length === 0) candidateVerbs = VERB_LIST;
@@ -1842,6 +2005,7 @@
             state.lastVerbId = verb.id;
             state.chartVerb = verb;
             state.chartSolved = false;
+            state.chartChecked = false;
             state.chartHadMistake = false;
 
             renderChartMode();
@@ -1853,47 +2017,40 @@
 
             updateHeaderStats();
 
-            // Update top prompt card to show Principal Parts & Definition prominently
-            els.badgeVerbNumber.textContent = `Chart #${state.questionIndex + 1}`;
-            els.badgeDifficultyMode.textContent = 'Chart Mode: Perfect Passive Paradigm';
-            els.badgeDifficultyMode.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300';
+            els.badgeVerbNumber.textContent = `Chart #${state.chartCompletedCount + 1}`;
             els.badgeStep1Locked.classList.add('hidden');
             els.badgeStep1Locked.classList.remove('inline-flex');
 
             els.latinVerbDisplay.textContent = formatMacrons(verb.pp, state.useMacrons);
-            els.morphologySubhint.innerHTML = `<span class="font-semibold text-imperial-700">${verb.meaning}</span> — Fill in all 6 Perfect Passive forms below (include all 3 genders: <em>${formatMacrons('-us, -a, -um', state.useMacrons)}</em> in Sg., <em>${formatMacrons('-ī, -ae, -a', state.useMacrons)}</em> in Pl.)`;
+            els.morphologySubhint.innerHTML = `<span class="font-semibold text-imperial-700">${verb.meaning}</span> — Fill in all 6 Perfect Passive forms below`;
 
-            // Populate Hint Drawer details
             els.hintPrincipalParts.textContent = formatMacrons(verb.pp, state.useMacrons);
             els.hintMeaning.textContent = `— ${verb.meaning}`;
             els.hintMorphBadge.textContent = formatMacrons(`4th PP Stem: ${verb.pppStem}-`, state.useMacrons);
 
-            // Reset all 6 inputs and diagnostics
             PERSON_NUMBER_KEYS.forEach(pn => {
                 const input = document.getElementById(`chartInput_${pn}`);
                 const diag = document.getElementById(`chartDiag_${pn}`);
                 if (input) {
                     input.value = '';
                     input.disabled = false;
-                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-base text-stone-900 focus:outline-none focus:border-imperial-600 transition';
-                    if (pn === '1s') {
-                        input.placeholder = formatMacrons(`e.g. ${verb.pppStem}us, -a, -um sum`, state.useMacrons);
-                    } else if (pn === '1p') {
-                        input.placeholder = formatMacrons(`e.g. ${verb.pppStem}ī, -ae, -a sumus`, state.useMacrons);
-                    }
+                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-300 bg-white font-serif text-stone-900 focus:outline-none focus:border-imperial-600 transition';
+                    input.placeholder = state.hintsEnabled
+                        ? (pn === '1s' ? formatMacrons(`${verb.pppStem}us, -a, -um sum`, state.useMacrons) : '...')
+                        : '...';
                 }
                 if (diag) {
-                    diag.className = 'text-[11px] min-h-[16px] text-stone-500 leading-tight';
+                    diag.className = 'text-xs min-h-[16px] text-stone-500 font-serif leading-tight';
                     diag.textContent = '';
                 }
             });
 
-            els.chartGlobalFeedback.className = 'text-xs text-stone-600 flex-1';
-            els.chartGlobalFeedback.innerHTML = `<span>Use <kbd class="font-mono bg-stone-100 px-1 border rounded">Tab ⇥</kbd> to move down Singular (1st→2nd→3rd) then Plural (1st→2nd→3rd). Press <kbd class="font-mono bg-stone-100 px-1 border rounded">Enter ↵</kbd> to check.</span>`;
+            els.chartGlobalFeedback.className = 'text-xs text-stone-600 flex-1 text-center md:text-left';
+            els.chartGlobalFeedback.innerHTML = `<span>Use <kbd class="font-mono bg-stone-100 px-1 border rounded">Tab ⇥</kbd> to move down Singular then Plural. Fill in the chart to enable <strong>Check Chart</strong>.</span>`;
 
+            updateChartPrimaryButtonState();
             applyHintsVisibility();
 
-            // Focus 1st Person Singular input automatically
             setTimeout(() => {
                 const firstInput = document.getElementById('chartInput_1s');
                 if (firstInput) firstInput.focus();
@@ -1902,10 +2059,7 @@
 
         function checkChartAnswers() {
             if (!state.chartVerb) return;
-            if (state.chartSolved) {
-                nextChartVerb();
-                return;
-            }
+            if (!hasAnyChartInput()) return;
 
             let allCorrect = true;
             let firstInvalidInput = null;
@@ -1919,470 +2073,348 @@
                 if (res.isValid) {
                     correctCount++;
                     input.value = formatMacrons(res.canonical, state.useMacrons);
-                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-emerald-600 bg-emerald-50 font-serif text-base text-emerald-950 font-semibold focus:outline-none transition';
-                    diag.className = 'text-[11px] min-h-[16px] text-emerald-700 font-medium leading-tight';
-                    diag.textContent = `✓ Correct (${PERSON_NUMBER_LABELS[pn]})`;
+                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-emerald-600 bg-emerald-50 font-serif text-emerald-950 font-semibold focus:outline-none transition';
+                    diag.className = 'text-xs min-h-[16px] text-emerald-700 font-medium leading-tight';
+                    diag.textContent = `✓ Correct`;
                 } else {
                     allCorrect = false;
                     if (!firstInvalidInput) firstInvalidInput = input;
-                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-rose-500 bg-rose-50 font-serif text-base text-stone-900 focus:outline-none focus:border-rose-600 transition animate-shake';
-                    diag.className = 'text-[11px] min-h-[16px] text-rose-700 font-medium leading-tight';
+                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-rose-500 bg-rose-50 font-serif text-stone-900 focus:outline-none focus:border-rose-600 transition animate-shake';
+                    diag.className = 'text-xs min-h-[16px] text-rose-700 font-medium leading-tight';
                     diag.textContent = `✗ ${res.reason}`;
                 }
             });
 
+            state.chartChecked = true;
+            updateChartPrimaryButtonState();
+
             if (allCorrect) {
-                state.chartSolved = true;
-                if (!state.chartHadMistake) {
-                    state.firstTryCorrectCount++;
-                    state.currentStreak++;
-                    if (state.currentStreak > state.bestStreak) {
-                        state.bestStreak = state.currentStreak;
+                if (!state.chartSolved) {
+                    state.chartSolved = true;
+                    if (!state.chartHadMistake) {
+                        state.firstTryCorrectCount++;
+                        state.currentStreak++;
+                        if (state.currentStreak > state.bestStreak) {
+                            state.bestStreak = state.currentStreak;
+                        }
                     }
+                    state.chartCompletedCount++;
                 }
                 synth.playStep2Success(state.currentStreak);
+
                 els.chartGlobalFeedback.className = 'text-xs text-emerald-900 bg-emerald-50 border border-emerald-300 px-3 py-1.5 rounded-lg flex-1 font-medium';
-                els.chartGlobalFeedback.innerHTML = `🎉 <strong>Eugepae!</strong> Full Perfect Passive paradigm for <em>${formatMacrons(state.chartVerb.pp.split(',')[0], state.useMacrons)}</em> completed! Press <strong>Enter ↵</strong> or click <strong>Next Verb →</strong>.`;
+                els.chartGlobalFeedback.innerHTML = `🎉 <strong>Optime!</strong> Perfect Passive chart completed!`;
                 updateHeaderStats();
+
+                if (state.chartCompletedCount === 5) {
+                    setTimeout(showMilestoneModal, 600);
+                }
             } else {
                 state.chartHadMistake = true;
                 state.currentStreak = 0;
                 synth.playError();
                 els.chartGlobalFeedback.className = 'text-xs text-rose-900 bg-rose-50 border border-rose-300 px-3 py-1.5 rounded-lg flex-1';
-                els.chartGlobalFeedback.innerHTML = `<strong>${correctCount} / 6 cells correct.</strong> Fix the highlighted forms above and press <strong>Enter ↵</strong> to re-check.`;
+                els.chartGlobalFeedback.innerHTML = `<strong>${correctCount} / 6 cells correct.</strong> Edit any highlighted cell to re-check.`;
                 updateHeaderStats();
-                if (firstInvalidInput) firstInvalidInput.focus();
             }
+        }
+
+        function nextChartVerb() {
+            loadNewChartVerb();
         }
 
         function revealChartAnswers() {
             if (!state.chartVerb) return;
-            state.chartHadMistake = true;
-            state.currentStreak = 0;
-            state.chartSolved = true;
-
             PERSON_NUMBER_KEYS.forEach(pn => {
                 const input = document.getElementById(`chartInput_${pn}`);
                 const diag = document.getElementById(`chartDiag_${pn}`);
-                const res = validateChartCellInput('', state.chartVerb, pn);
-                if (input) {
-                    input.value = formatMacrons(res.canonical, state.useMacrons);
-                    input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-amber-500 bg-amber-50 font-serif text-base text-stone-900 font-semibold focus:outline-none transition';
-                }
-                if (diag) {
-                    diag.className = 'text-[11px] min-h-[16px] text-amber-800 leading-tight';
-                    diag.textContent = `Revealed: ${formatMacrons(res.canonical, state.useMacrons)}`;
-                }
+                const aux = TENSE_META.perf.auxForms[pn];
+                const stem = state.chartVerb.pppStem;
+                const fullForm = pn.endsWith('p')
+                    ? `${stem}ī, -ae, -a ${aux}`
+                    : `${stem}us, -a, -um ${aux}`;
+
+                input.value = formatMacrons(fullForm, state.useMacrons);
+                input.className = 'chart-input w-full px-3 py-1.5 rounded-lg border-2 border-stone-400 bg-stone-100 font-serif text-stone-700 focus:outline-none transition';
+                diag.className = 'text-xs min-h-[16px] text-stone-500 font-medium leading-tight';
+                diag.textContent = `Revealed`;
             });
 
-            els.chartGlobalFeedback.className = 'text-xs text-amber-900 bg-amber-50 border border-amber-300 px-3 py-1.5 rounded-lg flex-1';
-            els.chartGlobalFeedback.innerHTML = `Answers revealed for <em>${formatMacrons(state.chartVerb.pp.split(',')[0], state.useMacrons)}</em>. Study the paradigm, then click <strong>Next Verb →</strong>.`;
+            state.chartHadMistake = true;
+            state.currentStreak = 0;
+            state.chartChecked = true;
+            updateChartPrimaryButtonState();
             updateHeaderStats();
+            els.chartGlobalFeedback.className = 'text-xs text-stone-700 bg-stone-100 border border-stone-300 px-3 py-1.5 rounded-lg flex-1';
+            els.chartGlobalFeedback.innerHTML = `Answers revealed. Click <strong>Next Verb</strong> to continue.`;
         }
 
-        function nextChartVerb() {
-            state.questionIndex++;
-            loadNewChartVerb();
+        function showMilestoneModal() {
+            const modal = els.milestoneModal || document.getElementById('milestoneModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
         }
 
-        /**
-         * Render the Step 2 translation option buttons
-         */
-        function renderStep2Options() {
-            const item = state.currentItem;
-            if (!item) return;
-
-            els.translationOptionsContainer.innerHTML = '';
-            const letters = ['A', 'B', 'C', 'D'];
-            item.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.dataset.index = idx;
-                btn.disabled = !state.step1Solved || state.step2Solved;
-                btn.className = 'trans-btn choice-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between gap-2 group';
-                btn.innerHTML = `
-                    <div class="flex items-center gap-2.5">
-                        <span class="letter-badge w-6 h-6 rounded bg-stone-200 group-hover:bg-imperial-600 group-hover:text-white text-stone-700 font-mono font-bold text-xs flex items-center justify-center transition shrink-0">
-                            ${letters[idx]}
-                        </span>
-                        <span class="font-medium text-sm text-stone-800">${opt.text}</span>
-                    </div>
-                    <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-white border border-stone-300 rounded text-stone-400 shrink-0">${idx + 1}</kbd>
+        function populateReferenceModal() {
+            els.refVerbTableBody.innerHTML = '';
+            VERB_LIST.forEach(v => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-parchment-100';
+                tr.innerHTML = `
+                    <td class="latin py-1.5 px-2 font-medium text-stone-900">${formatMacrons(v.pp, state.useMacrons)}</td>
+                    <td class="stem py-1.5 px-2 italic text-imperial-700">${formatMacrons(v.pppStem + 'us, -a, -um', state.useMacrons)}</td>
+                    <td class="py-1.5 px-2 font-sans text-xs text-stone-700">${v.meaning}, <em>${v.enPassPart}, having been ${v.enPassPart}</em></td>
                 `;
-                btn.addEventListener('click', () => handleStep2Selection(idx));
-                els.translationOptionsContainer.appendChild(btn);
+                els.refVerbTableBody.appendChild(tr);
             });
         }
 
-        /**
-         * Render the current question onto the screen
-         */
-        function renderQuestion() {
-            const item = state.currentItem;
-            if (!item) return;
+        function startNewSession() {
+            state.questionIndex = 0;
+            state.completedCount = 0;
+            state.firstTryCorrectCount = 0;
+            state.currentStreak = 0;
+            state.missedItems = [];
+            state.chartCompletedCount = 0;
+            els.summaryModal.classList.add('hidden');
+            els.summaryModal.classList.remove('flex');
+            const milestoneModal = els.milestoneModal || document.getElementById('milestoneModal');
+            if (milestoneModal) {
+                milestoneModal.classList.add('hidden');
+                milestoneModal.classList.remove('flex');
+            }
 
-            // Update Top Stats & Difficulty UI
+            const twoStepGrid = els.step1Panel.parentElement;
+
+            if (state.mode === 'chart') {
+                twoStepGrid.classList.add('hidden');
+                els.chartModeWorkspace.classList.remove('hidden');
+                els.chartModeWorkspace.classList.add('flex');
+                loadNewChartVerb();
+            } else {
+                els.chartModeWorkspace.classList.add('hidden');
+                els.chartModeWorkspace.classList.remove('flex');
+                twoStepGrid.classList.remove('hidden');
+                loadQuestion();
+            }
+        }
+
+        function loadQuestion() {
+            state.currentItem = generateQuestion();
+            state.step1Solved = false;
+            state.step2Solved = false;
+            state.missedOnCurrentItem = false;
+
+            const item = state.currentItem;
             updateHeaderStats();
             updateDifficultyUI();
 
-            // Update Question Number Badge
+            // Top Prompt Card
             els.badgeVerbNumber.textContent = `Quaestiō #${state.questionIndex + 1}`;
-
-            // Format Latin Verb & Principal Parts according to Macron setting
-            els.latinVerbDisplay.textContent = formatMacrons(item.fullLatinMacron, state.useMacrons);
-            els.hintPrincipalParts.textContent = formatMacrons(item.verb.pp, state.useMacrons);
-            els.hintMeaning.textContent = `— ${item.verb.meaning}`;
-
-            const numLabel = item.isPlural ? 'Plural' : 'Singular';
-            const endDisplay = formatMacrons(`-${item.ending}`, state.useMacrons);
-            els.hintMorphBadge.textContent = `${GENDER_LABELS[item.gender]} ${numLabel} (${endDisplay})`;
-
-            // Reset Step 1 UI
             els.badgeStep1Locked.classList.add('hidden');
             els.badgeStep1Locked.classList.remove('inline-flex');
-            els.step1Circle.className = 'w-6 h-6 rounded-full bg-imperial-600 text-white font-bold text-xs flex items-center justify-center';
-            els.step2Circle.className = 'w-6 h-6 rounded-full bg-stone-400 text-white font-bold text-xs flex items-center justify-center';
 
-            const tenseBtns = els.tenseButtonsContainer.querySelectorAll('.tense-btn');
-            tenseBtns.forEach(btn => {
+            els.latinVerbDisplay.textContent = formatMacrons(item.fullLatinMacron, state.useMacrons);
+            els.morphologySubhint.textContent = 'Identify the tense first, then select the exact English translation(s).';
+
+            // Hint Drawer content
+            els.hintPrincipalParts.textContent = formatMacrons(item.verb.pp, state.useMacrons);
+            els.hintMeaning.textContent = `— ${item.verb.meaning}`;
+            const numLabel = item.isPlural ? 'Plural' : 'Singular';
+            const endDisplay = formatMacrons(`-${item.ending}`, state.useMacrons);
+            els.hintMorphBadge.textContent = `Participle: ${GENDER_LABELS[item.gender]} ${numLabel} (${endDisplay})`;
+
+            // Reset Step 1 UI
+            els.step1Circle.className = 'w-6 h-6 rounded-full bg-imperial-600 text-white font-bold text-xs flex items-center justify-center';
+            els.tenseButtonsContainer.querySelectorAll('.tense-btn').forEach(btn => {
                 btn.disabled = false;
                 btn.className = 'tense-btn choice-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-stone-300 bg-parchment-50 hover:border-imperial-600 flex items-center justify-between group';
             });
-
-            // Apply current Hints visibility state (OFF by default)
-            applyHintsVisibility();
-
             els.step1Feedback.className = 'mt-2.5 p-2.5 rounded-lg bg-stone-100 border border-stone-200 text-xs text-stone-600 min-h-[54px] flex items-center';
             els.step1Feedback.innerHTML = `<span>Select a tense above or press <kbd class="font-mono bg-white px-1 border rounded">1</kbd>, <kbd class="font-mono bg-white px-1 border rounded">2</kbd>, or <kbd class="font-mono bg-white px-1 border rounded">3</kbd>.</span>`;
 
-            // Lock Step 2 until Step 1 is solved
+            // Reset Step 2 UI
             els.step2LockOverlay.classList.remove('hidden');
+            els.step2Circle.className = 'w-6 h-6 rounded-full bg-stone-400 text-white font-bold text-xs flex items-center justify-center';
+            els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
+            els.step2Feedback.innerHTML = '<span>Waiting for Step 1 tense identification...</span>';
             els.btnNextQuestion.classList.add('hidden');
             els.btnNextQuestion.classList.remove('inline-flex');
-            els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
-            els.step2Feedback.textContent = 'Waiting for Step 1 tense identification...';
 
             renderStep2Options();
+            applyHintsVisibility();
         }
 
-        /**
-         * Update header progress, accuracy, and streak counters
-         */
-        function updateHeaderStats() {
-            if (state.mode === 'endless' || state.mode === 'chart') {
-                els.statProgress.textContent = `#${state.questionIndex + 1} (∞)`;
-            } else {
-                const total = parseInt(state.mode, 10);
-                els.statProgress.textContent = `${Math.min(state.questionIndex + 1, total)} / ${total}`;
-            }
-
-            const isCurrentDone = state.mode === 'chart' ? state.chartSolved : state.step2Solved;
-            const completed = state.questionIndex + (isCurrentDone ? 1 : 0);
-            const acc = completed === 0 ? 100 : Math.round((state.firstTryCorrectCount / completed) * 100);
-            els.statAccuracy.textContent = `${acc}%`;
-            els.statStreak.textContent = `${state.currentStreak} 🔥`;
-        }
-
-        /**
-         * ============================================================================
-         * 6. STEP 1 & STEP 2 INTERACTION HANDLERS
-         * ============================================================================
-         */
-        function handleStep1Selection(selectedTenseKey) {
-            if (state.step1Solved) return;
+        function handleStep1Selection(selectedTense) {
+            if (state.step1Solved || !state.currentItem) return;
             const item = state.currentItem;
-            const clickedBtn = els.tenseButtonsContainer.querySelector(`[data-tense="${selectedTenseKey}"]`);
-            if (!clickedBtn || clickedBtn.disabled) return;
+            const clickedBtn = els.tenseButtonsContainer.querySelector(`[data-tense="${selectedTense}"]`);
 
-            const auxDisplay = formatMacrons(item.auxMacron, state.useMacrons);
-
-            if (selectedTenseKey === item.tense) {
-                // Correct Tense!
+            if (selectedTense === item.tense) {
                 state.step1Solved = true;
                 synth.playStep1Success();
 
                 // Style Step 1 buttons
                 els.tenseButtonsContainer.querySelectorAll('.tense-btn').forEach(btn => {
                     btn.disabled = true;
-                    if (btn.getAttribute('data-tense') === item.tense) {
-                        btn.className = 'tense-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-emerald-600 bg-emerald-50 flex items-center justify-between';
+                    if (btn.getAttribute('data-tense') === selectedTense) {
+                        btn.className = 'tense-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-emerald-600 bg-emerald-50 text-emerald-950 flex items-center justify-between';
                     } else {
-                        btn.classList.add('opacity-45');
+                        btn.className = 'tense-btn w-full text-left px-3.5 py-2.5 rounded-lg border border-stone-200 bg-stone-50 opacity-50 flex items-center justify-between';
                     }
                 });
 
-                // Show Step 1 Locked Badge
-                els.lockedTenseName.textContent = TENSE_META[item.tense].name;
+                els.step1Circle.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
                 els.badgeStep1Locked.classList.remove('hidden');
                 els.badgeStep1Locked.classList.add('inline-flex');
+                els.lockedTenseName.textContent = TENSE_META[item.tense].name;
 
-                els.step1Circle.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
                 els.step1Feedback.className = 'mt-2.5 p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs text-emerald-900 min-h-[54px] flex items-center';
+                els.step1Feedback.innerHTML = `<span><strong>Rēctē!</strong> <em class="font-serif text-sm">${formatMacrons(item.auxMacron, state.useMacrons)}</em> ${formatMacrons(TENSE_META[item.tense].explain, state.useMacrons)}</span>`;
 
-                const isDualPerf = state.quizDifficulty === 'easy' && item.tense === 'perf';
-                if (isDualPerf) {
-                    els.step1Feedback.innerHTML = `<span><strong>Euge!</strong> <em>${auxDisplay}</em> marks the <strong>Perfect Passive</strong>. In Easy Mode, choose <strong>BOTH</strong> correct English translations in Step 2!</span>`;
-                } else {
-                    els.step1Feedback.innerHTML = `<span><strong>Euge!</strong> The auxiliary <em>${auxDisplay}</em> marks the <strong>${TENSE_META[item.tense].name}</strong>. Now choose the exact translation in Step 2!</span>`;
-                }
-
-                // Unlock Step 2 Panel & update Step 2 instruction banner
+                // Unlock Step 2
                 els.step2LockOverlay.classList.add('hidden');
                 els.step2Circle.className = 'w-6 h-6 rounded-full bg-imperial-600 text-white font-bold text-xs flex items-center justify-center';
                 updateStep2PromptBanner();
+                renderStep2Options();
 
-                if (isDualPerf) {
-                    els.step2Feedback.className = 'text-xs text-amber-900 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg flex-1';
-                    els.step2Feedback.innerHTML = `<span>Choose <strong>both</strong> valid Perfect Passive translations above (<strong>0 / 2</strong> selected).</span>`;
+                if (state.quizDifficulty === 'easy' && item.tense === 'perf') {
+                    els.step2Feedback.innerHTML = '<span>Select <strong>both</strong> valid English translations of the Perfect Passive above.</span>';
                 } else {
-                    els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
-                    els.step2Feedback.innerHTML = `<span>Select one of the 4 translations above or press <kbd class="font-mono bg-stone-100 px-1 border rounded">1</kbd>–<kbd class="font-mono bg-stone-100 px-1 border rounded">4</kbd>.</span>`;
+                    els.step2Feedback.innerHTML = '<span>Now choose the matching English translation above (keys <kbd class="font-mono bg-stone-100 px-1 border rounded">A-D</kbd>).</span>';
                 }
-
-                els.translationOptionsContainer.querySelectorAll('.trans-btn').forEach(btn => {
-                    btn.disabled = false;
-                });
-
             } else {
-                // Incorrect Tense!
-                recordMistakeOnCurrentItem();
+                state.missedOnCurrentItem = true;
+                state.currentStreak = 0;
+                updateHeaderStats();
                 synth.playError();
 
-                clickedBtn.disabled = true;
-                clickedBtn.className = 'tense-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-rose-500 bg-rose-50 opacity-75 flex items-center justify-between animate-shake';
+                if (clickedBtn) {
+                    clickedBtn.className = 'tense-btn w-full text-left px-3.5 py-2.5 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-900 flex items-center justify-between animate-shake';
+                    clickedBtn.disabled = true;
+                }
 
-                const wrongMeta = TENSE_META[selectedTenseKey];
                 els.step1Feedback.className = 'mt-2.5 p-2.5 rounded-lg bg-rose-50 border border-rose-300 text-xs text-rose-900 min-h-[54px] flex items-center';
-                els.step1Feedback.innerHTML = `<span>Not quite! <strong>${wrongMeta.name}</strong> ${formatMacrons(wrongMeta.explain, state.useMacrons)} Look closely at <strong><em>${auxDisplay}</em></strong> and try again.</span>`;
-                updateHeaderStats();
+                els.step1Feedback.innerHTML = `<span>Not <strong>${TENSE_META[selectedTense].name}</strong> — look closely at the auxiliary verb <strong class="font-serif text-sm">${formatMacrons(item.auxMacron, state.useMacrons)}</strong> and try again!</span>`;
             }
         }
 
-        function handleStep2Selection(optionIndex) {
-            if (!state.step1Solved || state.step2Solved) return;
+        function handleStep2Selection(idx) {
+            if (!state.step1Solved || state.step2Solved || !state.currentItem) return;
             const item = state.currentItem;
-            const opt = item.options[optionIndex];
-            const transBtns = els.translationOptionsContainer.querySelectorAll('.trans-btn');
-            const clickedBtn = transBtns[optionIndex];
-            if (!clickedBtn || clickedBtn.disabled || opt.selected) return;
+            const opt = item.options[idx];
+            if (!opt || opt.selected) return;
+
+            const btns = els.translationOptionsContainer.querySelectorAll('.trans-btn');
+            const clickedBtn = btns[idx];
 
             if (opt.isCorrect) {
                 opt.selected = true;
                 item.selectedCorrectCount++;
 
-                // Style this button as selected & verified correct
-                clickedBtn.disabled = true;
-                clickedBtn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-emerald-600 bg-emerald-50 flex items-center justify-between gap-2';
-                const badge = clickedBtn.querySelector('.letter-badge');
-                if (badge) {
-                    badge.className = 'letter-badge w-6 h-6 rounded bg-emerald-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0';
-                    badge.textContent = '✓';
+                if (clickedBtn) {
+                    clickedBtn.disabled = true;
+                    clickedBtn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-emerald-600 bg-emerald-50 text-emerald-950 flex items-center justify-between gap-2';
                 }
 
-                // Check if more correct options are required (Easy Mode Perfect Passive requires 2!)
-                if (item.selectedCorrectCount < item.requiredCorrectCount) {
-                    synth.playPartialCorrect();
-                    updateStep2PromptBanner();
-
-                    els.step2Feedback.className = 'text-xs text-emerald-900 bg-emerald-50 border border-emerald-300 px-3 py-2 rounded-lg flex-1';
-                    els.step2Feedback.innerHTML = `<strong>✓ 1 of 2 found!</strong> "${opt.text}" is correct. Now select the <strong>other</strong> valid Perfect Passive translation!`;
-                    return;
-                }
-
-                // All required correct translations have been selected!
-                state.step2Solved = true;
                 updateStep2PromptBanner();
 
-                if (!state.missedOnCurrentItem) {
-                    state.firstTryCorrectCount++;
-                    state.currentStreak++;
-                    if (state.currentStreak > state.bestStreak) {
-                        state.bestStreak = state.currentStreak;
-                    }
-                }
-                synth.playStep2Success(state.currentStreak);
-
-                // Disable remaining unselected buttons
-                transBtns.forEach((btn, idx) => {
-                    btn.disabled = true;
-                    if (!item.options[idx].selected) {
-                        btn.classList.add('opacity-45');
-                    }
-                });
-
-                els.step2Circle.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
-                els.step2Feedback.className = 'text-xs text-emerald-900 bg-emerald-50 border border-emerald-300 px-3 py-2 rounded-lg flex-1';
-
-                if (item.requiredCorrectCount === 2) {
-                    const bothTexts = item.options.filter(o => o.isCorrect).map(o => `"${o.text}"`).join(' and ');
-                    els.step2Feedback.innerHTML = `<strong>✓ Optime! Both selected:</strong> ${bothTexts} accurately translate <em>${formatMacrons(item.fullLatinMacron, state.useMacrons)}</em>.`;
+                if (item.selectedCorrectCount < item.requiredCorrectCount) {
+                    // Partial completion (1 of 2 selected in Easy Mode Perfect Passive)
+                    synth.playPartialCorrect();
+                    els.step2Feedback.className = 'text-xs text-amber-900 bg-amber-50 border border-amber-300 px-3 py-1.5 rounded-lg flex-1';
+                    els.step2Feedback.innerHTML = `<span><strong>1 of 2 found!</strong> ${opt.feedback} Now select the <strong>other</strong> valid Perfect Passive translation!</span>`;
                 } else {
-                    els.step2Feedback.innerHTML = `<strong>✓ ${formatMacrons(opt.feedback, state.useMacrons)}</strong>`;
+                    // Step 2 completely solved!
+                    state.step2Solved = true;
+                    state.completedCount++;
+                    if (!state.missedOnCurrentItem) {
+                        state.firstTryCorrectCount++;
+                        state.currentStreak++;
+                        if (state.currentStreak > state.bestStreak) {
+                            state.bestStreak = state.currentStreak;
+                        }
+                    } else {
+                        state.missedItems.push({
+                            latin: item.fullLatinMacron,
+                            tenseName: TENSE_META[item.tense].name,
+                            english: item.summaryEnglish
+                        });
+                    }
+
+                    synth.playStep2Success(state.currentStreak);
+                    updateHeaderStats();
+
+                    // Disable remaining buttons
+                    btns.forEach((b, i) => {
+                        b.disabled = true;
+                        if (!item.options[i].isCorrect) {
+                            b.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border border-stone-200 bg-stone-50 opacity-50 flex items-center justify-between gap-2';
+                        }
+                    });
+
+                    els.step2Circle.className = 'w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center';
+                    els.step2Feedback.className = 'text-xs text-emerald-900 bg-emerald-50 border border-emerald-300 px-3 py-1.5 rounded-lg flex-1 font-medium';
+                    els.step2Feedback.innerHTML = `<span>🎉 <strong>Optime!</strong> "${formatMacrons(item.fullLatinMacron, state.useMacrons)}" = <em>${item.summaryEnglish}</em>.</span>`;
+
+                    els.btnNextQuestion.classList.remove('hidden');
+                    els.btnNextQuestion.classList.add('inline-flex');
                 }
-
-                // Show Next Button
-                els.btnNextQuestion.classList.remove('hidden');
-                els.btnNextQuestion.classList.add('inline-flex');
-                updateHeaderStats();
-
             } else {
-                // Wrong Translation!
-                recordMistakeOnCurrentItem();
-                synth.playError();
-
-                clickedBtn.disabled = true;
-                clickedBtn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-rose-500 bg-rose-50 opacity-75 flex items-center justify-between gap-2 animate-shake';
-
-                els.step2Feedback.className = 'text-xs text-rose-900 bg-rose-50 border border-rose-300 px-3 py-2 rounded-lg flex-1';
-                els.step2Feedback.innerHTML = `<strong>✗ Try again:</strong> ${formatMacrons(opt.feedback, state.useMacrons)}`;
-                updateHeaderStats();
-            }
-        }
-
-        function recordMistakeOnCurrentItem() {
-            if (!state.missedOnCurrentItem) {
+                // Incorrect option chosen
+                opt.selected = true;
                 state.missedOnCurrentItem = true;
                 state.currentStreak = 0;
-                state.missedItems.push({
-                    latin: state.currentItem.fullLatinMacron,
-                    tenseName: TENSE_META[state.currentItem.tense].name,
-                    english: state.currentItem.summaryEnglish,
-                    pp: state.currentItem.verb.pp
-                });
-            }
-        }
+                updateHeaderStats();
+                synth.playError();
 
-        /**
-         * Switch between Easy and Hard translation quiz modes.
-         * If the current question's Step 2 isn't finished yet, rebuilds Step 2 options
-         * for the current Latin verb so the student can immediately experience the new mode.
-         */
-        function setQuizDifficulty(newDiff) {
-            if (state.quizDifficulty === newDiff) return;
-            state.quizDifficulty = newDiff;
-
-            if (state.currentItem && !state.step2Solved) {
-                buildOptionsForItem(state.currentItem, state.quizDifficulty);
-                renderStep2Options();
-
-                if (state.step1Solved) {
-                    const isDualPerf = state.quizDifficulty === 'easy' && state.currentItem.tense === 'perf';
-                    if (isDualPerf) {
-                        els.step2Feedback.className = 'text-xs text-amber-900 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg flex-1';
-                        els.step2Feedback.innerHTML = `<span>Switched to Easy Mode: Choose <strong>both</strong> valid Perfect Passive translations above (<strong>0 / 2</strong> selected).</span>`;
-                    } else {
-                        els.step2Feedback.className = 'text-xs text-stone-600 flex-1';
-                        els.step2Feedback.innerHTML = `<span>Select one of the 4 translations above or press <kbd class="font-mono bg-stone-100 px-1 border rounded">1</kbd>–<kbd class="font-mono bg-stone-100 px-1 border rounded">4</kbd>.</span>`;
-                    }
+                if (clickedBtn) {
+                    clickedBtn.disabled = true;
+                    clickedBtn.className = 'trans-btn w-full text-left px-3.5 py-3 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-900 flex items-center justify-between gap-2 animate-shake';
                 }
-            }
 
-            updateDifficultyUI();
+                els.step2Feedback.className = 'text-xs text-rose-900 bg-rose-50 border border-rose-300 px-3 py-1.5 rounded-lg flex-1';
+                els.step2Feedback.innerHTML = `<span>✗ ${opt.feedback}</span>`;
+            }
         }
 
-        /**
-         * Advance to the next verb or display the End-of-Round Summary Modal
-         */
         function nextQuestion() {
-            if (!state.step2Solved) return;
-
-            state.questionIndex++;
-
-            // Check if finite challenge mode (10 or 20 questions) is finished
-            if (state.mode !== 'endless') {
-                const targetTotal = parseInt(state.mode, 10);
-                if (state.questionIndex >= targetTotal) {
-                    showSummaryModal(targetTotal);
-                    return;
-                }
-            }
-
-            // Otherwise load next verb (preserving `state.hintsEnabled` and `state.quizDifficulty`)
-            state.step1Solved = false;
-            state.step2Solved = false;
-            state.missedOnCurrentItem = false;
-            state.currentItem = generateQuestion();
-            renderQuestion();
-        }
-
-        /**
-         * Reset and start a fresh round
-         */
-        function startNewSession() {
-            state.questionIndex = 0;
-            state.firstTryCorrectCount = 0;
-            state.currentStreak = 0;
-            state.bestStreak = 0;
-            state.missedItems = [];
-            state.step1Solved = false;
-            state.step2Solved = false;
-            state.missedOnCurrentItem = false;
-
-            els.summaryModal.classList.add('hidden');
-            els.summaryModal.classList.remove('flex');
-
-            const twoStepGrid = els.step1Panel.parentElement;
-
-            if (state.mode === 'chart') {
-                // Hide Two-Step Multiple Choice Grid and Show Chart Mode Workspace
-                twoStepGrid.classList.add('hidden');
-                els.chartModeWorkspace.classList.remove('hidden');
-                els.chartModeWorkspace.classList.add('flex');
-                loadNewChartVerb();
+            const limit = state.mode === 'endless' ? Infinity : parseInt(state.mode, 10);
+            if (state.questionIndex + 1 >= limit) {
+                showSummaryModal();
             } else {
-                // Show Two-Step Multiple Choice Grid and Hide Chart Mode Workspace
-                els.chartModeWorkspace.classList.add('hidden');
-                els.chartModeWorkspace.classList.remove('flex');
-                twoStepGrid.classList.remove('hidden');
-                els.morphologySubhint.textContent = 'Identify the tense first, then select the exact English translation(s).';
-                state.currentItem = generateQuestion();
-                renderQuestion();
+                state.questionIndex++;
+                loadQuestion();
             }
         }
 
-        /**
-         * Toggle Hints ON/OFF globally
-         */
-        function toggleHints() {
-            state.hintsEnabled = !state.hintsEnabled;
-            applyHintsVisibility();
-        }
+        function showSummaryModal() {
+            const total = parseInt(state.mode, 10) || (state.questionIndex + 1);
+            const acc = Math.round((state.firstTryCorrectCount / total) * 100);
 
-        /**
-         * Populate and open the End-of-Challenge Summary Modal
-         */
-        function showSummaryModal(totalCompleted) {
-            const acc = Math.round((state.firstTryCorrectCount / totalCompleted) * 100);
             els.sumAccuracy.textContent = `${acc}%`;
             els.sumBestStreak.textContent = `${state.bestStreak} 🔥`;
-            els.sumTotalVerbs.textContent = `${totalCompleted}`;
+            els.sumTotalVerbs.textContent = `${total}`;
 
-            let rank = 'Tīrō Grammaticus';
-            if (acc === 100) rank = 'Imperātor Periphrasticus 🏆';
-            else if (acc >= 90) rank = 'Cōnsul Latīnitātis 🌿';
-            else if (acc >= 75) rank = 'Centuriō Verbōrum 🛡️';
-            els.summaryRankBadge.textContent = rank;
+            if (acc >= 90) els.summaryRankBadge.textContent = 'Imperātor Grammaticus 🏆';
+            else if (acc >= 75) els.summaryRankBadge.textContent = 'Centuriō Latīnus 🦅';
+            else els.summaryRankBadge.textContent = 'Tīrō Industrius 📜';
 
             els.sumMissedList.innerHTML = '';
             if (state.missedItems.length === 0) {
-                els.sumMissedList.innerHTML = `
-                    <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 font-medium">
-                        🎉 Flawless round! You identified every tense and translation on the first try.
-                    </div>
-                `;
+                els.sumMissedList.innerHTML = `<div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-medium">Flawless round! You answered every verb correctly on the first try.</div>`;
             } else {
                 state.missedItems.forEach(m => {
                     const row = document.createElement('div');
                     row.className = 'p-2.5 rounded-lg bg-parchment-100 border border-stone-300 flex flex-wrap items-center justify-between gap-2';
                     row.innerHTML = `
                         <div>
-                            <span class="font-serif font-bold text-base text-imperial-700">${formatMacrons(m.latin, state.useMacrons)}</span>
-                            <span class="text-stone-500 ml-1">(${m.tenseName})</span>
-                            <div class="text-[11px] font-serif italic text-stone-500">${formatMacrons(m.pp, state.useMacrons)}</div>
+                            <span class="font-serif font-bold text-base text-stone-900">${formatMacrons(m.latin, state.useMacrons)}</span>
+                            <span class="text-[11px] ml-2 px-2 py-0.5 rounded bg-stone-200 text-stone-700">${m.tenseName}</span>
                         </div>
-                        <div class="font-semibold text-stone-800 bg-white px-2.5 py-1 rounded border border-stone-300">
-                            "${m.english}"
-                        </div>
+                        <div class="text-xs italic text-imperial-700 font-medium">${m.english}</div>
                     `;
                     els.sumMissedList.appendChild(row);
                 });
@@ -2393,47 +2425,23 @@
         }
 
         /**
-         * Populate the 20 Target Verbs table inside the Reference Modal
-         */
-        function populateReferenceModal() {
-            els.refVerbTableBody.innerHTML = '';
-            VERB_LIST.forEach(v => {
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-parchment-100';
-                tr.innerHTML = `
-                    <td class="py-1.5 px-2 font-medium text-stone-900">${formatMacrons(v.pp, state.useMacrons)}</td>
-                    <td class="py-1.5 px-2 italic text-imperial-700">${formatMacrons(v.pppStem + 'us, -a, -um', state.useMacrons)}</td>
-                    <td class="py-1.5 px-2 font-sans text-xs text-stone-700">${v.meaning} → <em>"was/were ${v.enPassPart}"</em></td>
-                `;
-                els.refVerbTableBody.appendChild(tr);
-            });
-        }
-
-        /**
          * ============================================================================
          * 7. EVENT LISTENERS & KEYBOARD SHORTCUTS
          * ============================================================================
          */
         function bindEvents() {
-            // Step 1 Tense Buttons
             els.tenseButtonsContainer.querySelectorAll('.tense-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     handleStep1Selection(btn.getAttribute('data-tense'));
                 });
             });
 
-            // Easy / Hard Quiz Difficulty Toggle Buttons
             els.btnDiffEasy.addEventListener('click', () => setQuizDifficulty('easy'));
             els.btnDiffHard.addEventListener('click', () => setQuizDifficulty('hard'));
-
-            // Next Question Button
             els.btnNextQuestion.addEventListener('click', nextQuestion);
-
-            // Global & Inline Hints Toggle Buttons
             els.btnHintsToggle.addEventListener('click', toggleHints);
             els.btnInlineHint.addEventListener('click', toggleHints);
 
-            // Macron Toggle
             els.btnMacrons.addEventListener('click', () => {
                 state.useMacrons = !state.useMacrons;
                 els.labelMacrons.textContent = `Macrons: ${state.useMacrons ? 'ON' : 'OFF'}`;
@@ -2441,6 +2449,14 @@
                     els.latinVerbDisplay.textContent = formatMacrons(state.chartVerb.pp, state.useMacrons);
                     els.hintPrincipalParts.textContent = formatMacrons(state.chartVerb.pp, state.useMacrons);
                     els.hintMorphBadge.textContent = formatMacrons(`4th PP Stem: ${state.chartVerb.pppStem}-`, state.useMacrons);
+                    if (state.chartChecked) {
+                        PERSON_NUMBER_KEYS.forEach(pn => {
+                            const input = document.getElementById(`chartInput_${pn}`);
+                            if (input && input.value.trim()) {
+                                input.value = formatMacrons(input.value, state.useMacrons);
+                            }
+                        });
+                    }
                     applyHintsVisibility();
                     populateReferenceModal();
                 } else if (state.currentItem) {
@@ -2449,57 +2465,37 @@
                     els.hintPrincipalParts.textContent = formatMacrons(item.verb.pp, state.useMacrons);
                     const numLabel = item.isPlural ? 'Plural' : 'Singular';
                     const endDisplay = formatMacrons(`-${item.ending}`, state.useMacrons);
-                    els.hintMorphBadge.textContent = `${GENDER_LABELS[item.gender]} ${numLabel} (${endDisplay})`;
+                    els.hintMorphBadge.textContent = `Participle: ${GENDER_LABELS[item.gender]} ${numLabel} (${endDisplay})`;
                     applyHintsVisibility();
                     populateReferenceModal();
                 }
             });
 
-            // Chart Mode Buttons & Input Enter Key Handler
-            els.btnCheckChart.addEventListener('click', checkChartAnswers);
-            els.btnRevealChart.addEventListener('click', revealChartAnswers);
-            els.btnNextChartVerb.addEventListener('click', nextChartVerb);
-
-            PERSON_NUMBER_KEYS.forEach(pn => {
-                const input = document.getElementById(`chartInput_${pn}`);
-                if (input) {
-                    input.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                            checkChartAnswers();
-                        }
-                    });
-                }
-            });
-
-            // Gender Pool Toggle
-            els.btnGenderPool.addEventListener('click', () => {
-                state.allGenders = !state.allGenders;
-                els.labelGenderPool.textContent = state.allGenders ? 'M/F/N' : 'Masc Only';
-            });
-
-            // Audio Synth Toggle
             els.btnAudio.addEventListener('click', () => {
                 synth.enabled = !synth.enabled;
                 els.labelAudio.textContent = synth.enabled ? '🔊' : '🔇';
             });
 
-            // Session Length Mode Select Change
+            els.btnGenderPool.addEventListener('click', () => {
+                state.allGenders = !state.allGenders;
+                els.labelGenderPool.textContent = state.allGenders ? 'M/F/N' : 'M only';
+            });
+
             els.modeSelect.addEventListener('change', (e) => {
                 state.mode = e.target.value;
                 startNewSession();
             });
 
-            // Reference Modal Open/Close
             els.btnOpenRef.addEventListener('click', () => {
-                populateReferenceModal();
                 els.refModal.classList.remove('hidden');
                 els.refModal.classList.add('flex');
             });
+
             els.btnCloseRef.addEventListener('click', () => {
                 els.refModal.classList.add('hidden');
                 els.refModal.classList.remove('flex');
             });
+
             els.refModal.addEventListener('click', (e) => {
                 if (e.target === els.refModal) {
                     els.refModal.classList.add('hidden');
@@ -2507,27 +2503,95 @@
                 }
             });
 
-            // Summary Modal Play Again
-            els.btnPlayAgain.addEventListener('click', startNewSession);
+            if (els.btnPlayAgain) {
+                els.btnPlayAgain.addEventListener('click', startNewSession);
+            }
 
-            // Global Keyboard Shortcuts
-            window.addEventListener('keydown', (e) => {
-                // Close Reference modal on Escape
-                if (e.key === 'Escape' && !els.refModal.classList.contains('hidden')) {
-                    els.refModal.classList.add('hidden');
-                    els.refModal.classList.remove('flex');
-                    return;
+            if (els.btnSwitchToSprint) {
+                els.btnSwitchToSprint.addEventListener('click', () => {
+                    if (els.milestoneModal) {
+                        els.milestoneModal.classList.add('hidden');
+                        els.milestoneModal.classList.remove('flex');
+                    }
+                    state.mode = '10';
+                    els.modeSelect.value = '10';
+                    startNewSession();
+                });
+            }
+
+            if (els.btnContinueChart) {
+                els.btnContinueChart.addEventListener('click', () => {
+                    if (els.milestoneModal) {
+                        els.milestoneModal.classList.add('hidden');
+                        els.milestoneModal.classList.remove('flex');
+                    }
+                    nextChartVerb();
+                });
+            }
+
+            // Chart Mode inputs & actions
+            PERSON_NUMBER_KEYS.forEach(pn => {
+                const input = document.getElementById(`chartInput_${pn}`);
+                if (input) {
+                    input.addEventListener('input', () => {
+                        state.chartChecked = false;
+                        updateChartPrimaryButtonState();
+                    });
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (state.chartChecked) {
+                                nextChartVerb();
+                            } else {
+                                checkChartAnswers();
+                            }
+                        }
+                    });
                 }
+            });
 
-                // Ignore shortcuts if modals are open
-                if (!els.refModal.classList.contains('hidden') || !els.summaryModal.classList.contains('hidden')) {
-                    if (e.key === 'Enter' && !els.summaryModal.classList.contains('hidden')) {
+            if (els.btnChartPrimaryAction) {
+                els.btnChartPrimaryAction.addEventListener('click', () => {
+                    if (state.chartChecked) {
+                        nextChartVerb();
+                    } else {
+                        checkChartAnswers();
+                    }
+                });
+            }
+
+            if (els.btnSkipChartVerb) {
+                els.btnSkipChartVerb.addEventListener('click', nextChartVerb);
+            }
+
+            const btnRevealChart = document.getElementById('btnRevealChart');
+            if (btnRevealChart) {
+                btnRevealChart.addEventListener('click', revealChartAnswers);
+            }
+
+            // Global keyboard shortcuts
+            window.addEventListener('keydown', (e) => {
+                const isRefOpen = !els.refModal.classList.contains('hidden');
+                const isSummaryOpen = !els.summaryModal.classList.contains('hidden');
+                const isMilestoneOpen = els.milestoneModal && !els.milestoneModal.classList.contains('hidden');
+
+                if (isRefOpen || isSummaryOpen || isMilestoneOpen) {
+                    if (e.key === 'Escape') {
+                        if (isRefOpen) {
+                            els.refModal.classList.add('hidden');
+                            els.refModal.classList.remove('flex');
+                        }
+                        if (isMilestoneOpen) {
+                            els.milestoneModal.classList.add('hidden');
+                            els.milestoneModal.classList.remove('flex');
+                        }
+                    } else if (e.key === 'Enter' && isSummaryOpen) {
+                        e.preventDefault();
                         startNewSession();
                     }
                     return;
                 }
 
-                // If user is typing inside a Chart Mode text input, do not trigger single-letter hotkeys
                 const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
                 if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
                     return;
@@ -2535,37 +2599,32 @@
 
                 const key = e.key.toLowerCase();
 
-                // Hints Toggle ('h')
                 if (key === 'h') {
                     e.preventDefault();
                     toggleHints();
                     return;
                 }
 
-                // In Chart Mode, Enter advances to the next verb if already solved
                 if (state.mode === 'chart') {
-                    if (e.key === 'Enter' && state.chartSolved) {
+                    if (e.key === 'Enter' && state.chartChecked) {
                         e.preventDefault();
                         nextChartVerb();
                     }
                     return;
                 }
 
-                // Easy / Hard Mode Toggle ('m')
                 if (key === 'm') {
                     e.preventDefault();
                     setQuizDifficulty(state.quizDifficulty === 'easy' ? 'hard' : 'easy');
                     return;
                 }
 
-                // Next Question ('Enter' or ' ') when Step 2 is complete
                 if ((e.key === 'Enter' || e.key === ' ') && state.step2Solved) {
                     e.preventDefault();
                     nextQuestion();
                     return;
                 }
 
-                // Step 1 Shortcuts: 1, 2, 3
                 if (!state.step1Solved) {
                     if (key === '1') handleStep1Selection('perf');
                     else if (key === '2') handleStep1Selection('plup');
@@ -2573,12 +2632,11 @@
                     return;
                 }
 
-                // Step 2 Shortcuts: 1-4 or A-D
                 if (state.step1Solved && !state.step2Solved) {
-                    if (key === '1' || key === 'a') handleStep2Selection(0);
-                    else if (key === '2' || key === 'b') handleStep2Selection(1);
-                    else if (key === '3' || key === 'c') handleStep2Selection(2);
-                    else if (key === '4' || key === 'd') handleStep2Selection(3);
+                    if (key === 'a') handleStep2Selection(0);
+                    else if (key === 'b') handleStep2Selection(1);
+                    else if (key === 'c') handleStep2Selection(2);
+                    else if (key === 'd') handleStep2Selection(3);
                 }
             });
         }
